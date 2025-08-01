@@ -1,5 +1,5 @@
 {
-	"name": "cstwo-fantasy",
+	"name": "luckball",
 	"compatibility_date": "2024-09-23",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "src/index.ts",
@@ -9,11 +9,11 @@
 	},
 	"build": {
 		"command": "pnpm run build"
-	},
-	"hyperdrive": [
-		{
-			"binding": "HYPERDRIVE",
-			"id": "1194939d56b34346a0b9cfd007e21ff5"
-		}
-	]
+	}
+	// "hyperdrive": [
+	// 	{
+	// 		"binding": "HYPERDRIVE",
+	// 		"id": "1194939d56b34346a0b9cfd007e21ff5"
+	// 	}
+	// ]
 }

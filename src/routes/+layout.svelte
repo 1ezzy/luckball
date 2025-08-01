@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { MediaQuery } from 'svelte/reactivity';
-	import { Icon } from 'svelte-ux';
-	import { faCalendar, faHouse, faUsers } from '@fortawesome/free-solid-svg-icons';
 	import './app.css';
 
 	const desktopView = new MediaQuery('min-width: 768px');
@@ -10,6 +8,10 @@
 </script>
 
 <svelte:head>
-	<title>Happidrafters</title>
-	<meta name="happidrafters" content="Fantasy CS2 hosted by Ceej and Ezzy" />
+	<title>Luckball</title>
+	<meta name="luckball" content="Team-based football matchup scramble" />
 </svelte:head>
+
+<div class="flex min-h-screen w-full flex-col">
+	{@render children()}
+</div>

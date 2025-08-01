@@ -1,5 +1,5 @@
 {
-	"name": "cstwo-fantasy",
+	"name": "luckball",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -18,6 +18,7 @@
 		"@cloudflare/workers-types": "^4.20250725.0",
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
+		"@sveltejs/adapter-cloudflare": "^7.1.0",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/forms": "^0.5.9",
@@ -52,12 +53,8 @@
 		"@fortawesome/free-solid-svg-icons": "^7.0.0",
 		"@layerstack/tailwind": "2.0.0-next.15",
 		"@layerstack/utils": "2.0.0-next.12",
-		"@sveltejs/adapter-cloudflare": "^7.1.0",
 		"@upstash/redis": "^1.35.1",
-		"dotenv": "^17.2.1",
 		"drizzle-orm": "^0.44.3",
-		"graphql": "^16.11.0",
-		"graphql-request": "^7.2.0",
 		"layerchart": "2.0.0-next.27",
 		"postgres": "^3.4.7",
 		"svelte-ux": "2.0.0-next.13"

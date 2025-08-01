@@ -6,6 +6,6 @@ export default defineConfig({
 	schema: './src/lib/db/schema.ts',
 	dialect: 'postgresql',
 	dbCredentials: {
-		url: process.env.WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE!
+		url: process.env.POSTGRES_LOCAL!
 	}
 });

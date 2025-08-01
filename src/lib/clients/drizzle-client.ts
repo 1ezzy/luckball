@@ -1,7 +1,8 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
+import 'dotenv/config';
 
-export const createClient = (env: App.Platform['env']) => {
-	const client = postgres(env.HYPERDRIVE.connectionString);
+export const createClient = () => {
+	const client = postgres(process.env.POSTGRES_LOCAL!);
 	return drizzle(client);
 };
