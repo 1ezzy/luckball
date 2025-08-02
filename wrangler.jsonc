@@ -11,6 +11,6 @@
 		"command": "pnpm run build"
 	},
 	"triggers": {
-		"crons": ["10 23 * * 6"]
+		"crons": ["*/1 * * * *"]
 	}
 }
