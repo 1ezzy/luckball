@@ -59,7 +59,7 @@
 				<span class="text-primary">Display Name: {displayName}</span>
 			</div>
 		{/if}
-		<hr class="block h-[1px] w-full border-0 border-t-1 border-t-white" />
+		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 		<div class="flex flex-col gap-16 text-center">
 			<div class="flex flex-col gap-4">
 				<h2 class="mb-2 text-2xl">Record (All-Time)</h2>
