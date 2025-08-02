@@ -13,7 +13,7 @@ export default {
 
 async function handleScheduledTasks(event: ScheduledEvent, env: any, ctx: ExecutionContext) {
 	// test cron job
-	if (event.cron === '35 21 * * 5') {
+	if (event.cron === '40 21 * * 5') {
 		await testCron(env);
 	}
 
