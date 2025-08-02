@@ -29,7 +29,7 @@ export const actions: Actions = {
 		let userId = cookies.get('userId');
 
 		if (!userId) {
-			userId = 'boom';
+			userId = crypto.randomUUID();
 			cookies.set('userId', userId, {
 				path: '/',
 				maxAge: 60 * 60 * 24 * 365,
