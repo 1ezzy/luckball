@@ -7,10 +7,7 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
-		interface Env {}
-		export default {
-			async scheduled(controller: ScheduledController, env: Env, ctx: ExecutionContext) {}
-		};
+		// interface Env {}
 	}
 }
 
