@@ -3,18 +3,32 @@
 	import { onMount } from 'svelte';
 	import { Button, Card, Form, TextField } from 'svelte-ux';
 
-	// getting data for page
 	let { data } = $props();
-	const matchups = data.weekItem.events.map((week: any) => week.shortName);
-	const matchupDates = data.weekItem.events.map((week: any) => week.date);
-	const teams = data.weekItem.teams;
+
+	const matchups = data.weekEvents.events.map((week: any) => week.shortName);
+	const matchupDates = data.weekEvents.events.map((week: any) => week.date);
+	const teams = data.weekEvents.teams;
+
+	const weekJoined = data.weekJoined;
+	const displayName = data.displayName;
+
+	const currentWeek = data.currentWeek;
+	const seasonPrefix = $derived(
+		(() => {
+			switch (data.seasonType) {
+				case 1:
+					return 'Preseason';
+				case 3:
+					return 'Postseason';
+				default:
+					return '';
+			}
+		})()
+	);
 
 	onMount(() => {
-		console.log(teams);
+		// console.log(weekInfo);
 	});
-
-	const weekJoined = false;
-	const weekStart = false;
 </script>
 
 <div class="grid w-full flex-1 grid-cols-3">
@@ -36,13 +50,13 @@
 					}}
 				/>
 				<Button type="submit" color="primary" variant="fill-outline">
-					Join Preseason Week [weeknumber]
+					Join {seasonPrefix} Week {currentWeek}
 				</Button>
 			</Form>
 		{:else}
 			<div class="flex w-full flex-col gap-8 text-center">
-				<span>You've successfully joined Preseason Week [weeknumber]!</span>
-				<span class="text-primary">Display Name: [displayname]</span>
+				<span>You've successfully joined {seasonPrefix} Week {currentWeek}!</span>
+				<span class="text-primary">Display Name: {displayName}</span>
 			</div>
 		{/if}
 		<hr class="block h-[1px] w-full border-0 border-t-1 border-t-white" />
@@ -56,7 +70,6 @@
 			<div class="flex flex-col gap-4">
 				<h2 class="mb-2 text-2xl">Other Stats</h2>
 				<span class="text-sm">Your Best Team: n/a</span>
-				<span class="text-sm">Overall Best Team: n/a (Week 0)</span>
 			</div>
 		</div>
 	</div>
