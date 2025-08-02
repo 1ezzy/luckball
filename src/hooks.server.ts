@@ -1,6 +1,7 @@
-export const scheduled = async (event, env, ctx) => {
-	console.log('reached!');
-	await handleScheduledTasks(event, env, ctx);
+export default {
+	async scheduled(event, env, ctx) {
+		await handleScheduledTasks(event, env, ctx);
+	}
 };
 
 const handleScheduledTasks = async (event, env, ctx) => {
@@ -26,10 +27,10 @@ const handleScheduledTasks = async (event, env, ctx) => {
 	// }
 };
 
-async function testCron(env: any) {
+const testCron = async (env: any) => {
 	console.log('This cron job fired!');
-}
+};
 
-async function createNewRound(env: any) {
+const createNewRound = async (env: any) => {
 	console.log('Checking for new round start...');
-}
+};
