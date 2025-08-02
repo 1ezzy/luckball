@@ -2,7 +2,7 @@
 	"name": "luckball",
 	"compatibility_date": "2025-05-05",
 	"compatibility_flags": ["nodejs_compat"],
-	"main": "./.svelte-kit/cloudflare/_worker.js",
+	"main": "./src/worker.ts",
 	"assets": {
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare"
