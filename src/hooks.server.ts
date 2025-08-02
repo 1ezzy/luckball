@@ -6,7 +6,7 @@ export default {
 
 async function handleScheduledTasks(event, env, ctx) {
 	// test cron job
-	if (event.cron === '40 21 * * 5') {
+	if (event.cron === '05 23 * * 6') {
 		await testCron(env);
 	}
 
