@@ -1,5 +1,6 @@
 export default {
 	async scheduled(event, env, ctx) {
+		console.log('scheduled fired!');
 		await handleScheduledTasks(event, env, ctx);
 	}
 };
