@@ -25,7 +25,6 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"@tailwindcss/vite": "^4.0.0",
 		"@types/pg": "^8.15.4",
-		"drizzle-kit": "^0.31.4",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^3.0.0",
@@ -55,7 +54,6 @@
 		"@layerstack/tailwind": "2.0.0-next.15",
 		"@layerstack/utils": "2.0.0-next.12",
 		"@upstash/redis": "^1.35.1",
-		"drizzle-orm": "^0.44.3",
 		"layerchart": "2.0.0-next.27",
 		"postgres": "^3.4.7",
 		"svelte-ux": "2.0.0-next.13"

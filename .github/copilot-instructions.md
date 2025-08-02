@@ -5,8 +5,7 @@ This project is a SvelteKit project which uses some of the following technologie
 1. Svelte and SvelteKit
 2. svelte-ux
 3. TypeScript
-4. Drizzle
-5. Redis (via Upstash)
+4. Redis (via Upstash)
 
 This project is hosted via a Cloudflare Worker and uses the custom domain luckball.ezzy.dog
 
