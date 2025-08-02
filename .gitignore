@@ -1,3 +1,4 @@
+node_modules
 apps/frontend/node_modules
 
 # Output
@@ -15,3 +16,4 @@ Thumbs.db
 # Vite
 apps/frontend/vite.config.js.timestamp-*
 apps/frontend/vite.config.ts.timestamp-*
+
