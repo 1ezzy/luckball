@@ -2,11 +2,16 @@
 import type { ScheduledEvent, ExecutionContext } from '@cloudflare/workers-types';
 import { redis } from '$lib/clients/redis-client';
 
-export async function scheduled(
+export const handle: Handle = async ({ event, resolve }) => {
+	const response = await resolve(event);
+	return response;
+};
+
+export const scheduled = async (
 	event: ScheduledEvent,
 	env: any,
 	ctx: ExecutionContext
-): Promise<void> {
+): Promise<void> => {
 	console.log(
 		`--- HOOKS.SERVER.TS SCHEDULED FUNCTION WAS TRIGGERED AT ${new Date().toISOString()} ---`
 	);
@@ -17,4 +22,4 @@ export async function scheduled(
 	} catch (e) {
 		console.error('Error writing to Redis from scheduled function:', e);
 	}
-}
+};

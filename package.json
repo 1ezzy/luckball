@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"dev:wrangler": "npx wrangler dev --remote --test-scheduled",
+		"dev:wrangler": "npx wrangler dev --remote --test-scheduled --log-level debug",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -13,7 +13,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-		"deploy": "npx wrangler deploy"
+		"deploy": "npx wrangler deploy",
+		"sync": "svelte-kit sync && wrangler types --x-include-runtime=types/workerd.d.ts types/environment.d.ts"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250730.0",
