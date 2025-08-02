@@ -10,9 +10,6 @@
 	"build": {
 		"command": "pnpm run build"
 	},
-	"triggers": {
-		"crons": ["*/1 * * * *"]
-	},
 	"observability": {
 		"enabled": true
 	}

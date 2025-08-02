@@ -1,5 +1,6 @@
 node_modules
 apps/frontend/node_modules
+apps/cron-triggers/node_modules
 
 # Output
 apps/frontend/.wrangler
