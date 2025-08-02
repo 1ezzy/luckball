@@ -1,27 +1,20 @@
+// src/hooks.server.ts
 import type { ScheduledEvent, ExecutionContext } from '@cloudflare/workers-types';
+import { redis } from '$lib/clients/redis-client';
 
-export default {
-	async scheduled(event: ScheduledEvent, env, ctx: ExecutionContext) {
-		console.log('scheduled fired!');
-		ctx.waitUntil(handleScheduledTasks(event, env, ctx));
+export async function scheduled(
+	event: ScheduledEvent,
+	env: any,
+	ctx: ExecutionContext
+): Promise<void> {
+	console.log(
+		`--- HOOKS.SERVER.TS SCHEDULED FUNCTION WAS TRIGGERED AT ${new Date().toISOString()} ---`
+	);
+
+	try {
+		await redis.set('cron-last-run', new Date().toISOString());
+		console.log('Successfully wrote to Redis from scheduled function.');
+	} catch (e) {
+		console.error('Error writing to Redis from scheduled function:', e);
 	}
-};
-
-const handleScheduledTasks = async (event: ScheduledEvent, env, ctx: ExecutionContext) => {
-	// Your existing cron logic from index.ts
-	if (event.cron === '*/1 * * * *') {
-		await testCron(env);
-	}
-
-	// if (event.cron === '0 0 * * 3') {
-	// 	await createNewRound(env);
-	// }
-};
-
-const testCron = async (env: any) => {
-	console.log('This cron job fired!');
-};
-
-// const createNewRound = async (env: any) => {
-// 	console.log('Checking for new round start...');
-// };
+}

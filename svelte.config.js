@@ -8,6 +8,7 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter({
+			config: './wrangler.jsonc',
 			nodejs_compat: true
 		})
 	}
