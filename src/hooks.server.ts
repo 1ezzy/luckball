@@ -1,10 +1,9 @@
-export default {
-	async scheduled(event, env, ctx) {
-		await handleScheduledTasks(event, env, ctx);
-	}
+export const scheduled = async (event, env, ctx) => {
+	console.log('reached!');
+	await handleScheduledTasks(event, env, ctx);
 };
 
-async function handleScheduledTasks(event, env, ctx) {
+const handleScheduledTasks = async (event, env, ctx) => {
 	// test cron job
 	if (event.cron === '*/1 * * * *') {
 		await testCron(env);
@@ -25,7 +24,7 @@ async function handleScheduledTasks(event, env, ctx) {
 	// if (event.cron === 'todo') {
 	// 	await todo(env);
 	// }
-}
+};
 
 async function testCron(env: any) {
 	console.log('This cron job fired!');
