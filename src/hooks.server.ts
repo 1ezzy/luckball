@@ -3,7 +3,7 @@ import type { ScheduledEvent, ExecutionContext } from '@cloudflare/workers-types
 export default {
 	async scheduled(event: ScheduledEvent, env, ctx: ExecutionContext) {
 		console.log('scheduled fired!');
-		await handleScheduledTasks(event, env, ctx);
+		ctx.waitUntil(handleScheduledTasks(event, env, ctx));
 	}
 };
 
