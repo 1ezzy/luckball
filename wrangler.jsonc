@@ -9,11 +9,8 @@
 	},
 	"build": {
 		"command": "pnpm run build"
+	},
+	"triggers": {
+		"crons": ["30 21 * * 5"]
 	}
-	// "hyperdrive": [
-	// 	{
-	// 		"binding": "HYPERDRIVE",
-	// 		"id": "1194939d56b34346a0b9cfd007e21ff5"
-	// 	}
-	// ]
 }
