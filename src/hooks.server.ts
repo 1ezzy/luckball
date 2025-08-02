@@ -1,17 +1,10 @@
-import createRequestHandler from '@sveltejs/adapter-cloudflare';
-import type { ExecutionContext, ScheduledEvent } from '@cloudflare/workers-types';
-
-const handler = createRequestHandler({
-	config: 'wrangler.jsonc'
-});
-
 export default {
-	async scheduled(event: ScheduledEvent, env: any, ctx: ExecutionContext) {
+	async scheduled(event, env, ctx) {
 		await handleScheduledTasks(event, env, ctx);
 	}
 };
 
-async function handleScheduledTasks(event: ScheduledEvent, env: any, ctx: ExecutionContext) {
+async function handleScheduledTasks(event, env, ctx) {
 	// test cron job
 	if (event.cron === '40 21 * * 5') {
 		await testCron(env);
