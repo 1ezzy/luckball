@@ -7,7 +7,9 @@
 		"dev": "wrangler dev --test-scheduled",
 		"start": "wrangler dev --test-scheduled"
 	},
+	"dependencies": {"@luckball/redis-client": "workspace:*"},
 	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20250730.0",
 		"typescript": "^5.5.2",
 		"wrangler": "^4.27.0"
 	}

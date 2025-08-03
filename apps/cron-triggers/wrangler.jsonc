@@ -4,12 +4,12 @@
 	"compatibility_date": "2025-08-02",
 	"observability": {
 		"enabled": true
+	},
+	"triggers": {
+		"crons": [
+			"*/3 * * * *"
+		]
 	}
-	// "triggers": {
-	// 	"crons": [
-	// 		"*/1 * * * *"
-	// 	]
-	// }
 
 	/**
 	 * Service Bindings (communicate between multiple Workers)

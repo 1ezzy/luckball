@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
-    "checkJs": true,
-    "noEmit": true
-  },
-  "include": ["eslint.config.js"]
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "skipLibCheck": true
+  }
 }
