@@ -1,8 +1,5 @@
 <script lang="ts">
-	import { MediaQuery } from 'svelte/reactivity';
 	import './app.css';
-
-	const desktopView = new MediaQuery('min-width: 768px');
 
 	let { children } = $props();
 </script>

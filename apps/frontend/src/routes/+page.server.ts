@@ -1,4 +1,5 @@
-import type { Actions } from '@sveltejs/kit';
+import { fail, type Actions } from '@sveltejs/kit';
+import { dev } from '$app/environment';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch, cookies }) => {
@@ -6,7 +7,11 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	const { currentWeek, seasonType } = await currentWeekRes.json();
 
 	const userId = cookies.get('userId');
-	const userDataRes = await fetch(`/api/redis/${seasonType}/week/${currentWeek}/users/${userId}`);
+	const userDataRes = await fetch(`/api/redis/${seasonType}/week/${currentWeek}/users/${userId}`, {
+		headers: {
+			cookie: `userId=${userId}`
+		}
+	});
 	const userData = await userDataRes.json();
 
 	if (userData) {
@@ -21,6 +26,10 @@ export const actions: Actions = {
 		const data = await request.formData();
 		const displayName = data.get('displayName');
 
+		if (!displayName) {
+			return fail(400, { displayName, error: 'Display name is required' });
+		}
+
 		const weekDataRes = await fetch('/api/espn/activeWeek');
 		const weekData = await weekDataRes.json();
 		const weekNumber = weekData.currentWeek;
@@ -33,8 +42,8 @@ export const actions: Actions = {
 			cookies.set('userId', userId, {
 				path: '/',
 				maxAge: 60 * 60 * 24 * 365,
-				httpOnly: false,
-				secure: true,
+				httpOnly: true,
+				secure: !dev,
 				sameSite: 'strict'
 			});
 		}
@@ -50,6 +59,11 @@ export const actions: Actions = {
 			})
 		});
 
-		console.log(await response.json());
+		if (!response.ok) {
+			const errorData = await response.json();
+			return fail(response.status, { displayName, error: errorData.error });
+		}
+
+		return { success: true };
 	}
 };
