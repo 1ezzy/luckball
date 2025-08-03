@@ -49,6 +49,7 @@
 		"@fortawesome/free-solid-svg-icons": "^7.0.0",
 		"@layerstack/tailwind": "2.0.0-next.15",
 		"@layerstack/utils": "2.0.0-next.12",
+		"@luckball/redis-client": "workspace:*",
 		"@upstash/redis": "^1.35.1",
 		"layerchart": "2.0.0-next.27",
 		"postgres": "^3.4.7",
