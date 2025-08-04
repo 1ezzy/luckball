@@ -47,9 +47,9 @@
 	// });
 </script>
 
-{#if isDesktop}
+{#if isDesktop.current}
 	<DesktopLayout {...layoutProps} />
-{:else if isTablet}
+{:else if isTablet.current}
 	<TabletLayout {...layoutProps} />
 {:else}
 	<MobileLayout {...layoutProps} />
