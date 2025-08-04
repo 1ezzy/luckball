@@ -115,13 +115,20 @@
 	font-family: Rubik;
 
 	@media (min-width: 2560px) {
+		.text-sm {
+			font-size: 16px;
+			line-height: 1.5;
+		}
 		.text-2xl {
 			font-size: 1.75rem; /* 28px */
 			line-height: 2.25rem; /* 36px */
 		}
 		.text-6xl {
 			font-size: 4.5rem; /* 72px */
-			line-height: 1;
+			line-height: 5rem; /* 80px */
 		}
+
+		font-size: 18px;
+		line-height: 1.75;
 	}
 }
