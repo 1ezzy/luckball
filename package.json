@@ -4,6 +4,7 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
+		"install:all": "pnpm install --recursive",
 		"dev:frontend": "pnpm --filter luckball-frontend dev"
 	},
 	"devDependencies": {
