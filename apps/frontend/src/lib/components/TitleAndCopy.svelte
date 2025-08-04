@@ -1,13 +1,8 @@
 <script lang="ts">
-	import { MediaQuery } from 'svelte/reactivity';
-
 	let { seasonPrefix, currentWeek } = $props();
-
-	const isDesktop = new MediaQuery('(min-width: 1024px)');
-	const isTablet = new MediaQuery('(min-width: 768px) and (max-width: 1023px)');
 </script>
 
-{#if isDesktop.current}
+<div class="hidden lg:block">
 	<div class="flex max-w-2xl flex-col gap-8">
 		<div class="flex w-full flex-row items-center gap-12">
 			<h1 class="text-primary text-6xl font-bold">Luckball</h1>
@@ -18,7 +13,8 @@
 			name on the left and clicking the "Join" button
 		</div>
 	</div>
-{:else if isTablet.current}
+</div>
+<div class="hidden md:block lg:hidden">
 	<div class="flex max-w-2xl flex-col gap-8">
 		<div class="flex w-full flex-row items-center gap-12">
 			<h1 class="text-primary text-6xl font-bold">Luckball</h1>
@@ -29,7 +25,8 @@
 			name on the left and clicking the "Join" button
 		</div>
 	</div>
-{:else}
+</div>
+<div class="block md:hidden">
 	<div class="flex flex-col gap-8 text-center">
 		<div class="flex w-full flex-col items-center gap-4">
 			<h1 class="text-primary text-6xl font-bold">Luckball</h1>
@@ -40,4 +37,4 @@
 			name below and clicking the "Join" button
 		</div>
 	</div>
-{/if}
+</div>

@@ -1,15 +1,11 @@
 <script lang="ts">
-	import { MediaQuery } from 'svelte/reactivity';
 	import { Card } from 'svelte-ux';
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
-
-	const isDesktop = new MediaQuery('(min-width: 1024px)');
-	const isTablet = new MediaQuery('(min-width: 768px) and (max-width: 1023px)');
 
 	let { matchups, teams, matchupDates, seasonPrefix, currentWeek } = $props();
 </script>
 
-{#if isDesktop.current}
+<div class="hidden lg:block">
 	<div class="flex flex-col gap-4">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {seasonPrefix} Week {currentWeek}</h2>
 		<Card class="h-full">
@@ -45,7 +41,8 @@
 			</div>
 		</Card>
 	</div>
-{:else if isTablet.current}
+</div>
+<div class="hidden md:block lg:hidden">
 	<div class="flex flex-col gap-4">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {seasonPrefix} Week {currentWeek}</h2>
 		<Card class="h-full">
@@ -81,7 +78,8 @@
 			</div>
 		</Card>
 	</div>
-{:else}
+</div>
+<div class="block md:hidden">
 	<div class="flex flex-col gap-4 text-center">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {seasonPrefix} Week {currentWeek}</h2>
 		<Card class="h-full p-4">
@@ -115,4 +113,4 @@
 			{/each}
 		</Card>
 	</div>
-{/if}
+</div>

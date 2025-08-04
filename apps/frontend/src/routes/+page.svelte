@@ -1,12 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { MediaQuery } from 'svelte/reactivity';
 	import DesktopLayout from '$lib/components/layouts/DesktopLayout.svelte';
 	import TabletLayout from '$lib/components/layouts/TabletLayout.svelte';
 	import MobileLayout from '$lib/components/layouts/MobileLayout.svelte';
-
-	const isDesktop = new MediaQuery('(min-width: 1024px)');
-	const isTablet = new MediaQuery('(min-width: 768px) and (max-width: 1023px)');
 
 	let { data } = $props();
 
@@ -47,10 +43,12 @@
 	// });
 </script>
 
-{#if isDesktop.current}
+<div class="hidden lg:block">
 	<DesktopLayout {...layoutProps} />
-{:else if isTablet.current}
+</div>
+<div class="hidden md:block lg:hidden">
 	<TabletLayout {...layoutProps} />
-{:else}
+</div>
+<div class="block md:hidden">
 	<MobileLayout {...layoutProps} />
-{/if}
+</div>
