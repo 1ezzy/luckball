@@ -5,7 +5,7 @@
 	let { matchups, teams, matchupDates } = $props();
 </script>
 
-<div class="flex max-w-2xl flex-col gap-4">
+<div class="flex flex-col gap-4">
 	<h2 class="text-secondary mb-2 text-2xl">Schedule for Preaseaon Week [weeknumber]</h2>
 	<Card class="h-full">
 		<div class="grid h-full grid-cols-4 grid-rows-4 items-center justify-items-center gap-2 p-4">

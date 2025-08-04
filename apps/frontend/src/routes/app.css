@@ -113,4 +113,15 @@
 	--color-surface-300: #1f212b;
 
 	font-family: Rubik;
+
+	@media (min-width: 2560px) {
+		.text-2xl {
+			font-size: 1.75rem; /* 28px */
+			line-height: 2.25rem; /* 36px */
+		}
+		.text-6xl {
+			font-size: 4.5rem; /* 72px */
+			line-height: 1;
+		}
+	}
 }
