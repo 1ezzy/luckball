@@ -64,7 +64,7 @@ export async function POST({ params }) {
 	// get the matchup data for the week
 	const weekDataRes = await fetch(`/api/espn/${seasonType}/week/${weekNumber}`);
 	const weekData = await weekDataRes.json();
-	const nflTeams = weekData.events.map((week) => week.shortName);
+	const nflTeams = weekData.events.map((week: any) => week.shortName);
 
 	// randomly select one team from each matchup to assign to both teams
 	const [team1NflTeams, team2NflTeams] = shuffleNflTeams(nflTeams);

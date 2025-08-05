@@ -1,0 +1,14 @@
+{
+    "name": "@luckball/drizzle-client",
+    "version": "1.0.0",
+    "private": true,
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "dependencies": {
+        "drizzle-orm": "^0.44.4",
+        "postgres": "^3.4.7"
+    },
+    "devDependencies": {
+        "drizzle-kit": "^0.31.4"
+    }
+}
