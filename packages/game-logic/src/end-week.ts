@@ -1,9 +1,11 @@
+import { espnApi } from "./api/espn-api";
 
+export const endWeek = async(redis: any, drizzle: any) => {
+    const { currentWeek, seasonType }= await espnApi.getActiveWeek();
 
-export const endWeek = async(seasonType: string, weekNumber: number, redis: any, drizzle: any) => {
-    const usersKey = `${seasonType}:week:${weekNumber}:users`;
-    const weekDataKey = `${seasonType}:week:${weekNumber}:data`;
-    const matchupsKey = `${seasonType}:week:${weekNumber}:matchups`;
+    const usersKey = `${seasonType.type}:week:${currentWeek}:users`;
+    const weekDataKey = `${seasonType.type}:week:${currentWeek}:data`;
+    const matchupsKey = `${seasonType.type}:week:${currentWeek}:matchups`;
 
     // get a list of all the users
     const users = await redis.hgetall(usersKey);
@@ -64,5 +66,5 @@ export const endWeek = async(seasonType: string, weekNumber: number, redis: any,
     // save the results
     await redis.set(weekDataKey, JSON.stringify(updatedWeekData));
 
-    return { success: true, message: `Week ${weekNumber} started ended.` };
+    return { success: true, message: `Week ${currentWeek} started ended.` };
 }

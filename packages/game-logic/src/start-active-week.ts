@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { espnApi } from './api/espn-api';
 
 const generateTeamName = (): string => {
 	const adj = faker.word.adjective({ length: { min: 5, max: 8 }, strategy: 'fail' });
@@ -36,10 +37,12 @@ const shuffleNflTeams = (teams: string[]): [string[], string[]] => {
 	return [team1Teams, team2Teams];
 };
 
-export const startActiveWeek = async(seasonType: string, weekNumber: number, redis: any) => {
-    const usersKey = `${seasonType}:week:${weekNumber}:users`;
-    const weekDataKey = `${seasonType}:week:${weekNumber}:data`;
-    const matchupsKey = `${seasonType}:week:${weekNumber}:matchups`;
+export const startActiveWeek = async(redis: any, drizzle: any) => {
+	const { currentWeek, seasonType }= await espnApi.getActiveWeek();
+
+    const usersKey = `${seasonType.type}:week:${currentWeek}:users`;
+    const weekDataKey = `${seasonType.type}:week:${currentWeek}:data`;
+    const matchupsKey = `${seasonType.type}:week:${currentWeek}:matchups`;
 
 	// get a list of all the users
 	const users = await redis.hgetall(usersKey);
@@ -88,5 +91,5 @@ export const startActiveWeek = async(seasonType: string, weekNumber: number, red
 	// save the week data to redis
 	await redis.set(weekDataKey, JSON.stringify(weekData));
 
-	return { success: true, message: `Week ${weekNumber} started successfully.` };
+	return { success: true, message: `Week ${currentWeek} started successfully.` };
 }

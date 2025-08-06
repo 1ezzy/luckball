@@ -4,17 +4,20 @@ import type { PageServerLoad } from './$types';
 import { addUserToWeek, beginWeek, endWeek, startActiveWeek } from '@luckball/game-logic';
 import { redis } from '$lib/clients/redis-client';
 import { drizzle } from '$lib/clients/drizzle-client';
+import { espnApi } from '@luckball/game-logic/src/api/espn-api';
 
 export const load: PageServerLoad = async ({ fetch, cookies }) => {
-	const currentWeekRes = await fetch('/api/espn/activeWeek');
-	const { currentWeek, seasonType } = await currentWeekRes.json();
+	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	const userId = cookies.get('userId');
-	const userDataRes = await fetch(`/api/redis/${seasonType}/week/${currentWeek}/users/${userId}`, {
-		headers: {
-			cookie: `userId=${userId}`
+	const userDataRes = await fetch(
+		`/api/redis/${seasonType.type}/week/${currentWeek}/users/${userId}`,
+		{
+			headers: {
+				cookie: `userId=${userId}`
+			}
 		}
-	});
+	);
 	const userData = await userDataRes.json();
 
 	if (userData) {
@@ -25,18 +28,13 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 };
 
 export const actions: Actions = {
-	joinWeek: async ({ request, fetch, cookies }) => {
+	joinWeek: async ({ request, cookies }) => {
 		const data = await request.formData();
 		const displayName = data.get('displayName')?.toString();
 
 		if (!displayName) {
 			return fail(400, { displayName, error: 'Display name is required' });
 		}
-
-		const weekDataRes = await fetch('/api/espn/activeWeek');
-		const weekData = await weekDataRes.json();
-		const weekNumber = weekData.currentWeek;
-		const seasonType = weekData.seasonType;
 
 		let userId = cookies.get('userId');
 		if (!userId) {
@@ -50,7 +48,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const result = await addUserToWeek(seasonType, weekNumber, displayName, userId, redis, drizzle);
+		const result = await addUserToWeek(displayName, userId, redis, drizzle);
 
 		if (!result.success) {
 			return fail(400, { displayName, error: result.message });
@@ -58,13 +56,8 @@ export const actions: Actions = {
 
 		return { success: true };
 	},
-	beginWeek: async ({ fetch }) => {
-		const weekDataRes = await fetch('/api/espn/activeWeek');
-		const weekData = await weekDataRes.json();
-		const weekNumber = weekData.currentWeek;
-		const seasonType = weekData.seasonType;
-
-		const result = await beginWeek(seasonType, weekNumber, redis, drizzle);
+	beginWeek: async () => {
+		const result = await beginWeek(redis, drizzle);
 
 		if (!result.success) {
 			return fail(400, { error: result.message });
@@ -72,13 +65,8 @@ export const actions: Actions = {
 
 		return { success: true };
 	},
-	startActiveWeek: async ({ fetch }) => {
-		const weekDataRes = await fetch('/api/espn/activeWeek');
-		const weekData = await weekDataRes.json();
-		const weekNumber = weekData.currentWeek;
-		const seasonType = weekData.seasonType;
-
-		const result = await startActiveWeek(seasonType, weekNumber, redis);
+	startActiveWeek: async () => {
+		const result = await startActiveWeek(redis, drizzle);
 
 		if (!result.success) {
 			return fail(400, { error: result.message });
@@ -86,13 +74,8 @@ export const actions: Actions = {
 
 		return { success: true };
 	},
-	endWeek: async ({ fetch }) => {
-		const weekDataRes = await fetch('/api/espn/activeWeek');
-		const weekData = await weekDataRes.json();
-		const weekNumber = weekData.currentWeek;
-		const seasonType = weekData.seasonType;
-
-		const result = await endWeek(seasonType, weekNumber, redis, drizzle);
+	endWeek: async () => {
+		const result = await endWeek(redis, drizzle);
 
 		if (!result.success) {
 			return fail(400, { error: result.message });

@@ -1,13 +1,13 @@
+import { espnApi } from '@luckball/game-logic/src/api/espn-api';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch, data }) => {
-	const currentWeekRes = await fetch('/api/espn/activeWeek');
-	const { currentWeek, seasonType } = await currentWeekRes.json();
+export const load: PageLoad = async ({ data }) => {
+	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+	const type = seasonType.type;
 
-	const weekEventsRes = await fetch(`/api/espn/${seasonType}/week/${currentWeek}/events`);
-	const weekEvents = await weekEventsRes.json();
+	const weekEvents = await espnApi.getWeekEvents(currentWeek, type);
 
 	const displayName = data.displayName;
 	const weekJoined = data.weekJoined;
-	return { weekEvents, currentWeek, seasonType, displayName, weekJoined };
+	return { weekEvents, currentWeek, type, displayName, weekJoined };
 };

@@ -10,7 +10,7 @@
 	const matchupDates = data.weekEvents.events.map((week: any) => week.date);
 
 	const currentWeek = data.currentWeek;
-	const seasonType = data.seasonType;
+	const seasonType = data.type;
 	const teams = data.weekEvents.teams;
 	const displayName = $derived(data.displayName);
 	const weekJoined = $derived(data.weekJoined);
