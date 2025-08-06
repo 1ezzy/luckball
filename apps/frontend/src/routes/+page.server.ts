@@ -1,7 +1,7 @@
 import { fail, type Actions } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 import type { PageServerLoad } from './$types';
-import { addUserToWeek, beginWeek, endWeek, startActiveWeek } from '@luckball/game-logic';
+import { addUserToWeek } from '@luckball/game-logic';
 import { redis } from '$lib/clients/redis-client';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { espnApi } from '@luckball/game-logic/src/api/espn-api';
@@ -52,33 +52,6 @@ export const actions: Actions = {
 
 		if (!result.success) {
 			return fail(400, { displayName, error: result.message });
-		}
-
-		return { success: true };
-	},
-	beginWeek: async () => {
-		const result = await beginWeek(redis, drizzle);
-
-		if (!result.success) {
-			return fail(400, { error: result.message });
-		}
-
-		return { success: true };
-	},
-	startActiveWeek: async () => {
-		const result = await startActiveWeek(redis, drizzle);
-
-		if (!result.success) {
-			return fail(400, { error: result.message });
-		}
-
-		return { success: true };
-	},
-	endWeek: async () => {
-		const result = await endWeek(redis, drizzle);
-
-		if (!result.success) {
-			return fail(400, { error: result.message });
 		}
 
 		return { success: true };
