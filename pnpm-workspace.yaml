@@ -5,3 +5,4 @@ packages:
   - "packages/*"
   - "packages/redis-client"
   - "packages/drizzle-client"
+  - "packages/game-logic"

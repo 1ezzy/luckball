@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import DisplayNameForm from '$lib/components/DisplayNameForm.svelte';
 	import Records from '$lib/components/Records.svelte';
 	import ScheduleCard from '$lib/components/ScheduleCard.svelte';
 	import TitleAndCopy from '$lib/components/TitleAndCopy.svelte';
+	import { Button } from 'svelte-ux';
 
 	let { weekJoined, seasonPrefix, currentWeek, displayName, matchups, teams, matchupDates } =
 		$props();
@@ -16,6 +18,17 @@
 	</div>
 	<div class="col-span-2 flex flex-col items-center justify-center gap-16 px-16 py-24">
 		<TitleAndCopy {seasonPrefix} {currentWeek} />
+		<div class="gap-md flex flex-row">
+			<form method="post" action="?/beginWeek" use:enhance>
+				<Button type="submit">Begin Week</Button>
+			</form>
+			<form method="post" action="?/startActiveWeek" use:enhance>
+				<Button type="submit">Start Active Week</Button>
+			</form>
+			<form method="post" action="?/endWeek" use:enhance>
+				<Button type="submit">End Week</Button>
+			</form>
+		</div>
 		<ScheduleCard {matchups} {teams} {matchupDates} {seasonPrefix} {currentWeek} />
 	</div>
 </div>

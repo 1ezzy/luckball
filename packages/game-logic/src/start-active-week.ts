@@ -1,0 +1,92 @@
+import { faker } from '@faker-js/faker';
+
+const generateTeamName = (): string => {
+	const adj = faker.word.adjective({ length: { min: 5, max: 8 }, strategy: 'fail' });
+	const noun = faker.word.noun({ length: { min: 5, max: 8 }, strategy: 'fail' });
+	return `${adj}-${noun}`;
+};
+
+const shuffleArray = <T>(array: T[]): T[] => {
+	const shuffled = [...array];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
+};
+
+const shuffleNflTeams = (teams: string[]): [string[], string[]] => {
+	const team1Teams: string[] = [];
+	const team2Teams: string[] = [];
+
+	for (let i = 0; i < teams.length; i++) {
+		const teamSplit = teams[i].split(' ');
+		const team1 = teamSplit[0];
+		const team2 = teamSplit[2];
+
+		if (Math.random() < 0.5) {
+			team1Teams.push(team1);
+			team2Teams.push(team2);
+		} else {
+			team1Teams.push(team2);
+			team2Teams.push(team1);
+		}
+	}
+
+	return [team1Teams, team2Teams];
+};
+
+export const startActiveWeek = async(seasonType: string, weekNumber: number, redis: any) => {
+    const usersKey = `${seasonType}:week:${weekNumber}:users`;
+    const weekDataKey = `${seasonType}:week:${weekNumber}:data`;
+    const matchupsKey = `${seasonType}:week:${weekNumber}:matchups`;
+
+	// get a list of all the users
+	const users = await redis.hgetall(usersKey);
+	if (!users || Object.keys(users).length === 0) {
+		return { success: false, message: 'No users to start the week.' };
+	}
+
+    // get a list of all the matchups
+    const matchups = await redis.lrange(matchupsKey, 0, -1);
+    if (matchups.length === 0) {
+        return { success: false, message: 'No NFL matchups found for the week.' };
+    }
+
+	// shuffle the list of users and split the list into two lists
+	const shuffledUsers = shuffleArray(Object.keys(users));
+	const midpoint = Math.ceil(shuffledUsers.length / 2);
+	const team1Players = shuffledUsers.slice(0, midpoint);
+	const team2Players = shuffledUsers.slice(midpoint);
+
+	// generate a random team name for each team
+	const team1Name = generateTeamName();
+	const team2Name = generateTeamName();
+
+	// randomly select one team from each matchup to assign to both teams
+	const [team1NflTeams, team2NflTeams] = shuffleNflTeams(matchups);
+
+	// create week data with new teams
+    const weekData = {
+        team1: {
+            name: team1Name,
+            players: team1Players,
+            nflTeams: team1NflTeams,
+            totalScore: 0,
+            wins: 0
+	    },
+	    team2: {
+            name: team2Name,
+            players: team2Players,
+            nflTeams: team2NflTeams,
+            totalScore: 0,
+            wins: 0
+	    },
+        status: 'in_progress'
+    };
+
+	// save the week data to redis
+	await redis.set(weekDataKey, JSON.stringify(weekData));
+
+	return { success: true, message: `Week ${weekNumber} started successfully.` };
+}
