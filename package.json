@@ -6,6 +6,10 @@
 	"scripts": {
 		"install:all": "pnpm install --recursive",
 		"dev:frontend": "pnpm --filter luckball-frontend dev",
+		"format": "prettier --write .",
+		"lint": "eslint . --max-warnings 0",
+		"lint:fix": "eslint . --fix --max-warnings 0",
+		"format:check": "prettier --check .",
 		"fix:all": "prettier --write . && eslint . --fix --max-warnings 0"
 	},
 	"devDependencies": {
