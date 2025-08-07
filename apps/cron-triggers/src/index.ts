@@ -9,22 +9,21 @@ export interface Env {
 }
 
 export default {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
-		switch (event.cron) {
-			case '*/5 * * * *': {
-				await handleBeginWeek(env);
-				break;
-			}
-			case '0 0 * * *': {
-				await handleStartActiveWeek(env);
-				break;
-			}
-			case '0 0 * * 1': {
-				await handleEndWeek(env);
-				break;
-			}
-		}
+		// switch (event.cron) {
+		// 	case '*/5 * * * *': {
+		// 		await handleBeginWeek(env);
+		// 		break;
+		// 	}
+		// 	case '0 0 * * *': {
+		// 		await handleStartActiveWeek(env);
+		// 		break;
+		// 	}
+		// 	case '0 0 * * 1': {
+		// 		await handleEndWeek(env);
+		// 		break;
+		// 	}
+		// }
 	}
 };
 
