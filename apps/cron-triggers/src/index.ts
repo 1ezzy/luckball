@@ -1,25 +1,77 @@
-import type {ScheduledEvent, ExecutionContext} from '@cloudflare/workers-types';
+import type { ScheduledEvent, ExecutionContext } from '@cloudflare/workers-types';
+import { beginWeek, endWeek, startActiveWeek } from '@luckball/game-logic';
 import { createRedisClient } from '@luckball/redis-client';
+import { createDrizzleClient } from '@luckball/drizzle-client';
 
 export interface Env {
-    UPSTASH_REDIS_REST_URL: string;
-    UPSTASH_REDIS_REST_TOKEN: string;
+	UPSTASH_REDIS_REST_URL: string;
+	UPSTASH_REDIS_REST_TOKEN: string;
 }
 
 export default {
-    async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
-        console.log(`Cron job triggered: ${event.cron}`);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+		switch (event.cron) {
+			case '*/5 * * * *': {
+				await handleBeginWeek(env);
+				break;
+			}
+			case '0 0 * * *': {
+				await handleStartActiveWeek(env);
+				break;
+			}
+			case '0 0 * * 1': {
+				await handleEndWeek(env);
+				break;
+			}
+		}
+	}
+};
 
-        try {
-            const redis = createRedisClient({
-                url: env.UPSTASH_REDIS_REST_URL,
-                token: env.UPSTASH_REDIS_REST_TOKEN
-            });
+const handleBeginWeek = async (env: Env) => {
+	const redis = createRedisClient({
+		url: env.UPSTASH_REDIS_REST_URL,
+		token: env.UPSTASH_REDIS_REST_TOKEN
+	});
+	const drizzle = createDrizzleClient(env);
 
-            await redis.set('cron-last-run', new Date().toISOString());
-            console.log('Successfully wrote to Redis from scheduled function.');
-        } catch (e) {
-            console.error('Error in scheduled function:', e);
-        }
-    }
+	const result = await beginWeek(redis, drizzle);
+
+	if (!result.success) {
+		return { success: false, error: result.message };
+	}
+
+	return { success: true };
+};
+
+const handleStartActiveWeek = async (env: Env) => {
+	const redis = createRedisClient({
+		url: env.UPSTASH_REDIS_REST_URL,
+		token: env.UPSTASH_REDIS_REST_TOKEN
+	});
+	const drizzle = createDrizzleClient(env);
+
+	const result = await startActiveWeek(redis, drizzle);
+
+	if (!result.success) {
+		return { success: false, error: result.message };
+	}
+
+	return { success: true };
+};
+
+const handleEndWeek = async (env: Env) => {
+	const redis = createRedisClient({
+		url: env.UPSTASH_REDIS_REST_URL,
+		token: env.UPSTASH_REDIS_REST_TOKEN
+	});
+	const drizzle = createDrizzleClient(env);
+
+	const result = await endWeek(redis, drizzle);
+
+	if (!result.success) {
+		return { success: false, error: result.message };
+	}
+
+	return { success: true };
 };

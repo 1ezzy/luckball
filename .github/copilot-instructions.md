@@ -1,21 +1,22 @@
 # Tech Stack/Technologies
 
 This project is a pnpm monorepo that includes two packages and two applications.
-- The `cron-triggers` app is responsible for triggering cron events for the application via its own dedicated Cloudflare Worker 
+
+- The `cron-triggers` app is responsible for triggering cron events for the application via its own dedicated Cloudflare Worker
 - The `frontend` app is a SvelteKit frontend for my application and it uses some of the following technologies:
-    1. Svelte and SvelteKit (front-end and full stack framework)
-    2. svelte-ux (A collection of Svelte components, actions, stores, and utilities)
-    3. TypeScript
-    4. Redis (via Upstash, short term data storage)
-    5. Drizzle ORM (via Postgres, long term data storage)
+  1. Svelte and SvelteKit (front-end and full stack framework)
+  2. svelte-ux (A collection of Svelte components, actions, stores, and utilities)
+  3. TypeScript
+  4. Redis (via Upstash, short term data storage)
+  5. Drizzle ORM (via Postgres, long term data storage)
 
 - The `drizzle-client` package is responsible for creating a singleton instance of the Drizzle client to be used in my applications
 - the `redis-client` package is responsible for creating a singleton instance of the Redis client to be used in my applications
 
 Some other technologies used in this project include:
+
 1. Cloudflare Workers for all apps in the repository (frontend worker uses the custom domain luckball.ezzy.dog)
 2. Cloudflare Tunnels to create a connection from my database on a local server to my Cloudflare Workers
-
 
 # Project Description
 

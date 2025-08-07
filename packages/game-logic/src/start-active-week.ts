@@ -37,12 +37,12 @@ const shuffleNflTeams = (teams: string[]): [string[], string[]] => {
 	return [team1Teams, team2Teams];
 };
 
-export const startActiveWeek = async(redis: any, drizzle: any) => {
-	const { currentWeek, seasonType }= await espnApi.getActiveWeek();
+export const startActiveWeek = async (redis: any, drizzle: any) => {
+	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
-    const usersKey = `${seasonType.type}:week:${currentWeek}:users`;
-    const weekDataKey = `${seasonType.type}:week:${currentWeek}:data`;
-    const matchupsKey = `${seasonType.type}:week:${currentWeek}:matchups`;
+	const usersKey = `${seasonType.type}:week:${currentWeek}:users`;
+	const weekDataKey = `${seasonType.type}:week:${currentWeek}:data`;
+	const matchupsKey = `${seasonType.type}:week:${currentWeek}:matchups`;
 
 	// get a list of all the users
 	const users = await redis.hgetall(usersKey);
@@ -50,11 +50,11 @@ export const startActiveWeek = async(redis: any, drizzle: any) => {
 		return { success: false, message: 'No users to start the week.' };
 	}
 
-    // get a list of all the matchups
-    const matchups = await redis.lrange(matchupsKey, 0, -1);
-    if (matchups.length === 0) {
-        return { success: false, message: 'No NFL matchups found for the week.' };
-    }
+	// get a list of all the matchups
+	const matchups = await redis.lrange(matchupsKey, 0, -1);
+	if (matchups.length === 0) {
+		return { success: false, message: 'No NFL matchups found for the week.' };
+	}
 
 	// shuffle the list of users and split the list into two lists
 	const shuffledUsers = shuffleArray(Object.keys(users));
@@ -70,26 +70,26 @@ export const startActiveWeek = async(redis: any, drizzle: any) => {
 	const [team1NflTeams, team2NflTeams] = shuffleNflTeams(matchups);
 
 	// create week data with new teams
-    const weekData = {
-        team1: {
-            name: team1Name,
-            players: team1Players,
-            nflTeams: team1NflTeams,
-            totalScore: 0,
-            wins: 0
-	    },
-	    team2: {
-            name: team2Name,
-            players: team2Players,
-            nflTeams: team2NflTeams,
-            totalScore: 0,
-            wins: 0
-	    },
-        status: 'in_progress'
-    };
+	const weekData = {
+		team1: {
+			name: team1Name,
+			players: team1Players,
+			nflTeams: team1NflTeams,
+			totalScore: 0,
+			wins: 0
+		},
+		team2: {
+			name: team2Name,
+			players: team2Players,
+			nflTeams: team2NflTeams,
+			totalScore: 0,
+			wins: 0
+		},
+		status: 'in_progress'
+	};
 
 	// save the week data to redis
 	await redis.set(weekDataKey, JSON.stringify(weekData));
 
 	return { success: true, message: `Week ${currentWeek} started successfully.` };
-}
+};

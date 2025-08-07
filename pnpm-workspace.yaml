@@ -1,8 +1,8 @@
 packages:
-  - "apps/*"
-  - "apps/frontend"
-  - "apps/cron-triggers"
-  - "packages/*"
-  - "packages/redis-client"
-  - "packages/drizzle-client"
-  - "packages/game-logic"
+  - 'apps/*'
+  - 'apps/frontend'
+  - 'apps/cron-triggers'
+  - 'packages/*'
+  - 'packages/redis-client'
+  - 'packages/drizzle-client'
+  - 'packages/game-logic'

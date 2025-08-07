@@ -9,7 +9,8 @@
 	},
 	"dependencies": {
 		"@luckball/redis-client": "workspace:*",
-		"@luckball/drizzle-client": "workspace:*"
+		"@luckball/drizzle-client": "workspace:*",
+		"@luckball/game-logic": "workspace:*"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250730.0",
