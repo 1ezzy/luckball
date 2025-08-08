@@ -1,6 +1,7 @@
 {
 	"name": "luckball-cron-triggers",
 	"main": "src/index.ts",
+	"compatibility_flags": ["nodejs_compat"],
 	"compatibility_date": "2025-08-02",
 	"observability": {
 		"enabled": true
