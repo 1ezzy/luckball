@@ -20,10 +20,28 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	);
 	const userData = await userDataRes.json();
 
-	if (userData) {
-		return { weekJoined: true, displayName: userData.displayName };
+	const allUserDataRes = await fetch(`/api/redis/${seasonType.type}/week/${currentWeek}/users`);
+	const allUserData = await allUserDataRes.json();
+
+	const weekDataRes = await fetch(`/api/redis/${seasonType.type}/week/${currentWeek}/data`);
+	const weekData = await weekDataRes.json();
+
+	if (userData && userId) {
+		return {
+			weekJoined: true,
+			displayName: userData.displayName,
+			userData: allUserData,
+			userId: userId,
+			weekData: weekData
+		};
 	} else {
-		return { weekJoined: false, displayName: null };
+		return {
+			weekJoined: false,
+			displayName: null,
+			userData: null,
+			userId: null,
+			weekData: weekData
+		};
 	}
 };
 

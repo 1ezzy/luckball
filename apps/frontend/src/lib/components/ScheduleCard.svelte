@@ -85,7 +85,7 @@
 		<Card class="h-full gap-4 p-4">
 			{#each matchups as matchup, i}
 				<div class="flex w-full flex-col items-center justify-center gap-1">
-					<div class="flex w-full flex-row items-center justify-center gap-2 px-2">
+					<div class="flex flex-row items-center justify-between gap-4 px-2">
 						<img
 							class="h-6"
 							height="32"

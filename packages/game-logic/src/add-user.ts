@@ -13,10 +13,9 @@ export const addUserToWeek = async (
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	// check if there is an active round for the week
-	const roundData = (await redis.get(`${seasonType.type}:week:${currentWeek}:data`)) as string;
+	const roundData = await redis.get(`${seasonType.type}:week:${currentWeek}:data`);
 	if (roundData) {
-		const status = JSON.parse(roundData);
-		if (status.status === 'pending' || status.status === 'ended') {
+		if (roundData.status === 'in_progress' || roundData.status === 'ended') {
 			return { success: false, message: 'Round has already started' };
 		}
 	}

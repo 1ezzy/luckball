@@ -8,6 +8,9 @@ export const load: PageLoad = async ({ data }) => {
 	const weekEvents = await espnApi.getWeekEvents(type, currentWeek);
 
 	const displayName = data.displayName;
+	const userData = data.userData;
+	const userId = data.userId;
 	const weekJoined = data.weekJoined;
-	return { weekEvents, currentWeek, type, displayName, weekJoined };
+	const weekData = data.weekData;
+	return { weekEvents, currentWeek, type, displayName, userData, userId, weekJoined, weekData };
 };

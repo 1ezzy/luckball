@@ -5,7 +5,7 @@ export async function GET({ params }) {
 	const weekNumber = params.weekNumber;
 	const seasonType = params.seasonType;
 
-	const users = await redis.hgetall(`${seasonType}:week:${weekNumber}:status`);
+	const data = await redis.get(`${seasonType}:week:${weekNumber}:data`);
 
-	return json(users);
+	return json(data);
 }
