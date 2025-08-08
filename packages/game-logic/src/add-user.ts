@@ -1,11 +1,6 @@
 import { espnApi } from './api/espn-api';
 
-export const addUserToWeek = async (
-	displayName: string,
-	userId: string,
-	redis: any,
-	drizzle: any
-) => {
+export const addUserToWeek = async (displayName: string, userId: string, redis: any) => {
 	if (!displayName || !userId) {
 		return { success: false, message: 'displayName and userId are required' };
 	}

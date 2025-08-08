@@ -3,7 +3,6 @@ import { dev } from '$app/environment';
 import type { PageServerLoad } from './$types';
 import { addUserToWeek } from '@luckball/game-logic';
 import { redis } from '$lib/clients/redis-client';
-import { drizzle } from '$lib/clients/drizzle-client';
 import { espnApi } from '@luckball/game-logic/src/api/espn-api';
 
 export const load: PageServerLoad = async ({ fetch, cookies }) => {
@@ -66,7 +65,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const result = await addUserToWeek(displayName, userId, redis, drizzle);
+		const result = await addUserToWeek(displayName, userId, redis);
 
 		if (!result.success) {
 			return fail(400, { displayName, error: result.message });
