@@ -5,8 +5,8 @@
 	let { matchups, teams, matchupDates, seasonPrefix, currentWeek } = $props();
 </script>
 
-<div class="hidden lg:block">
-	<div class="flex flex-col gap-4">
+<div class="hidden flex-1 lg:block">
+	<div class="flex h-full flex-col gap-4">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {seasonPrefix} Week {currentWeek}</h2>
 		<Card class="h-full">
 			<div class="grid h-full grid-cols-4 grid-rows-4 items-center justify-items-center gap-2 p-4">
@@ -82,10 +82,10 @@
 <div class="block md:hidden">
 	<div class="flex flex-col gap-4 text-center">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {seasonPrefix} Week {currentWeek}</h2>
-		<Card class="h-full p-4">
+		<Card class="h-full gap-4 p-4">
 			{#each matchups as matchup, i}
 				<div class="flex w-full flex-col items-center justify-center gap-1">
-					<div class="flex w-full flex-row items-center justify-center gap-4 px-2">
+					<div class="flex w-full flex-row items-center justify-center gap-2 px-2">
 						<img
 							class="h-6"
 							height="32"

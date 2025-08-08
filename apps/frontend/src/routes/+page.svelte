@@ -39,11 +39,11 @@
 	});
 
 	// onMount(() => {
-	// 	console.log(weekInfo);
+	// 	console.log(teams);
 	// });
 </script>
 
-<div class="hidden lg:block">
+<div class="hidden min-h-screen lg:block">
 	<DesktopLayout {...layoutProps} />
 </div>
 <div class="hidden md:block lg:hidden">

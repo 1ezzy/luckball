@@ -5,7 +5,7 @@ export const load: PageLoad = async ({ data }) => {
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 	const type = seasonType.type;
 
-	const weekEvents = await espnApi.getWeekEvents(currentWeek, type);
+	const weekEvents = await espnApi.getWeekEvents(type, currentWeek);
 
 	const displayName = data.displayName;
 	const weekJoined = data.weekJoined;
