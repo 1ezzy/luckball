@@ -56,10 +56,11 @@
 		<TitleAndActiveWeekCopy {seasonPrefix} {currentWeek} {weekJoined} {teamName} />
 		<ScheduleCard {matchups} {teams} {matchupDates} {seasonPrefix} {currentWeek} />
 	</div>
-	<div class="my-16 w-[1px] grid-cols-1 justify-self-center bg-white"></div>
+	<div class="w-[1px] grid-cols-1 justify-self-center bg-white"></div>
 	<div class="col-span-4 flex flex-col gap-4 overflow-y-scroll py-16 pr-12">
 		<h2 class="text-primary text-2xl">Teams</h2>
-		<div class="flex flex-1 flex-col gap-16">
+		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
+		<div class="flex flex-1 flex-col gap-16 overflow-y-scroll pr-4">
 			<TeamCard teamPlayerData={team1Data} {displayName} />
 			<TeamCard teamPlayerData={team2Data} {displayName} />
 		</div>
