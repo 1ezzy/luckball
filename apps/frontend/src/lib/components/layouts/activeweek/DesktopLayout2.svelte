@@ -18,11 +18,27 @@
 
 	let team1Data = $derived({
 		...weekData.team1,
-		usernames: weekData.team1.players.map((id: string) => userData[id]?.displayName).filter(Boolean)
+		usernames: weekData.team1.players
+			.map((id: string) => {
+				if (userData) {
+					if (id in userData) {
+						return userData[id]?.displayName;
+					}
+				}
+			})
+			.filter(Boolean)
 	});
 	let team2Data = $derived({
 		...weekData.team2,
-		usernames: weekData.team2.players.map((id: string) => userData[id]?.displayName).filter(Boolean)
+		usernames: weekData.team2.players
+			.map((id: string) => {
+				if (userData) {
+					if (id in userData) {
+						return userData[id]?.displayName;
+					}
+				}
+			})
+			.filter(Boolean)
 	});
 
 	let teamName = $state('');
