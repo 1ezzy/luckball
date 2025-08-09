@@ -4,55 +4,21 @@
 	import TitleAndActiveWeekCopy from '$lib/components/TitleAndActiveWeekCopy.svelte';
 
 	let {
-		weekJoined,
+		matchups,
+		matchupDates,
+		teams,
+		team1Data,
+		team2Data,
+		teamName,
 		seasonPrefix,
 		currentWeek,
 		displayName,
-		userData,
-		userId,
-		matchups,
-		teams,
-		matchupDates,
-		weekData
+		weekJoined
 	} = $props();
-
-	let team1Data = $derived({
-		...weekData.team1,
-		usernames: weekData.team1.players
-			.map((id: string) => {
-				if (userData) {
-					if (id in userData) {
-						return userData[id]?.displayName;
-					}
-				}
-			})
-			.filter(Boolean)
-	});
-	let team2Data = $derived({
-		...weekData.team2,
-		usernames: weekData.team2.players
-			.map((id: string) => {
-				if (userData) {
-					if (id in userData) {
-						return userData[id]?.displayName;
-					}
-				}
-			})
-			.filter(Boolean)
-	});
-
-	let teamName = $state('');
-	$effect(() => {
-		if (team1Data.players.includes(userId)) {
-			teamName = weekData.team1.name;
-		} else if (team2Data.players.includes(userId)) {
-			teamName = weekData.team2.name;
-		}
-	});
 </script>
 
 <div class="grid h-screen w-full flex-1 grid-cols-12 xl:mx-auto xl:max-w-[90vw] 2xl:max-w-[70vw]">
-	<div class="col-span-7 flex flex-col items-center justify-center gap-8 py-20 pl-16">
+	<div class="col-span-7 flex flex-col items-start justify-center gap-8 py-20 pl-16">
 		<TitleAndActiveWeekCopy {seasonPrefix} {currentWeek} {weekJoined} {teamName} />
 		<ScheduleCard {matchups} {teams} {matchupDates} {seasonPrefix} {currentWeek} />
 	</div>

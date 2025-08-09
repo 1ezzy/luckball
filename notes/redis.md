@@ -1,4 +1,4 @@
-copilot's recommended Redis structure:
+Redis structure:
 
 1. User Data (per week)
 

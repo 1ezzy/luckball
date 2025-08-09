@@ -3,43 +3,67 @@ import { dev } from '$app/environment';
 import type { PageServerLoad } from './$types';
 import { addUserToWeek } from '@luckball/game-logic';
 import { redis } from '$lib/clients/redis-client';
-import { espnApi } from '@luckball/game-logic/src/api/espn-api';
+import { getWeekAndUserData } from '$lib/server/redis';
+import { EspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 
-export const load: PageServerLoad = async ({ fetch, cookies }) => {
+export const load: PageServerLoad = async ({ cookies }) => {
+	const espnApi = new EspnApiClient();
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
-
 	const userId = cookies.get('userId');
-	const userDataRes = await fetch(
-		`/api/redis/${seasonType.type}/week/${currentWeek}/users/${userId}`,
-		{
-			headers: {
-				cookie: `userId=${userId}`
-			}
+
+	const { weekData, allUserData } = await getWeekAndUserData(seasonType.type, currentWeek);
+	const weekEvents = await espnApi.getWeekEvents(seasonType.type, currentWeek);
+
+	const userData = userId && allUserData ? allUserData[userId] : null;
+
+	const getTeamWithUsernames = (team: { players: string[] }) => {
+		if (!team || !allUserData) return { ...team, usernames: [] };
+		const usernames = team.players.map((id) => allUserData[id]?.displayName).filter(Boolean);
+		return { ...team, usernames };
+	};
+
+	if (userData && userId && weekData) {
+		const team1Data = getTeamWithUsernames(weekData.team1);
+		const team2Data = getTeamWithUsernames(weekData.team2);
+
+		let teamName = '';
+		if (weekData.team1?.players.includes(userId)) {
+			teamName = weekData.team1.name;
+		} else if (weekData.team2?.players.includes(userId)) {
+			teamName = weekData.team2.name;
 		}
-	);
-	const userData = await userDataRes.json();
 
-	const allUserDataRes = await fetch(`/api/redis/${seasonType.type}/week/${currentWeek}/users`);
-	const allUserData = await allUserDataRes.json();
+		const weekStatus = weekData.status;
 
-	const weekDataRes = await fetch(`/api/redis/${seasonType.type}/week/${currentWeek}/data`);
-	const weekData = await weekDataRes.json();
-
-	if (userData && userId) {
 		return {
 			weekJoined: true,
 			displayName: userData.displayName,
-			userData: allUserData,
 			userId: userId,
-			weekData: weekData
+			team1Data,
+			team2Data,
+			teamName,
+			seasonType,
+			currentWeek,
+			weekEvents,
+			weekStatus
 		};
 	} else {
+		const team1Data = weekData ? getTeamWithUsernames(weekData.team1) : null;
+		const team2Data = weekData ? getTeamWithUsernames(weekData.team2) : null;
+
+		const weekStatus = weekData?.status;
+
 		return {
 			weekJoined: false,
 			displayName: null,
-			userData: null,
 			userId: null,
-			weekData: weekData
+			team1Data,
+			team2Data,
+			teamName: '',
+			seasonType,
+			currentWeek,
+			weekEvents,
+			weekStatus
 		};
 	}
 };

@@ -4,51 +4,17 @@
 	import TitleAndActiveWeekCopy from '$lib/components/TitleAndActiveWeekCopy.svelte';
 
 	let {
-		weekJoined,
+		matchups,
+		matchupDates,
+		teams,
+		team1Data,
+		team2Data,
+		teamName,
 		seasonPrefix,
 		currentWeek,
 		displayName,
-		userData,
-		userId,
-		matchups,
-		teams,
-		matchupDates,
-		weekData
+		weekJoined
 	} = $props();
-
-	let team1Data = $derived({
-		...weekData.team1,
-		usernames: weekData.team1.players
-			.map((id: string) => {
-				if (userData) {
-					if (id in userData) {
-						return userData[id]?.displayName;
-					}
-				}
-			})
-			.filter(Boolean)
-	});
-	let team2Data = $derived({
-		...weekData.team2,
-		usernames: weekData.team2.players
-			.map((id: string) => {
-				if (userData) {
-					if (id in userData) {
-						return userData[id]?.displayName;
-					}
-				}
-			})
-			.filter(Boolean)
-	});
-
-	let teamName = $state('');
-	$effect(() => {
-		if (team1Data.players.includes(userId)) {
-			teamName = weekData.team1.name;
-		} else if (team2Data.players.includes(userId)) {
-			teamName = weekData.team2.name;
-		}
-	});
 </script>
 
 <div class="grid h-screen w-full flex-1 grid-cols-12">

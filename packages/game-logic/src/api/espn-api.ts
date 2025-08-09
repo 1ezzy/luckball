@@ -3,9 +3,15 @@ import PLimit from 'p-limit';
 const limit = PLimit(5);
 
 export class EspnApiClient {
+	private fetch: typeof fetch;
+
+	constructor(customFetch?: typeof fetch) {
+		this.fetch = customFetch || fetch;
+	}
+
 	async getActiveWeek(): Promise<any> {
 		const baseUrl = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
-		const response = await fetch(`${baseUrl}`);
+		const response = await this.fetch(`${baseUrl}`);
 		const data = await response.json();
 
 		return {
@@ -16,7 +22,7 @@ export class EspnApiClient {
 
 	async getWeekEvents(seasonType: string, weekNumber: number): Promise<any> {
 		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl';
-		const response = await fetch(
+		const response = await this.fetch(
 			`${baseUrl}/seasons/2025/types/${seasonType}/weeks/${weekNumber}/events`
 		);
 		const data = await response.json();
@@ -25,7 +31,7 @@ export class EspnApiClient {
 			data.items.map((event: { $ref: string }) =>
 				limit(async () => {
 					const secureUrl = event.$ref.replace('http://', 'https://');
-					const res = await fetch(secureUrl);
+					const res = await this.fetch(secureUrl);
 					if (!res.ok) {
 						console.error(`Failed to fetch ${secureUrl}: ${res.statusText}`);
 						return null;

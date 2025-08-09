@@ -7,18 +7,22 @@
 	import TabletLayout2 from '$lib/components/layouts/activeweek/TabletLayout2.svelte';
 	import MobileLayout2 from '$lib/components/layouts/activeweek/MobileLayout2.svelte';
 	import DesktopLayout3 from '$lib/components/layouts/postweek/DesktopLayout3.svelte';
+	import { WeekStatus } from '$lib/types/redis-types.js';
 
 	let { data } = $props();
 
 	const matchups = data.weekEvents.events.map((week: any) => week.shortName);
 	const matchupDates = data.weekEvents.events.map((week: any) => week.date);
 
-	const currentWeek = data.currentWeek;
-	const seasonType = data.type;
-	const teams = data.weekEvents.teams;
-	const weekData = data.weekData;
-	const userData = data.userData;
 	const userId = data.userId;
+	const team1Data = data.team1Data;
+	const team2Data = data.team2Data;
+	const teamName = data.teamName;
+	const seasonType = data.seasonType;
+	const currentWeek = data.currentWeek;
+	const teams = data.weekEvents.teams;
+	const weekStatus = data.weekStatus;
+
 	const displayName = $derived(data.displayName);
 	const weekJoined = $derived(data.weekJoined);
 
@@ -38,24 +42,25 @@
 	const layoutProps = $derived({
 		matchups,
 		matchupDates,
+		userId,
+		teams,
+		team1Data,
+		team2Data,
+		teamName,
+		seasonType,
+		seasonPrefix,
 		currentWeek,
 		displayName,
-		userData,
-		userId,
-		seasonPrefix,
-		teams,
 		weekJoined,
-		weekData
+		weekStatus
 	});
 
-	const weekStatus: string = weekData.status;
-
 	// onMount(() => {
-	// 	console.log('page', data.weekData);
+	// 	console.log('page', weekStatus);
 	// });
 </script>
 
-{#if weekStatus === 'pending'}
+{#if weekStatus === WeekStatus.Pending}
 	<div class="hidden h-screen lg:block">
 		<DesktopLayout1 {...layoutProps} />
 	</div>
@@ -65,7 +70,7 @@
 	<div class="block md:hidden">
 		<MobileLayout1 {...layoutProps} />
 	</div>
-{:else if weekStatus == 'in_progress'}
+{:else if weekStatus == WeekStatus.InProgress}
 	<div class="hidden h-screen lg:block">
 		<DesktopLayout2 {...layoutProps} />
 	</div>

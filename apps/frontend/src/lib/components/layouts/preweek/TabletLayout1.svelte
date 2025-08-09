@@ -2,9 +2,9 @@
 	import DisplayNameForm from '$lib/components/DisplayNameForm.svelte';
 	import Records from '$lib/components/Records.svelte';
 	import ScheduleCard from '$lib/components/ScheduleCard.svelte';
-	import TitleAndPreweekCopy from '$lib/components/TitleAndPreweekCopy.svelte';
+	import TitleAndPreweekCopy from '$lib/components/TitleAndPreWeekCopy.svelte';
 
-	let { weekJoined, seasonPrefix, currentWeek, displayName, matchups, teams, matchupDates } =
+	let { matchups, matchupDates, teams, seasonPrefix, currentWeek, displayName, weekJoined } =
 		$props();
 </script>
 
