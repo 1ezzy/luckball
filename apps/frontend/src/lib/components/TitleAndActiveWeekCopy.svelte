@@ -30,8 +30,17 @@
 			<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
 		</div>
 		<div class="flex w-full flex-col gap-8 leading-8">
-			{seasonPrefix} Week {currentWeek} has not started yet. You can join the week by entering a display
-			name on the left and clicking the "Join" button
+			{#if weekJoined}
+				<span>
+					{seasonPrefix} Week {currentWeek} has begun! You can track this week's teams on the right.
+				</span>
+				<span>You are on team <span class="text-primary font-bold">{teamName}</span>.</span>
+			{:else}
+				<span>
+					{seasonPrefix} Week {currentWeek} has begun! You didn't join a team this week; you can track
+					this week's teams on the right and join again next week.
+				</span>
+			{/if}
 		</div>
 	</div>
 </div>
@@ -42,8 +51,17 @@
 			<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
 		</div>
 		<div class="flex w-full flex-col gap-8 leading-8">
-			{seasonPrefix} Week {currentWeek} has not started yet. You can join the week by entering a display
-			name below and clicking the "Join" button
+			{#if weekJoined}
+				<span>
+					{seasonPrefix} Week {currentWeek} has begun! You can track this week's teams on the right.
+				</span>
+				<span>You are on team <span class="text-primary font-bold">{teamName}</span>.</span>
+			{:else}
+				<span>
+					{seasonPrefix} Week {currentWeek} has begun! You didn't join a team this week; you can track
+					this week's teams on the right and join again next week.
+				</span>
+			{/if}
 		</div>
 	</div>
 </div>
