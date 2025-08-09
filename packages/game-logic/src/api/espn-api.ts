@@ -21,15 +21,25 @@ export class EspnApiClient {
 		);
 		const data = await response.json();
 
-		const eventData = await Promise.all(
-			data.items.map((event: { $ref: string }) => limit(() => fetch(event.$ref)))
+		const events = await Promise.all(
+			data.items.map((event: { $ref: string }) =>
+				limit(async () => {
+					const res = await fetch(event.$ref);
+					if (!res.ok) {
+						console.error(`Failed to fetch ${event.$ref}: ${res.statusText}`);
+						return null;
+					}
+					return res.json();
+				})
+			)
 		);
-		const events = await Promise.all(eventData.map((res: any) => limit(() => res.json())));
 
-		const teams = events.flatMap((event) => {
+		const validEvents = events.filter((event) => event !== null);
+		const teams = validEvents.flatMap((event) => {
 			const nameParts = event.shortName.split(' ');
 			return [nameParts[0], nameParts[2]];
 		});
+
 		return {
 			events: events || [],
 			teams: teams
