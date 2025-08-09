@@ -24,9 +24,10 @@ export class EspnApiClient {
 		const events = await Promise.all(
 			data.items.map((event: { $ref: string }) =>
 				limit(async () => {
-					const res = await fetch(event.$ref);
+					const secureUrl = event.$ref.replace('http://', 'https://');
+					const res = await fetch(secureUrl);
 					if (!res.ok) {
-						console.error(`Failed to fetch ${event.$ref}: ${res.statusText}`);
+						console.error(`Failed to fetch ${secureUrl}: ${res.statusText}`);
 						return null;
 					}
 					return res.json();
