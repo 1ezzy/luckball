@@ -6,7 +6,7 @@ export class EspnApiClient {
 	private fetch: typeof fetch;
 
 	constructor(customFetch?: typeof fetch) {
-		this.fetch = customFetch || fetch;
+		this.fetch = customFetch || fetch.bind(globalThis);
 	}
 
 	async getActiveWeek(): Promise<any> {
