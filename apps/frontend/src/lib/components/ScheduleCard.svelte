@@ -5,12 +5,12 @@
 	let { matchups, teams, matchupDates, seasonPrefix, currentWeek } = $props();
 </script>
 
-<div class="hidden h-full w-full lg:block">
+<div class="hidden w-full lg:block">
 	<div class="flex h-full w-full flex-col gap-4">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {seasonPrefix} Week {currentWeek}</h2>
 		<Card class="h-full">
 			<div
-				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-2 p-4"
+				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-8 p-4"
 			>
 				{#each matchups as matchup, i}
 					<div class="flex w-full flex-col gap-1">
@@ -44,12 +44,12 @@
 		</Card>
 	</div>
 </div>
-<div class="hidden h-full w-full md:block lg:hidden">
-	<div class="flex flex-col gap-4">
+<div class="hidden w-full md:block lg:hidden">
+	<div class="flex h-full w-full flex-col gap-4">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {seasonPrefix} Week {currentWeek}</h2>
 		<Card class="h-full">
 			<div
-				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] grid-rows-4 items-center justify-items-center gap-2 p-4"
+				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] grid-rows-4 items-center justify-items-center gap-8 p-4"
 			>
 				{#each matchups as matchup, i}
 					<div class="flex w-full flex-col gap-1">

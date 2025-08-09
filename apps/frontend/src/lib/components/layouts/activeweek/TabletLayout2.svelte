@@ -2,6 +2,7 @@
 	import ScheduleCard from '$lib/components/ScheduleCard.svelte';
 	import TeamCard from '$lib/components/TeamCard.svelte';
 	import TitleAndActiveWeekCopy from '$lib/components/TitleAndActiveWeekCopy.svelte';
+	import { Tabs } from 'svelte-ux';
 
 	let {
 		matchups,
@@ -15,20 +16,52 @@
 		displayName,
 		weekJoined
 	} = $props();
+
+	const options = [
+		{
+			label: 'Matchups',
+			value: 'matchups'
+		},
+		{
+			label: 'Schedule',
+			value: 'schedule'
+		}
+	];
+	let value = $state('matchups');
 </script>
 
-<div class="grid h-screen w-full flex-1 grid-cols-12">
-	<div class="col-span-7 flex flex-col items-center justify-center gap-16 py-16 pl-12">
+<div class="flex h-screen w-full flex-1 flex-col justify-center gap-8">
+	<div class="flex flex-col items-start justify-center gap-8 px-12 pt-16">
 		<TitleAndActiveWeekCopy {seasonPrefix} {currentWeek} {weekJoined} {teamName} />
-		<ScheduleCard {matchups} {teams} {matchupDates} {seasonPrefix} {currentWeek} />
 	</div>
-	<div class="w-[1px] grid-cols-1 justify-self-center bg-white"></div>
-	<div class="col-span-4 flex flex-col gap-4 overflow-y-scroll py-16 pr-12">
-		<h2 class="text-primary text-2xl">Teams</h2>
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div class="flex flex-1 flex-col gap-16 overflow-y-scroll pr-4">
-			<TeamCard teamPlayerData={team1Data} {displayName} />
-			<TeamCard teamPlayerData={team2Data} {displayName} />
-		</div>
+	<div class="flex flex-col justify-center overflow-hidden px-12 pb-16">
+		<Tabs
+			{options}
+			placement="top"
+			bind:value
+			classes={{
+				tabs: 'gap-2 min-h-8',
+				content: 'rounded-b rounded-tr h-full overflow-y-auto',
+				tab: { root: 'rounded-t' }
+			}}
+		>
+			<svelte:fragment slot="content" let:value>
+				<div class="flex flex-col items-start justify-center gap-8 pt-8">
+					{#if value === 'schedule'}
+						<ScheduleCard {matchups} {teams} {matchupDates} {seasonPrefix} {currentWeek} />
+					{:else if value === 'matchups'}
+						<div class="flex h-full w-full flex-col gap-4 pr-4">
+							<h2 class="text-secondary text-2xl">
+								Teams for {seasonPrefix} Week {currentWeek}
+							</h2>
+							<div class="flex w-full flex-row gap-8">
+								<TeamCard teamPlayerData={team1Data} {displayName} />
+								<TeamCard teamPlayerData={team2Data} {displayName} />
+							</div>
+						</div>
+					{/if}
+				</div>
+			</svelte:fragment>
+		</Tabs>
 	</div>
 </div>

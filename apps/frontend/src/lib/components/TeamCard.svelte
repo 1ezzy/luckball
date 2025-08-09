@@ -7,7 +7,7 @@
 
 <div class="hidden w-full flex-1 lg:block">
 	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-secondary mb-2 text-2xl">{teamPlayerData.name}</h2>
+		<h2 class="text-primary mb-2 text-2xl">{teamPlayerData.name}</h2>
 		<Card class="flex h-full flex-col justify-start gap-4 p-4">
 			<div class="flex flex-col gap-1">
 				<h3 class="text-accent">Teams</h3>
@@ -40,9 +40,9 @@
 		</Card>
 	</div>
 </div>
-<div class="hidden md:block lg:hidden">
+<div class="hidden w-full flex-1 md:block lg:hidden">
 	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-secondary mb-2 text-2xl">{teamPlayerData.name}</h2>
+		<h2 class="text-primary mb-2 text-2xl">{teamPlayerData.name}</h2>
 		<Card class="flex h-full flex-col justify-start gap-4  p-4">
 			<div class="flex flex-col gap-1">
 				<h3 class="text-accent">Teams</h3>
@@ -77,7 +77,7 @@
 </div>
 <div class="block md:hidden">
 	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-secondary mb-2 text-2xl">{teamPlayerData.name}</h2>
+		<h2 class="text-primary mb-2 text-2xl">{teamPlayerData.name}</h2>
 		<Card class="flex h-full flex-col justify-start gap-4 p-4">
 			<div class="flex flex-col gap-1">
 				<h3 class="text-accent">Teams</h3>
