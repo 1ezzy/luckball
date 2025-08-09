@@ -51,12 +51,13 @@
 	});
 </script>
 
-<div class="grid h-screen w-full flex-1 grid-cols-3">
-	<div class="col-span-2 flex flex-col items-center justify-center gap-16 px-12 py-16">
+<div class="grid h-screen w-full flex-1 grid-cols-12">
+	<div class="col-span-7 flex flex-col items-center justify-center gap-16 py-16 pl-12">
 		<TitleAndActiveWeekCopy {seasonPrefix} {currentWeek} {weekJoined} {teamName} />
 		<ScheduleCard {matchups} {teams} {matchupDates} {seasonPrefix} {currentWeek} />
 	</div>
-	<div class="col-span-1 flex flex-col gap-4 overflow-y-scroll py-16 pr-12">
+	<div class="my-16 w-[1px] grid-cols-1 justify-self-center bg-white"></div>
+	<div class="col-span-4 flex flex-col gap-4 overflow-y-scroll py-16 pr-12">
 		<h2 class="text-primary text-2xl">Teams</h2>
 		<div class="flex flex-1 flex-col gap-16">
 			<TeamCard teamPlayerData={team1Data} {displayName} />
