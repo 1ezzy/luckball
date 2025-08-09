@@ -11,8 +11,10 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 	const userId = cookies.get('userId');
 
-	const { weekData, allUserData } = await getWeekAndUserData(seasonType.type, currentWeek);
-	const weekEvents = await espnApi.getWeekEvents(seasonType.type, currentWeek);
+	const [{ weekData, allUserData }, weekEvents] = await Promise.all([
+		getWeekAndUserData(seasonType.type, currentWeek),
+		espnApi.getWeekEvents(seasonType.type, currentWeek)
+	]);
 
 	const userData = userId && allUserData ? allUserData[userId] : null;
 
