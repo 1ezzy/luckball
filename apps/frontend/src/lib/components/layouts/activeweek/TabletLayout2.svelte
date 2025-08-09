@@ -58,7 +58,7 @@
 	</div>
 	<div class="col-span-1 flex flex-col gap-4 overflow-y-scroll py-16 pr-12">
 		<h2 class="text-primary text-2xl">Teams</h2>
-		<div class="flex flex-col gap-16">
+		<div class="flex flex-1 flex-col gap-16">
 			<TeamCard teamPlayerData={team1Data} {displayName} />
 			<TeamCard teamPlayerData={team2Data} {displayName} />
 		</div>
