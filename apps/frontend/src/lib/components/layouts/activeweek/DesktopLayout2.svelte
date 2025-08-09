@@ -36,7 +36,7 @@
 	<div class="flex flex-col items-start justify-center gap-8 px-16 pt-20">
 		<TitleAndActiveWeekCopy {seasonPrefix} {currentWeek} {weekJoined} {teamName} />
 	</div>
-	<div class="flex flex-col justify-center overflow-hidden px-16 pb-20">
+	<div class="flex flex-col justify-start overflow-hidden px-16 pb-20">
 		<Tabs
 			{options}
 			placement="top"
