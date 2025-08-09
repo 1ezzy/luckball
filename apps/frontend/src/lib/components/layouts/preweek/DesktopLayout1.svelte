@@ -2,7 +2,7 @@
 	import DisplayNameForm from '$lib/components/DisplayNameForm.svelte';
 	import Records from '$lib/components/Records.svelte';
 	import ScheduleCard from '$lib/components/ScheduleCard.svelte';
-	import TitleAndPreweekCopy from '$lib/components/TitleAndPreWeekCopy.svelte';
+	import TitleAndPreWeekCopy from '$lib/components/TitleAndPreWeekCopy.svelte';
 
 	let { matchups, matchupDates, teams, seasonPrefix, currentWeek, displayName, weekJoined } =
 		$props();
@@ -16,7 +16,7 @@
 	</div>
 	<div class="w-[1px] grid-cols-1 justify-self-center bg-white"></div>
 	<div class="col-span-8 flex flex-col items-start justify-center gap-8 py-20 pr-16">
-		<TitleAndPreweekCopy {seasonPrefix} {currentWeek} />
+		<TitleAndPreWeekCopy {seasonPrefix} {currentWeek} />
 		<ScheduleCard {matchups} {teams} {matchupDates} {seasonPrefix} {currentWeek} />
 	</div>
 </div>
