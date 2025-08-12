@@ -1,7 +1,11 @@
-import { espnApi } from './api/espn-api';
+import { createEspnApiClient } from './api/espn-api';
 
-export const beginWeek = async (redis: any, drizzle: any) => {
-	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+export const beginWeek = async (redis: any, drizzle: any, prevWeek = false) => {
+	const espnApi = createEspnApiClient(redis);
+	const activeWeek = await espnApi.getActiveWeek();
+	const currentWeek = prevWeek ? activeWeek.currentWeek - 1 : activeWeek.currentWeek;
+	const seasonType = activeWeek.seasonType;
+
 	const weekDataKey = `${seasonType.type}:week:${currentWeek}:data`;
 	const prevWeekDataKey = `${seasonType.type}:week:${currentWeek - 1}:data`;
 
@@ -28,5 +32,5 @@ export const beginWeek = async (redis: any, drizzle: any) => {
 	// save the results
 	await redis.set(weekDataKey, JSON.stringify(weekData));
 
-	return { success: true, message: `Week ${currentWeek} started ended.` };
+	return { success: true, message: `Week ${currentWeek} started.` };
 };

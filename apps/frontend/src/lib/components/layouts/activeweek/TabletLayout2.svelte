@@ -1,7 +1,7 @@
 <script lang="ts">
-	import ScheduleCard from '$lib/components/ScheduleCard.svelte';
-	import TeamCard from '$lib/components/TeamCard.svelte';
-	import TitleAndActiveWeekCopy from '$lib/components/TitleAndActiveWeekCopy.svelte';
+	import ScheduleCard from '$lib/components/shared/ScheduleCard.svelte';
+	import TeamCard from '$lib/components/activeweek/TeamCard.svelte';
+	import TitleAndActiveWeekCopy from '$lib/components/activeweek/TitleAndActiveWeekCopy.svelte';
 	import { Tabs } from 'svelte-ux';
 
 	let {

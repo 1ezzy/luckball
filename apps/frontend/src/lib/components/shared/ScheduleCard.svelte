@@ -10,7 +10,7 @@
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {seasonPrefix} Week {currentWeek}</h2>
 		<Card class="h-full">
 			<div
-				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-8 p-4"
+				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-x-8 gap-y-4 p-4"
 			>
 				{#each matchups as matchup, i}
 					<div class="flex w-full flex-col gap-1">

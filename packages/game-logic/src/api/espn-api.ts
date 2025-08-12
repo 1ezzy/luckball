@@ -4,9 +4,11 @@ const limit = PLimit(5);
 
 export class EspnApiClient {
 	private fetch: typeof fetch;
+	private redis: any;
 
-	constructor(customFetch?: typeof fetch) {
+	constructor(redis: any, customFetch?: typeof fetch) {
 		this.fetch = customFetch || fetch.bind(globalThis);
+		this.redis = redis;
 	}
 
 	async getActiveWeek(): Promise<any> {
@@ -14,8 +16,16 @@ export class EspnApiClient {
 		const response = await this.fetch(`${baseUrl}`);
 		const data = await response.json();
 
+		const weekDataKey = `${data.season.type}:week:${data.week.number}:data`;
+		const weekData = await this.redis.get(weekDataKey);
+
+		let currentWeek = data.week.number;
+		if (weekData?.status === 'pending') {
+			currentWeek += 1;
+		}
+
 		return {
-			currentWeek: data.week.number,
+			currentWeek: currentWeek,
 			seasonType: data.season
 		};
 	}
@@ -54,4 +64,6 @@ export class EspnApiClient {
 	}
 }
 
-export const espnApi = new EspnApiClient();
+export const createEspnApiClient = (redis: any, customFetch?: typeof fetch) => {
+	return new EspnApiClient(redis, customFetch);
+};

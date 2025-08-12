@@ -1,7 +1,7 @@
 <script lang="ts">
-	import ScheduleCard from '$lib/components/ScheduleCard.svelte';
-	import TeamCard from '$lib/components/TeamCard.svelte';
-	import TitleAndActiveWeekCopy from '$lib/components/TitleAndActiveWeekCopy.svelte';
+	import ScheduleCard from '$lib/components/shared/ScheduleCard.svelte';
+	import TeamCard from '$lib/components/activeweek/TeamCard.svelte';
+	import TitleAndActiveWeekCopy from '$lib/components/activeweek/TitleAndActiveWeekCopy.svelte';
 
 	let {
 		matchups,
@@ -21,7 +21,7 @@
 	<TitleAndActiveWeekCopy {seasonPrefix} {currentWeek} {weekJoined} {teamName} />
 	<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 	<div class="flex flex-col gap-4 overflow-y-scroll">
-		<h2 class="text-primary text-2xl">Teams</h2>
+		<h2 class="text-secondary text-2xl">Teams for {seasonPrefix} Week {currentWeek}</h2>
 		<div class="flex flex-col gap-16">
 			<TeamCard teamPlayerData={team1Data} {displayName} />
 			<TeamCard teamPlayerData={team2Data} {displayName} />

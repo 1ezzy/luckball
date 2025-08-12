@@ -1,22 +1,33 @@
 <script lang="ts">
-	import ScheduleCard from '$lib/components/ScheduleCard.svelte';
-	import TeamCard from '$lib/components/TeamCard.svelte';
-	import TitleAndPostWeekCopy from '$lib/components/TitleAndPostWeekCopy.svelte';
+	import TitleAndPostWeekCopy from '$lib/components/postweek/TitleAndPostWeekCopy.svelte';
+	import WinningTeamCard from '$lib/components/postweek/WinningTeamCard.svelte';
+	import BestTeamCard from '$lib/components/postweek/BestTeamCard.svelte';
+	import RecordsCard from '$lib/components/postweek/RecordsCard.svelte';
 
 	let {
-		matchups,
-		matchupDates,
-		teams,
-		team1Data,
-		team2Data,
 		teamName,
+		userTeamName,
 		seasonPrefix,
 		currentWeek,
 		displayName,
-		weekJoined
+		winningTeamName,
+		bestNflTeamName
 	} = $props();
 </script>
 
-<div class="grid h-screen w-full flex-1 grid-cols-12">
-	<div class="col-span-7 flex flex-col items-center justify-center gap-16 py-16 pl-12"></div>
+<div class=" flex h-screen w-full flex-1 flex-col">
+	<div class="flex flex-row items-center justify-center gap-16 px-12 pb-16">
+		<TitleAndPostWeekCopy {seasonPrefix} {currentWeek} {displayName} {teamName} {userTeamName} />
+	</div>
+	<div class="pb-26 grid h-full grid-cols-3 gap-x-12 px-12">
+		<div class="col-span-1 flex h-full items-center justify-center">
+			<WinningTeamCard {winningTeamName} />
+		</div>
+		<div class="col-span-1 flex h-full items-center justify-center">
+			<BestTeamCard {bestNflTeamName} />
+		</div>
+		<div class="col-span-1 flex h-full items-center justify-center">
+			<RecordsCard />
+		</div>
+	</div>
 </div>

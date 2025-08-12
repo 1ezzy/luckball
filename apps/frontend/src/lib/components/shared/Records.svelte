@@ -39,7 +39,7 @@
 		</div>
 		<div class="flex flex-col gap-4">
 			<h2 class="text-secondary mb-2 text-2xl">Other Stats</h2>
-			<span class="text-sm">Your Best Team: {bestTeam}</span>
+			<span class="text-sm">Your Best Team: coming soon</span>
 		</div>
 	</div>
 </div>

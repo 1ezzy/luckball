@@ -1,6 +1,7 @@
-import { espnApi } from './api/espn-api';
+import { createEspnApiClient } from './api/espn-api';
 
 export const endWeek = async (redis: any, drizzle: any) => {
+	const espnApi = createEspnApiClient(redis);
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	const usersKey = `${seasonType.type}:week:${currentWeek}:users`;
@@ -26,10 +27,10 @@ export const endWeek = async (redis: any, drizzle: any) => {
 	}
 
 	// get relevant team data for new object
-	const team1Name = weekData.team1.name;
-	const team2Name = weekData.team2.name;
-	const team1Players = weekData.team1.players;
-	const team2Players = weekData.team2.players;
+	const team1Name = weekData.team1?.name;
+	const team2Name = weekData.team2?.name;
+	const team1Players = weekData.team1?.players;
+	const team2Players = weekData.team2?.players;
 
 	// determine the win status for both teams
 	let team1WinStatus, team2WinStatus, winningTeam;

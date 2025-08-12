@@ -29,9 +29,12 @@
 			<div class="flex flex-col gap-1">
 				<h3 class="text-accent">Players</h3>
 				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-				<div class="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-2">
+				<div class="grid grid-cols-3 gap-2">
 					{#each teamPlayerData.usernames as player}
-						<span class="p-2" class:text-primary={player === displayName}>
+						<span
+							class="col-span-1 overflow-auto p-2 text-center"
+							class:text-primary={player === displayName}
+						>
 							{player}
 						</span>
 					{/each}
@@ -47,7 +50,7 @@
 			<div class="flex flex-col gap-1">
 				<h3 class="text-accent">Teams</h3>
 				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-				<div class="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-2">
+				<div class="grid grid-cols-3 gap-2">
 					{#each teamPlayerData.nflTeams as team}
 						<div class="flex flex-row gap-2 p-2">
 							<img
@@ -64,9 +67,12 @@
 			<div class="flex flex-col gap-1">
 				<h3 class="text-accent">Players</h3>
 				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-				<div class="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-2">
+				<div class="grid grid-cols-3 gap-2">
 					{#each teamPlayerData.usernames as player}
-						<span class="p-2" class:text-primary={player === displayName}>
+						<span
+							class="col-span-1 overflow-auto p-2 text-center"
+							class:text-primary={player === displayName}
+						>
 							{player}
 						</span>
 					{/each}
@@ -101,7 +107,10 @@
 				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 				<div class="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-2">
 					{#each teamPlayerData.usernames as player}
-						<span class="p-2" class:text-primary={player === displayName}>
+						<span
+							class="col-span-1 overflow-auto p-2 text-center"
+							class:text-primary={player === displayName}
+						>
 							{player}
 						</span>
 					{/each}

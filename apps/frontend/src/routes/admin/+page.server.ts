@@ -13,6 +13,15 @@ export const actions: Actions = {
 
 		return { success: true };
 	},
+	beginPrevWeek: async () => {
+		const result = await beginWeek(redis, drizzle);
+
+		if (!result.success) {
+			return fail(400, { error: result.message });
+		}
+
+		return { success: true };
+	},
 	startActiveWeek: async () => {
 		const result = await startActiveWeek(redis, drizzle);
 

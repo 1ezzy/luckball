@@ -4,10 +4,10 @@ import type { PageServerLoad } from './$types';
 import { addUserToWeek } from '@luckball/game-logic';
 import { redis } from '$lib/clients/redis-client';
 import { getWeekAndUserData } from '$lib/server/redis';
-import { EspnApiClient } from '@luckball/game-logic/src/api/espn-api';
+import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 
 export const load: PageServerLoad = async ({ cookies }) => {
-	const espnApi = new EspnApiClient();
+	const espnApi = createEspnApiClient(redis);
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 	const userId = cookies.get('userId');
 
@@ -44,10 +44,13 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			team1Data,
 			team2Data,
 			teamName,
+			userTeamName: userData.teamAssignment,
 			seasonType,
 			currentWeek,
 			weekEvents,
-			weekStatus
+			weekStatus,
+			winningTeamName: weekData.winningTeam,
+			bestNflTeamName: weekData.bestNflTeam
 		};
 	} else {
 		const team1Data = weekData ? getTeamWithUsernames(weekData.team1) : null;

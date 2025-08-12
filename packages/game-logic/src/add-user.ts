@@ -1,10 +1,11 @@
-import { espnApi } from './api/espn-api';
+import { createEspnApiClient } from './api/espn-api';
 
 export const addUserToWeek = async (displayName: string, userId: string, redis: any) => {
 	if (!displayName || !userId) {
 		return { success: false, message: 'displayName and userId are required' };
 	}
 
+	const espnApi = createEspnApiClient(redis);
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	// check if there is an active round for the week

@@ -8,6 +8,8 @@
 	import MobileLayout2 from '$lib/components/layouts/activeweek/MobileLayout2.svelte';
 	import DesktopLayout3 from '$lib/components/layouts/postweek/DesktopLayout3.svelte';
 	import { WeekStatus } from '$lib/types/redis-types.js';
+	import TabletLayout3 from '$lib/components/layouts/postweek/TabletLayout3.svelte';
+	import MobileLayout3 from '$lib/components/layouts/postweek/MobileLayout3.svelte';
 
 	let { data } = $props();
 
@@ -18,17 +20,20 @@
 	const team1Data = data.team1Data;
 	const team2Data = data.team2Data;
 	const teamName = data.teamName;
+	const userTeamName = data.userTeamName;
 	const seasonType = data.seasonType;
 	const currentWeek = data.currentWeek;
 	const teams = data.weekEvents.teams;
 	const weekStatus = data.weekStatus;
+	const winningTeamName = data.winningTeamName;
+	const bestNflTeamName = data.bestNflTeamName;
 
 	const displayName = $derived(data.displayName);
 	const weekJoined = $derived(data.weekJoined);
 
 	const seasonPrefix = $derived(
 		(() => {
-			switch (seasonType) {
+			switch (seasonType.type) {
 				case 1:
 					return 'Preseason';
 				case 3:
@@ -47,12 +52,15 @@
 		team1Data,
 		team2Data,
 		teamName,
+		userTeamName,
 		seasonType,
 		seasonPrefix,
 		currentWeek,
 		displayName,
 		weekJoined,
-		weekStatus
+		weekStatus,
+		winningTeamName,
+		bestNflTeamName
 	});
 
 	// onMount(() => {
@@ -83,5 +91,11 @@
 {:else}
 	<div class="hidden h-screen lg:block">
 		<DesktopLayout3 {...layoutProps} />
+	</div>
+	<div class="hidden h-screen md:block lg:hidden">
+		<TabletLayout3 {...layoutProps} />
+	</div>
+	<div class="block md:hidden">
+		<MobileLayout3 {...layoutProps} />
 	</div>
 {/if}
