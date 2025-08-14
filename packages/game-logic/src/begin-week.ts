@@ -1,7 +1,7 @@
 import { createEspnApiClient } from './api/espn-api';
 
-export const beginWeek = async (redis: any, drizzle: any, prevWeek = false) => {
-	const espnApi = createEspnApiClient(redis);
+export const beginWeek = async (valkey: any, drizzle: any, prevWeek = false) => {
+	const espnApi = createEspnApiClient(valkey);
 	const activeWeek = await espnApi.getActiveWeek();
 	const currentWeek = prevWeek ? activeWeek.currentWeek - 1 : activeWeek.currentWeek;
 	const seasonType = activeWeek.seasonType;
@@ -16,12 +16,12 @@ export const beginWeek = async (redis: any, drizzle: any, prevWeek = false) => {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 
-	// update redis with new match data
-	await redis.del(`${seasonType.type}:week:${currentWeek}:matchups`);
-	await redis.lpush(`${seasonType.type}:week:${currentWeek}:matchups`, ...matchups);
+	// update valkey with new match data
+	await valkey.del(`${seasonType.type}:week:${currentWeek}:matchups`);
+	await valkey.lpush(`${seasonType.type}:week:${currentWeek}:matchups`, matchups);
 
 	// get the previous week data
-	const prevWeekData = await redis.get(prevWeekDataKey);
+	const prevWeekData = await valkey.get(prevWeekDataKey);
 
 	// create current week data
 	const weekData = {
@@ -30,7 +30,7 @@ export const beginWeek = async (redis: any, drizzle: any, prevWeek = false) => {
 	};
 
 	// save the results
-	await redis.set(weekDataKey, JSON.stringify(weekData));
+	await valkey.set(weekDataKey, JSON.stringify(weekData));
 
 	return { success: true, message: `Week ${currentWeek} started.` };
 };

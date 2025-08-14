@@ -2,13 +2,15 @@ import { fail, type Actions } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 import type { PageServerLoad } from './$types';
 import { addUserToWeek } from '@luckball/game-logic';
-import { redis } from '$lib/clients/redis-client';
-import { getWeekAndUserData } from '$lib/server/redis';
+import { valkey } from '$lib/clients/valkey-client';
+import { getWeekAndUserData } from '$lib/server/valkey';
 import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 
 export const load: PageServerLoad = async ({ cookies }) => {
-	const espnApi = createEspnApiClient(redis);
+	const espnApi = createEspnApiClient(valkey);
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+
+	console.log(currentWeek);
 	const userId = cookies.get('userId');
 
 	const [{ weekData, allUserData }, weekEvents] = await Promise.all([
@@ -16,7 +18,19 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		espnApi.getWeekEvents(seasonType.type, currentWeek)
 	]);
 
-	const userData = userId && allUserData ? allUserData[userId] : null;
+	const userMap = new Map(
+		Array.isArray(allUserData)
+			? allUserData.map((entry) => {
+					try {
+						return [entry.key, JSON.parse(entry.value)];
+					} catch {
+						return [entry.key, null];
+					}
+				})
+			: []
+	);
+
+	const userData = userId ? userMap.get(userId) : null;
 
 	const getTeamWithUsernames = (team: { players: string[] }) => {
 		if (!team || !allUserData) return { ...team, usernames: [] };
@@ -35,8 +49,6 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			teamName = weekData.team2.name;
 		}
 
-		const weekStatus = weekData.status;
-
 		return {
 			weekJoined: true,
 			displayName: userData.displayName,
@@ -48,15 +60,13 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			seasonType,
 			currentWeek,
 			weekEvents,
-			weekStatus,
+			weekStatus: weekData.status,
 			winningTeamName: weekData.winningTeam,
 			bestNflTeamName: weekData.bestNflTeam
 		};
 	} else {
 		const team1Data = weekData ? getTeamWithUsernames(weekData.team1) : null;
 		const team2Data = weekData ? getTeamWithUsernames(weekData.team2) : null;
-
-		const weekStatus = weekData?.status;
 
 		return {
 			weekJoined: false,
@@ -68,7 +78,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			seasonType,
 			currentWeek,
 			weekEvents,
-			weekStatus
+			weekStatus: weekData?.status
 		};
 	}
 };
@@ -94,11 +104,12 @@ export const actions: Actions = {
 			});
 		}
 
-		const result = await addUserToWeek(displayName, userId, redis);
-
+		const result = await addUserToWeek(displayName, userId, valkey);
 		if (!result.success) {
 			return fail(400, { displayName, error: result.message });
 		}
+
+		console.log('joinWeek finished');
 
 		return { success: true };
 	}

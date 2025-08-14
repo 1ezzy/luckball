@@ -3,6 +3,6 @@ packages:
   - 'apps/frontend'
   - 'apps/cron-triggers'
   - 'packages/*'
-  - 'packages/redis-client'
+  - 'packages/valkey-client'
   - 'packages/drizzle-client'
   - 'packages/game-logic'

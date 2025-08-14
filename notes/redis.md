@@ -1,4 +1,4 @@
-Redis structure:
+Valkey structure:
 
 1. User Data (per week)
 

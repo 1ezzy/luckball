@@ -7,7 +7,7 @@
 	import TabletLayout2 from '$lib/components/layouts/activeweek/TabletLayout2.svelte';
 	import MobileLayout2 from '$lib/components/layouts/activeweek/MobileLayout2.svelte';
 	import DesktopLayout3 from '$lib/components/layouts/postweek/DesktopLayout3.svelte';
-	import { WeekStatus } from '$lib/types/redis-types.js';
+	import { WeekStatus } from '$lib/types/valkey-types.js';
 	import TabletLayout3 from '$lib/components/layouts/postweek/TabletLayout3.svelte';
 	import MobileLayout3 from '$lib/components/layouts/postweek/MobileLayout3.svelte';
 

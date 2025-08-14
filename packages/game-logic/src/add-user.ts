@@ -1,15 +1,15 @@
 import { createEspnApiClient } from './api/espn-api';
 
-export const addUserToWeek = async (displayName: string, userId: string, redis: any) => {
+export const addUserToWeek = async (displayName: string, userId: string, valkey: any) => {
 	if (!displayName || !userId) {
 		return { success: false, message: 'displayName and userId are required' };
 	}
 
-	const espnApi = createEspnApiClient(redis);
+	const espnApi = createEspnApiClient(valkey);
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	// check if there is an active round for the week
-	const roundData = await redis.get(`${seasonType.type}:week:${currentWeek}:data`);
+	const roundData = await valkey.get(`${seasonType.type}:week:${currentWeek}:data`);
 	if (roundData) {
 		if (roundData.status === 'in_progress' || roundData.status === 'ended') {
 			return { success: false, message: 'Round has already started' };
@@ -17,7 +17,7 @@ export const addUserToWeek = async (displayName: string, userId: string, redis: 
 	}
 
 	// check if this user has already joined for the week
-	const existingUser = await redis.hget(`${seasonType.type}:week:${currentWeek}:users`, userId);
+	const existingUser = await valkey.hget(`${seasonType.type}:week:${currentWeek}:users`, userId);
 	if (existingUser) {
 		return { success: false, message: 'User already joined this week' };
 	}
@@ -29,8 +29,8 @@ export const addUserToWeek = async (displayName: string, userId: string, redis: 
 		teamAssignment: null
 	};
 
-	// add user to Redis hash for this week
-	await redis.hset(`${seasonType.type}:week:${currentWeek}:users`, {
+	// add user to Valkey hash for this week
+	await valkey.hset(`${seasonType.type}:week:${currentWeek}:users`, {
 		[userId]: JSON.stringify(userData)
 	});
 

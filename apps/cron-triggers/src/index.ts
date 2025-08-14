@@ -1,11 +1,12 @@
 import type { ScheduledEvent, ExecutionContext } from '@cloudflare/workers-types';
 import { beginWeek, endWeek, startActiveWeek } from '@luckball/game-logic';
-import { createRedisClient } from '@luckball/redis-client';
+import { createValkeyClient } from '@luckball/valkey-client';
 import { createDrizzleClient } from '@luckball/drizzle-client';
 
 export interface Env {
-	UPSTASH_REDIS_REST_URL: string;
-	UPSTASH_REDIS_REST_TOKEN: string;
+	LUCKBALL_DATA_VALKEY: string;
+	VALKEY_USER: string;
+	VALKEY_PASSWORD: string;
 }
 
 export default {
@@ -28,13 +29,10 @@ export default {
 };
 
 const handleBeginWeek = async (env: Env) => {
-	const redis = createRedisClient({
-		url: env.UPSTASH_REDIS_REST_URL,
-		token: env.UPSTASH_REDIS_REST_TOKEN
-	});
+	const valkey = createValkeyClient(env.LUCKBALL_DATA_VALKEY, env.VALKEY_USER, env.VALKEY_PASSWORD);
 	const drizzle = createDrizzleClient(env);
 
-	const result = await beginWeek(redis, drizzle);
+	const result = await beginWeek(valkey, drizzle);
 
 	if (!result.success) {
 		return { success: false, error: result.message };
@@ -44,13 +42,10 @@ const handleBeginWeek = async (env: Env) => {
 };
 
 const handleStartActiveWeek = async (env: Env) => {
-	const redis = createRedisClient({
-		url: env.UPSTASH_REDIS_REST_URL,
-		token: env.UPSTASH_REDIS_REST_TOKEN
-	});
+	const valkey = createValkeyClient(env.LUCKBALL_DATA_VALKEY, env.VALKEY_USER, env.VALKEY_PASSWORD);
 	const drizzle = createDrizzleClient(env);
 
-	const result = await startActiveWeek(redis, drizzle);
+	const result = await startActiveWeek(valkey, drizzle);
 
 	if (!result.success) {
 		return { success: false, error: result.message };
@@ -60,13 +55,10 @@ const handleStartActiveWeek = async (env: Env) => {
 };
 
 const handleEndWeek = async (env: Env) => {
-	const redis = createRedisClient({
-		url: env.UPSTASH_REDIS_REST_URL,
-		token: env.UPSTASH_REDIS_REST_TOKEN
-	});
+	const valkey = createValkeyClient(env.LUCKBALL_DATA_VALKEY, env.VALKEY_USER, env.VALKEY_PASSWORD);
 	const drizzle = createDrizzleClient(env);
 
-	const result = await endWeek(redis, drizzle);
+	const result = await endWeek(valkey, drizzle);
 
 	if (!result.success) {
 		return { success: false, error: result.message };

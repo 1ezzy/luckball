@@ -1,7 +1,7 @@
 import { createEspnApiClient } from './api/espn-api';
 
-export const endWeek = async (redis: any, drizzle: any) => {
-	const espnApi = createEspnApiClient(redis);
+export const endWeek = async (valkey: any, drizzle: any) => {
+	const espnApi = createEspnApiClient(valkey);
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	const usersKey = `${seasonType.type}:week:${currentWeek}:users`;
@@ -9,19 +9,19 @@ export const endWeek = async (redis: any, drizzle: any) => {
 	const matchupsKey = `${seasonType.type}:week:${currentWeek}:matchups`;
 
 	// get a list of all the users
-	const users = await redis.hgetall(usersKey);
+	const users = await valkey.hgetall(usersKey);
 	if (!users || Object.keys(users).length === 0) {
 		return { success: false, message: 'No users to start the week.' };
 	}
 
 	// get a list of all the matchups
-	const matchups = await redis.lrange(matchupsKey, 0, -1);
+	const matchups = await valkey.lrange(matchupsKey, 0, -1);
 	if (matchups.length === 0) {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 
 	// get the week data
-	const weekData = await redis.get(weekDataKey);
+	const weekData = await valkey.get(weekDataKey);
 	if (weekData.length === 0) {
 		return { success: false, message: 'No week data found.' };
 	}
@@ -65,7 +65,7 @@ export const endWeek = async (redis: any, drizzle: any) => {
 	};
 
 	// save the results
-	await redis.set(weekDataKey, JSON.stringify(updatedWeekData));
+	await valkey.set(weekDataKey, JSON.stringify(updatedWeekData));
 
 	return { success: true, message: `Week ${currentWeek} started ended.` };
 };

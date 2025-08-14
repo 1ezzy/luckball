@@ -53,11 +53,11 @@
 		"@layerstack/utils": "2.0.0-next.12",
 		"@luckball/drizzle-client": "workspace:*",
 		"@luckball/game-logic": "workspace:*",
-		"@luckball/redis-client": "workspace:*",
-		"@upstash/redis": "^1.35.1",
+		"@luckball/valkey-client": "workspace:*",
 		"drizzle-orm": "^0.44.4",
 		"layerchart": "2.0.0-next.27",
 		"postgres": "^3.4.7",
-		"svelte-ux": "2.0.0-next.13"
+		"svelte-ux": "2.0.0-next.13",
+		"@valkey/valkey-glide": "^2.0.1"
 	}
 }

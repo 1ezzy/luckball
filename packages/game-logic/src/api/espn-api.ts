@@ -1,14 +1,15 @@
 import PLimit from 'p-limit';
+import type { GlideClient } from '@valkey/valkey-glide';
 
 const limit = PLimit(5);
 
 export class EspnApiClient {
 	private fetch: typeof fetch;
-	private redis: any;
+	private valkey: GlideClient;
 
-	constructor(redis: any, customFetch?: typeof fetch) {
+	constructor(valkey: any, customFetch?: typeof fetch) {
 		this.fetch = customFetch || fetch.bind(globalThis);
-		this.redis = redis;
+		this.valkey = valkey;
 	}
 
 	async getActiveWeek(): Promise<any> {
@@ -17,10 +18,18 @@ export class EspnApiClient {
 		const data = await response.json();
 
 		const weekDataKey = `${data.season.type}:week:${data.week.number}:data`;
-		const weekData = await this.redis.get(weekDataKey);
+		const weekDataString = await this.valkey.get(weekDataKey);
+		if (!weekDataString) {
+			return {
+				currentWeek: data.week.number,
+				seasonType: data.season
+			};
+		}
+
+		const parsedWeekData = JSON.parse(weekDataString.toString());
 
 		let currentWeek = data.week.number;
-		if (weekData?.status === 'pending') {
+		if (parsedWeekData?.status === 'pending') {
 			currentWeek += 1;
 		}
 
@@ -64,6 +73,6 @@ export class EspnApiClient {
 	}
 }
 
-export const createEspnApiClient = (redis: any, customFetch?: typeof fetch) => {
-	return new EspnApiClient(redis, customFetch);
+export const createEspnApiClient = (valkey: any, customFetch?: typeof fetch) => {
+	return new EspnApiClient(valkey, customFetch);
 };

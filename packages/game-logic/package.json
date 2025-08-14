@@ -9,8 +9,9 @@
 	},
 	"dependencies": {
 		"@faker-js/faker": "^8.4.1",
-		"@luckball/redis-client": "workspace:*",
-		"p-limit": "^6.2.0"
+		"@luckball/valkey-client": "workspace:*",
+		"p-limit": "^6.2.0",
+		"@valkey/valkey-glide": "^2.0.1"
 	},
 	"devDependencies": {
 		"typescript": "^5.5.4"

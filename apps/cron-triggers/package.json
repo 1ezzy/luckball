@@ -8,7 +8,7 @@
 		"start": "wrangler dev --test-scheduled"
 	},
 	"dependencies": {
-		"@luckball/redis-client": "workspace:*",
+		"@luckball/valkey-client": "workspace:*",
 		"@luckball/drizzle-client": "workspace:*",
 		"@luckball/game-logic": "workspace:*"
 	},
