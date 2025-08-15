@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { seasonPrefix, currentWeek } = $props();
+	let { currentWeekText } = $props();
 </script>
 
 <div class="hidden lg:block">
@@ -9,8 +9,8 @@
 			<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
 		</div>
 		<div class="flex w-full flex-col gap-8 text-start leading-8">
-			{seasonPrefix} Week {currentWeek} has not started yet. You can join the week by entering a display
-			name on the left and clicking the "Join" button.
+			{currentWeekText} has not started yet. You can join the week by entering a display name on the
+			left and clicking the "Join" button.
 		</div>
 	</div>
 </div>
@@ -21,8 +21,8 @@
 			<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
 		</div>
 		<div class="flex w-full flex-col gap-8 leading-8">
-			{seasonPrefix} Week {currentWeek} has not started yet. You can join the week by entering a display
-			name on the left and clicking the "Join" button.
+			{currentWeekText} has not started yet. You can join the week by entering a display name on the
+			left and clicking the "Join" button.
 		</div>
 	</div>
 </div>
@@ -33,8 +33,8 @@
 			<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
 		</div>
 		<div class="flex w-full flex-col gap-8 text-start leading-8">
-			{seasonPrefix} Week {currentWeek} has not started yet. You can join the week by entering a display
-			name below and clicking the "Join" button.
+			{currentWeekText} has not started yet. You can join the week by entering a display name below and
+			clicking the "Join" button.
 		</div>
 	</div>
 </div>
