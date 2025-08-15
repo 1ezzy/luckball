@@ -6,19 +6,19 @@ export const beginWeek = async (valkey: any, drizzle: any, prevWeek = false) => 
 	const currentWeek = prevWeek ? activeWeek.currentWeek - 1 : activeWeek.currentWeek;
 	const seasonType = activeWeek.seasonType;
 
-	const weekDataKey = `${seasonType.type}:week:${currentWeek}:data`;
-	const prevWeekDataKey = `${seasonType.type}:week:${currentWeek - 1}:data`;
+	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
+	const prevWeekDataKey = `${seasonType}:week:${currentWeek - 1}:data`;
 
 	// get all matchups for the week
-	const weekEvents = await espnApi.getWeekEvents(seasonType.type, currentWeek);
+	const weekEvents = await espnApi.getWeekEvents(seasonType, currentWeek);
 	const matchups = weekEvents.events.map((event: any) => event.shortName);
 	if (matchups.length === 0) {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 
 	// update valkey with new match data
-	await valkey.del(`${seasonType.type}:week:${currentWeek}:matchups`);
-	await valkey.lpush(`${seasonType.type}:week:${currentWeek}:matchups`, matchups);
+	await valkey.del(`${seasonType}:week:${currentWeek}:matchups`);
+	await valkey.lpush(`${seasonType}:week:${currentWeek}:matchups`, matchups);
 
 	// get the previous week data
 	const prevWeekData = await valkey.get(prevWeekDataKey);

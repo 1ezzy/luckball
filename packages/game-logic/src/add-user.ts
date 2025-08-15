@@ -6,10 +6,10 @@ export const addUserToWeek = async (displayName: string, userId: string, valkey:
 	}
 
 	const espnApi = createEspnApiClient(valkey);
-	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
 
 	// check if there is an active round for the week
-	const roundData = await valkey.get(`${seasonType.type}:week:${currentWeek}:data`);
+	const roundData = await valkey.get(`${seasonType}:week:${currentWeek}:data`);
 	if (roundData) {
 		if (roundData.status === 'in_progress' || roundData.status === 'ended') {
 			return { success: false, message: 'Round has already started' };
@@ -17,7 +17,7 @@ export const addUserToWeek = async (displayName: string, userId: string, valkey:
 	}
 
 	// check if this user has already joined for the week
-	const existingUser = await valkey.hget(`${seasonType.type}:week:${currentWeek}:users`, userId);
+	const existingUser = await valkey.hget(`${seasonType}:week:${currentWeek}:users`, userId);
 	if (existingUser) {
 		return { success: false, message: 'User already joined this week' };
 	}
@@ -30,7 +30,8 @@ export const addUserToWeek = async (displayName: string, userId: string, valkey:
 	};
 
 	// add user to Valkey hash for this week
-	await valkey.hset(`${seasonType.type}:week:${currentWeek}:users`, {
+	console.log('test', seasonType);
+	await valkey.hset(`${seasonType}:week:${currentWeek}:users`, {
 		[userId]: JSON.stringify(userData)
 	});
 

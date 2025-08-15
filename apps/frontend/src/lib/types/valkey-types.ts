@@ -16,8 +16,11 @@ export interface WeekData {
 	team1: Team;
 	team2: Team;
 	status: WeekStatus;
-	winningTeam?: string;
-	bestNflTeam?: string;
+	winningTeamName?: string;
+	winningTeamScore?: string;
+	bestNflTeamName?: string;
+	bestNflTeamScore?: string;
+	lastWinningTeam?: string;
 }
 
 export interface User {

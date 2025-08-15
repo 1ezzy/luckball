@@ -13,29 +13,18 @@ export class EspnApiClient {
 	}
 
 	async getActiveWeek(): Promise<any> {
-		const baseUrl = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
+		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/season';
 		const response = await this.fetch(`${baseUrl}`);
 		const data = await response.json();
 
-		const weekDataKey = `${data.season.type}:week:${data.week.number}:data`;
-		const weekDataString = await this.valkey.get(weekDataKey);
-		if (!weekDataString) {
-			return {
-				currentWeek: data.week.number,
-				seasonType: data.season
-			};
-		}
-
-		const parsedWeekData = JSON.parse(weekDataString.toString());
-
-		let currentWeek = data.week.number;
-		if (parsedWeekData?.status === 'pending') {
-			currentWeek += 1;
-		}
+		const currentWeek = data.type.week.number;
+		const currentWeekText = data.type.week.text;
+		const seasonType = data.type.type;
 
 		return {
-			currentWeek: currentWeek,
-			seasonType: data.season
+			currentWeek,
+			currentWeekText,
+			seasonType
 		};
 	}
 

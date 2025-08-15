@@ -13,72 +13,43 @@
 
 	let { data } = $props();
 
-	const matchups = data.weekEvents.events.map((week: any) => week.shortName);
-	const matchupDates = data.weekEvents.events.map((week: any) => week.date);
+	// declaring objects passed through the page
+	const currentUserData = $derived(data.currentUserData);
+	const currentWeekData = $derived(data.currentWeekData);
+	const teamData = $derived(data.teamData);
 
-	const userId = data.userId;
-	const team1Data = data.team1Data;
-	const team2Data = data.team2Data;
-	const teamName = data.teamName;
-	const userTeamName = data.userTeamName;
-	const seasonType = data.seasonType;
-	const currentWeek = data.currentWeek;
-	const teams = data.weekEvents.teams;
-	const weekStatus = data.weekStatus;
-	const winningTeamName = data.winningTeamName;
-	const bestNflTeamName = data.bestNflTeamName;
+	const matchups = currentWeekData?.weekEvents.events.map((week: any) => week.shortName);
+	const matchupDates = currentWeekData?.weekEvents.events.map((week: any) => week.date);
 
-	const displayName = $derived(data.displayName);
-	const weekJoined = $derived(data.weekJoined);
+	const displayName = $derived(currentUserData?.displayName);
 
-	const seasonPrefix = $derived(
-		(() => {
-			switch (seasonType.type) {
-				case 1:
-					return 'Preseason';
-				case 3:
-					return 'Postseason';
-				default:
-					return '';
-			}
-		})()
-	);
-
-	const layoutProps = $derived({
-		matchups,
-		matchupDates,
-		userId,
-		teams,
-		team1Data,
-		team2Data,
-		teamName,
-		userTeamName,
-		seasonType,
-		seasonPrefix,
-		currentWeek,
-		displayName,
-		weekJoined,
-		weekStatus,
-		winningTeamName,
-		bestNflTeamName
+	// declaring prop objects for each layout
+	const preWeekLayoutProps = $derived({
+		matchups: matchups,
+		matchupDates: matchupDates,
+		matchupTeams: data.currentWeekData?.weekEvents.teams,
+		teamData: teamData,
+		currentWeekText: currentWeekData?.currentWeekText,
+		displayName: displayName,
+		weekJoined: displayName
 	});
 
-	// onMount(() => {
-	// 	console.log('page', weekStatus);
-	// });
+	onMount(() => {
+		console.log('page', currentUserData?.displayName);
+	});
 </script>
 
-{#if weekStatus === WeekStatus.Pending}
+{#if currentWeekData?.weekStatus === WeekStatus.Pending}
 	<div class="hidden h-screen lg:block">
-		<DesktopLayout1 {...layoutProps} />
+		<DesktopLayout1 {...preWeekLayoutProps} />
 	</div>
 	<div class="hidden h-screen md:block lg:hidden">
-		<TabletLayout1 {...layoutProps} />
+		<TabletLayout1 {...preWeekLayoutProps} />
 	</div>
 	<div class="block md:hidden">
-		<MobileLayout1 {...layoutProps} />
+		<MobileLayout1 {...preWeekLayoutProps} />
 	</div>
-{:else if weekStatus == WeekStatus.InProgress}
+{:else if currentWeekData?.weekStatus == WeekStatus.InProgress}
 	<div class="hidden h-screen lg:block">
 		<DesktopLayout2 {...layoutProps} />
 	</div>

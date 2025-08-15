@@ -39,11 +39,11 @@ const shuffleNflTeams = (teams: string[]): [string[], string[]] => {
 
 export const startActiveWeek = async (valkey: any, drizzle: any) => {
 	const espnApi = createEspnApiClient(valkey);
-	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
 
-	const usersKey = `${seasonType.type}:week:${currentWeek}:users`;
-	const weekDataKey = `${seasonType.type}:week:${currentWeek}:data`;
-	const matchupsKey = `${seasonType.type}:week:${currentWeek}:matchups`;
+	const usersKey = `${seasonType}:week:${currentWeek}:users`;
+	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
+	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
 	// get a list of all the users
 	const users = await valkey.hgetall(usersKey);
