@@ -10,7 +10,8 @@
 	"dependencies": {
 		"@luckball/valkey-client": "workspace:*",
 		"@luckball/drizzle-client": "workspace:*",
-		"@luckball/game-logic": "workspace:*"
+		"@luckball/game-logic": "workspace:*",
+		"@valkey/valkey-glide": "^2.0.1"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250730.0",
