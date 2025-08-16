@@ -30,7 +30,6 @@ export const addUserToWeek = async (displayName: string, userId: string, valkey:
 	};
 
 	// add user to Valkey hash for this week
-	console.log('test', seasonType);
 	await valkey.hset(`${seasonType}:week:${currentWeek}:users`, {
 		[userId]: JSON.stringify(userData)
 	});

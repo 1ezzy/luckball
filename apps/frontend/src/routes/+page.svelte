@@ -18,8 +18,8 @@
 	const currentWeekData = $derived(data.currentWeekData);
 	const teamData = $derived(data.teamData);
 
-	const matchups = currentWeekData?.weekEvents.events.map((week: any) => week.shortName);
-	const matchupDates = currentWeekData?.weekEvents.events.map((week: any) => week.date);
+	const matchups = $derived(currentWeekData?.weekEvents.events.map((week: any) => week.shortName));
+	const matchupDates = $derived(currentWeekData?.weekEvents.events.map((week: any) => week.date));
 
 	const displayName = $derived(currentUserData?.displayName);
 
@@ -34,8 +34,19 @@
 		weekJoined: displayName
 	});
 
+	const activeWeekLayoutProps = $derived({
+		matchups: matchups,
+		matchupDates: matchupDates,
+		matchupTeams: data.currentWeekData?.weekEvents.teams,
+		teamData: teamData,
+		userTeamAssignment: currentUserData?.teamAssignment,
+		currentWeekText: currentWeekData?.currentWeekText,
+		displayName: displayName,
+		weekJoined: displayName
+	});
+
 	onMount(() => {
-		console.log('page', currentUserData?.displayName);
+		console.log('page', teamData);
 	});
 </script>
 
@@ -51,13 +62,13 @@
 	</div>
 {:else if currentWeekData?.weekStatus == WeekStatus.InProgress}
 	<div class="hidden h-screen lg:block">
-		<DesktopLayout2 {...layoutProps} />
+		<DesktopLayout2 {...activeWeekLayoutProps} />
 	</div>
 	<div class="hidden h-screen md:block lg:hidden">
-		<TabletLayout2 {...layoutProps} />
+		<TabletLayout2 {...activeWeekLayoutProps} />
 	</div>
 	<div class="block md:hidden">
-		<MobileLayout2 {...layoutProps} />
+		<MobileLayout2 {...activeWeekLayoutProps} />
 	</div>
 {:else}
 	<div class="hidden h-screen lg:block">

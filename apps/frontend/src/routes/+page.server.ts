@@ -7,9 +7,12 @@ import { getWeekAndUserData } from '$lib/server/valkey';
 import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 
 export const load: PageServerLoad = async ({ cookies }) => {
-	const getTeamWithUsernames = (team: { players: string[] }) => {
-		if (!team || !allUserData) return { ...team, usernames: [] };
-		const usernames = team.players.map((id) => allUserData[id]?.displayName).filter(Boolean);
+	const getTeamWithUsernames = (
+		team: { players: string[] },
+		allUsers: Record<string, { displayName: string }>
+	) => {
+		if (!team || !allUsers) return { ...team, usernames: [] };
+		const usernames = team.players.map((id) => allUsers[id]?.displayName).filter(Boolean);
 		return { ...team, usernames };
 	};
 
@@ -41,9 +44,11 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		return fail(500, { error: 'Could not load user data. Please try again later.' });
 	}
 
+	const allUsersObject = Object.fromEntries(usersMap);
+
 	const currentUserData = { ...usersMap.get(userId), userId: userId };
-	const team1Data = getTeamWithUsernames(weekData?.team1);
-	const team2Data = getTeamWithUsernames(weekData?.team2);
+	const team1Data = getTeamWithUsernames(weekData?.team1, allUsersObject);
+	const team2Data = getTeamWithUsernames(weekData?.team2, allUsersObject);
 
 	const currentWeekData = {
 		seasonType: seasonType,
@@ -72,7 +77,6 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
 export const actions: Actions = {
 	joinWeek: async ({ request, cookies }) => {
-		console.log('hit!');
 		const data = await request.formData();
 		const displayName = data.get('displayName')?.toString();
 
@@ -96,8 +100,6 @@ export const actions: Actions = {
 		if (!result.success) {
 			return fail(400, { displayName, error: result.message });
 		}
-
-		console.log('joinWeek finished');
 
 		return { success: true };
 	}

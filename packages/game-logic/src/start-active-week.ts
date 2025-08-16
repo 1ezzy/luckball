@@ -46,7 +46,7 @@ export const startActiveWeek = async (valkey: any, drizzle: any) => {
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
 	// get a list of all the users
-	const users = await valkey.hgetall(usersKey);
+	const users = await valkey.hkeys(usersKey);
 	if (!users || Object.keys(users).length === 0) {
 		return { success: false, message: 'No users to start the week.' };
 	}
@@ -58,7 +58,7 @@ export const startActiveWeek = async (valkey: any, drizzle: any) => {
 	}
 
 	// shuffle the list of users and split the list into two lists
-	const shuffledUsers = shuffleArray(Object.keys(users));
+	const shuffledUsers = shuffleArray(users);
 	const midpoint = Math.ceil(shuffledUsers.length / 2);
 	const team1Players = shuffledUsers.slice(0, midpoint);
 	const team2Players = shuffledUsers.slice(midpoint);

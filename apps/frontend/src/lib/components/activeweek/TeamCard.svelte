@@ -1,121 +1,63 @@
 <script lang="ts">
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
+	import { onMount } from 'svelte';
 	import { Card } from 'svelte-ux';
 
 	let { teamPlayerData, displayName } = $props();
 </script>
 
-<div class="hidden w-full flex-1 lg:block">
+{#snippet playersText(data: any, mobileGrid: boolean)}
+	<div class="flex flex-col gap-1">
+		<h3 class="text-accent">Players</h3>
+		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
+		<div
+			class="grid gap-2 {mobileGrid
+				? 'grid-cols-3'
+				: 'grid-cols-[repeat(auto-fit,minmax(80px,1fr))'}"
+		>
+			{#each data?.usernames as player}
+				<span
+					class="col-span-1 overflow-auto p-2 text-center"
+					class:text-primary={player === displayName}
+				>
+					{player}
+				</span>
+			{/each}
+		</div>
+	</div>
+{/snippet}
+
+{#snippet teamsText(data: any, mobileGrid: boolean)}
+	<div class="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-2">
+		{#each data?.nflTeams as team}
+			<div class="flex w-fit flex-row gap-2 p-2">
+				<img class="h-6" height="32" src="{PUBLIC_TEAM_LOGO_URL}/{team}.png" alt="{team} logo" />
+				<span>{team}</span>
+			</div>
+		{/each}
+	</div>
+{/snippet}
+
+{#snippet titleAndCard(data: any)}
 	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-primary mb-2 text-2xl">{teamPlayerData.name}</h2>
+		<h2 class="text-primary mb-2 text-2xl">{data?.name}</h2>
 		<Card class="flex h-full flex-col justify-start gap-4 p-4">
 			<div class="flex flex-col gap-1">
 				<h3 class="text-accent">Teams</h3>
 				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-				<div class="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-2">
-					{#each teamPlayerData.nflTeams as team}
-						<div class="flex w-fit flex-row gap-2 p-2">
-							<img
-								class="h-6"
-								height="32"
-								src="{PUBLIC_TEAM_LOGO_URL}/{team}.png"
-								alt="{team} logo"
-							/>
-							<span>{team}</span>
-						</div>
-					{/each}
-				</div>
+				{@render teamsText(data, true)}
 			</div>
-			<div class="flex flex-col gap-1">
-				<h3 class="text-accent">Players</h3>
-				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-				<div class="grid grid-cols-3 gap-2">
-					{#each teamPlayerData.usernames as player}
-						<span
-							class="col-span-1 overflow-auto p-2 text-center"
-							class:text-primary={player === displayName}
-						>
-							{player}
-						</span>
-					{/each}
-				</div>
-			</div>
+			{@render playersText(data, true)}
 		</Card>
 	</div>
+{/snippet}
+
+<div class="hidden w-full flex-1 lg:block">
+	{@render titleAndCard(teamPlayerData)}
 </div>
 <div class="hidden w-full flex-1 md:block lg:hidden">
-	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-primary mb-2 text-2xl">{teamPlayerData.name}</h2>
-		<Card class="flex h-full flex-col justify-start gap-4  p-4">
-			<div class="flex flex-col gap-1">
-				<h3 class="text-accent">Teams</h3>
-				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-				<div class="grid grid-cols-3 gap-2">
-					{#each teamPlayerData.nflTeams as team}
-						<div class="flex flex-row gap-2 p-2">
-							<img
-								class="h-6"
-								height="32"
-								src="{PUBLIC_TEAM_LOGO_URL}/{team}.png"
-								alt="{team} logo"
-							/>
-							<span>{team}</span>
-						</div>
-					{/each}
-				</div>
-			</div>
-			<div class="flex flex-col gap-1">
-				<h3 class="text-accent">Players</h3>
-				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-				<div class="grid grid-cols-3 gap-2">
-					{#each teamPlayerData.usernames as player}
-						<span
-							class="col-span-1 overflow-auto p-2 text-center"
-							class:text-primary={player === displayName}
-						>
-							{player}
-						</span>
-					{/each}
-				</div>
-			</div>
-		</Card>
-	</div>
+	{@render titleAndCard(teamPlayerData)}
 </div>
 <div class="block md:hidden">
-	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-primary mb-2 text-2xl">{teamPlayerData.name}</h2>
-		<Card class="flex h-full flex-col justify-start gap-4 p-4">
-			<div class="flex flex-col gap-1">
-				<h3 class="text-accent">Teams</h3>
-				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-				<div class="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-2">
-					{#each teamPlayerData.nflTeams as team}
-						<div class="flex flex-row gap-2 p-2">
-							<img
-								class="h-6"
-								height="32"
-								src="{PUBLIC_TEAM_LOGO_URL}/{team}.png"
-								alt="{team} logo"
-							/>
-							<span>{team}</span>
-						</div>
-					{/each}
-				</div>
-			</div>
-			<div class="flex flex-col gap-1">
-				<h3 class="text-accent">Players</h3>
-				<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-				<div class="grid grid-cols-[repeat(auto-fit,minmax(80px,1fr))] gap-2">
-					{#each teamPlayerData.usernames as player}
-						<span
-							class="col-span-1 overflow-auto p-2 text-center"
-							class:text-primary={player === displayName}
-						>
-							{player}
-						</span>
-					{/each}
-				</div>
-			</div>
-		</Card>
-	</div>
+	{@render titleAndCard(teamPlayerData)}
 </div>

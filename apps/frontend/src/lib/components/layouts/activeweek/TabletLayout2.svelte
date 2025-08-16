@@ -7,12 +7,10 @@
 	let {
 		matchups,
 		matchupDates,
-		teams,
-		team1Data,
-		team2Data,
-		teamName,
-		seasonPrefix,
-		currentWeek,
+		matchupTeams,
+		teamData,
+		userTeamAssignment,
+		currentWeekText,
 		displayName,
 		weekJoined
 	} = $props();
@@ -32,7 +30,7 @@
 
 <div class="flex h-screen w-full flex-1 flex-col justify-center gap-8">
 	<div class="flex flex-col items-start justify-center gap-8 px-12 pt-16">
-		<TitleAndActiveWeekCopy {seasonPrefix} {currentWeek} {weekJoined} {teamName} />
+		<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
 	</div>
 	<div class="flex flex-col justify-start overflow-hidden px-12 pb-16">
 		<Tabs
@@ -48,15 +46,15 @@
 			<svelte:fragment slot="content" let:value>
 				<div class="flex flex-col items-start justify-center gap-8 pt-8">
 					{#if value === 'schedule'}
-						<ScheduleCard {matchups} {teams} {matchupDates} {seasonPrefix} {currentWeek} />
+						<ScheduleCard {matchups} {matchupDates} {matchupTeams} {currentWeekText} />
 					{:else if value === 'matchups'}
 						<div class="flex h-full w-full flex-col gap-4 pr-4">
 							<h2 class="text-secondary text-2xl">
-								Teams for {seasonPrefix} Week {currentWeek}
+								Teams for {currentWeekText}
 							</h2>
 							<div class="flex w-full flex-row gap-8">
-								<TeamCard teamPlayerData={team1Data} {displayName} />
-								<TeamCard teamPlayerData={team2Data} {displayName} />
+								<TeamCard teamPlayerData={teamData?.team1} {displayName} />
+								<TeamCard teamPlayerData={teamData?.team2} {displayName} />
 							</div>
 						</div>
 					{/if}

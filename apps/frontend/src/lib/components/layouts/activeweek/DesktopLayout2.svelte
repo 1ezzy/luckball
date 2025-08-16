@@ -7,12 +7,10 @@
 	let {
 		matchups,
 		matchupDates,
-		teams,
-		team1Data,
-		team2Data,
-		teamName,
-		seasonPrefix,
-		currentWeek,
+		matchupTeams,
+		teamData,
+		userTeamAssignment,
+		currentWeekText,
 		displayName,
 		weekJoined
 	} = $props();
@@ -34,7 +32,7 @@
 	class="flex h-screen w-full flex-1 flex-col justify-center gap-8 xl:mx-auto xl:max-w-[90vw] 2xl:max-w-[70vw]"
 >
 	<div class="flex flex-col items-start justify-center gap-8 px-16 pt-20">
-		<TitleAndActiveWeekCopy {seasonPrefix} {currentWeek} {weekJoined} {teamName} />
+		<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
 	</div>
 	<div class="flex flex-col justify-start overflow-hidden px-16 pb-20">
 		<Tabs
@@ -51,16 +49,16 @@
 				<div class="flex flex-col items-start justify-center gap-8 pt-8">
 					{#if value === 'schedule'}
 						<div class="flex h-full w-full flex-col gap-4 pr-4">
-							<ScheduleCard {matchups} {teams} {matchupDates} {seasonPrefix} {currentWeek} />
+							<ScheduleCard {matchups} {matchupDates} {matchupTeams} {currentWeekText} />
 						</div>
 					{:else if value === 'matchups'}
 						<div class="flex h-full w-full flex-col gap-4 pr-4">
 							<h2 class="text-secondary text-2xl">
-								Teams for {seasonPrefix} Week {currentWeek}
+								Teams for {currentWeekText}
 							</h2>
 							<div class="flex w-full flex-row gap-8">
-								<TeamCard teamPlayerData={team1Data} {displayName} />
-								<TeamCard teamPlayerData={team2Data} {displayName} />
+								<TeamCard teamPlayerData={teamData?.team1} {displayName} />
+								<TeamCard teamPlayerData={teamData?.team2} {displayName} />
 							</div>
 						</div>
 					{/if}
