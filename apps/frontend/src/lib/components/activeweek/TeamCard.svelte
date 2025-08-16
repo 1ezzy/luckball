@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
-	import { onMount } from 'svelte';
 	import { Card } from 'svelte-ux';
 
 	let { teamPlayerData, displayName } = $props();

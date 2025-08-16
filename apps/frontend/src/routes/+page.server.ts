@@ -7,18 +7,18 @@ import { getWeekAndUserData } from '$lib/server/valkey';
 import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 
 export const load: PageServerLoad = async ({ cookies }) => {
-	const getTeamWithUsernames = (
-		team: { players: string[] },
-		allUsers: Record<string, { displayName: string }>
-	) => {
+	const getTeamWithUsernames = (team: { players: string[] }, allUsers: Record<string, string>) => {
 		if (!team || !allUsers) return { ...team, usernames: [] };
-		const usernames = team.players.map((id) => allUsers[id]?.displayName).filter(Boolean);
+		const usernames = team.players
+			.map((id) => JSON.parse(allUsers[id])?.displayName)
+			.filter(Boolean);
+		console.log(usernames);
 		return { ...team, usernames };
 	};
 
 	const userId = cookies.get('userId');
 
-	const espnApi = createEspnApiClient(valkey);
+	const espnApi = createEspnApiClient();
 	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
 
 	const [{ weekData, allUserData }, weekEvents] = await Promise.all([
@@ -29,26 +29,15 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		return fail(500, { error: 'Could not load week data. Please try again later.' });
 	}
 
-	const usersMap = new Map(
-		Array.isArray(allUserData)
-			? allUserData.map((entry) => {
-					try {
-						return [entry.key, JSON.parse(entry.value)];
-					} catch {
-						return [entry.key, null];
-					}
-				})
-			: []
-	);
-	if (!usersMap || !userId) {
-		return fail(500, { error: 'Could not load user data. Please try again later.' });
-	}
+	const currentUserDataFromId = userId
+		? allUserData[userId]
+			? JSON.parse(allUserData[userId] as string)
+			: null
+		: null;
 
-	const allUsersObject = Object.fromEntries(usersMap);
-
-	const currentUserData = { ...usersMap.get(userId), userId: userId };
-	const team1Data = getTeamWithUsernames(weekData?.team1, allUsersObject);
-	const team2Data = getTeamWithUsernames(weekData?.team2, allUsersObject);
+	const currentUserData = userId ? { ...currentUserDataFromId, userId } : null;
+	const team1Data = getTeamWithUsernames(weekData?.team1, allUserData);
+	const team2Data = getTeamWithUsernames(weekData?.team2, allUserData);
 
 	const currentWeekData = {
 		seasonType: seasonType,

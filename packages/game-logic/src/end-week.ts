@@ -1,7 +1,7 @@
 import { createEspnApiClient } from './api/espn-api';
 
 export const endWeek = async (valkey: any, drizzle: any) => {
-	const espnApi = createEspnApiClient(valkey);
+	const espnApi = createEspnApiClient();
 	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;

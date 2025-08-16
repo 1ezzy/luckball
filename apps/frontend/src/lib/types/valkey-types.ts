@@ -29,4 +29,4 @@ export interface User {
 	teamAssignment: string | null;
 }
 
-export type AllUsersData = Record<string, User>;
+export type AllUsersData = Record<string, string>;

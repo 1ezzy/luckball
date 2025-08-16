@@ -45,9 +45,9 @@
 		weekJoined: displayName
 	});
 
-	onMount(() => {
-		console.log('page', teamData);
-	});
+	// onMount(() => {
+	// 	console.log('page', teamData);
+	// });
 </script>
 
 {#if currentWeekData?.weekStatus === WeekStatus.Pending}

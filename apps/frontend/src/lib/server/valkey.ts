@@ -1,6 +1,5 @@
 import { valkey } from '$lib/clients/valkey-client';
 import type { AllUsersData, User, WeekData } from '$lib/types/valkey-types';
-import { Batch } from '@valkey/valkey-glide';
 
 export async function getWeekAndUserData(
 	seasonType: string,
@@ -9,17 +8,18 @@ export async function getWeekAndUserData(
 	const weekDataKey = `${seasonType}:week:${week}:data`;
 	const allUsersDataKey = `${seasonType}:week:${week}:users`;
 
-	const transaction = new Batch(false).get(weekDataKey).hgetall(allUsersDataKey);
-
-	const results = await valkey.exec(transaction, true);
+	const results = await valkey.multi().get(weekDataKey).hgetall(allUsersDataKey).exec();
 	if (!results) {
 		return { weekData: null, allUserData: null };
 	}
 
-	const weekDataString = results[0] as string;
-	const weekData = weekDataString ? (JSON.parse(weekDataString) as WeekData) : null;
+	const weekDataRes = results[0][1] as string;
+	const weekData = weekDataRes ? (JSON.parse(weekDataRes) as WeekData) : null;
 
-	const allUserData = results[1] as AllUsersData | null;
+	const allUserData = results[1][1] as Record<string, string> | null;
+	if (!allUserData) {
+		return { weekData, allUserData: null };
+	}
 
 	return { weekData, allUserData };
 }
@@ -47,7 +47,7 @@ export async function getAllUsersData(
 	}
 
 	const allUsersData = Object.fromEntries(
-		Object.entries(usersDataHash).map(([key, value]) => [key, JSON.parse(value.value as string)])
+		Object.entries(usersDataHash).map(([key, value]) => [key, JSON.parse(value as string)])
 	) as AllUsersData;
 
 	return { allUsersData };

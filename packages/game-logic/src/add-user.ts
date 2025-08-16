@@ -5,7 +5,7 @@ export const addUserToWeek = async (displayName: string, userId: string, valkey:
 		return { success: false, message: 'displayName and userId are required' };
 	}
 
-	const espnApi = createEspnApiClient(valkey);
+	const espnApi = createEspnApiClient();
 	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
 
 	// check if there is an active round for the week

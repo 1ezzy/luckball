@@ -5,7 +5,7 @@
 	"main": "./src/index.ts",
 	"types": "./src/index.ts",
 	"dependencies": {
-		"@valkey/valkey-glide": "^2.0.1"
+		"iovalkey": "^0.3.3"
 	},
 	"devDependencies": {
 		"typescript": "^5.5.3"

@@ -11,7 +11,7 @@
 		"@luckball/valkey-client": "workspace:*",
 		"@luckball/drizzle-client": "workspace:*",
 		"@luckball/game-logic": "workspace:*",
-		"@valkey/valkey-glide": "^2.0.1"
+		"iovalkey": "^0.3.3"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20250730.0",
