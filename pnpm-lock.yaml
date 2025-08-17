@@ -54,15 +54,9 @@ importers:
         specifier: ^0.3.3
         version: 0.3.3
     devDependencies:
-      '@cloudflare/workers-types':
-        specifier: ^4.20250730.0
-        version: 4.20250802.0
       typescript:
         specifier: ^5.5.2
         version: 5.9.2
-      wrangler:
-        specifier: ^4.27.0
-        version: 4.27.0(@cloudflare/workers-types@4.20250802.0)
 
   apps/frontend:
     dependencies:
