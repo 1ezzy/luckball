@@ -6,3 +6,7 @@
 - automate week changing
 
 - calculate scores during live games
+
+- move from cloudflare worker to droplet
+  - ensure both databases only work locally
+  - use nginx and ssl

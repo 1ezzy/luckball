@@ -1,7 +1,7 @@
 packages:
   - 'apps/*'
   - 'apps/frontend'
-  - 'apps/cron-triggers'
+  - 'apps/cron-jobs'
   - 'packages/*'
   - 'packages/valkey-client'
   - 'packages/drizzle-client'

@@ -2,7 +2,7 @@
 
 This project is a pnpm monorepo that includes two packages and two applications.
 
-- The `cron-triggers` app is responsible for triggering cron events for the application via its own dedicated Cloudflare Worker
+- The `cron-jobs` app is responsible for triggering cron events for the application via its own dedicated Cloudflare Worker
 - The `frontend` app is a SvelteKit frontend for my application and it uses some of the following technologies:
   1. Svelte and SvelteKit (front-end and full stack framework)
   2. svelte-ux (A collection of Svelte components, actions, stores, and utilities)

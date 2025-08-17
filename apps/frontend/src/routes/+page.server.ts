@@ -12,7 +12,6 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		const usernames = team.players
 			.map((id) => JSON.parse(allUsers[id])?.displayName)
 			.filter(Boolean);
-		console.log(usernames);
 		return { ...team, usernames };
 	};
 

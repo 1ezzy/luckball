@@ -27,5 +27,5 @@ export const baseConfig = ts.config(
 	}
 );
 
-// Default export for packages and cron-triggers
+// Default export for packages and cron-jobs
 export default baseConfig;

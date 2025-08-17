@@ -1,6 +1,6 @@
 node_modules
 apps/frontend/node_modules
-apps/cron-triggers/node_modules
+apps/cron-jobs/node_modules
 
 # Output
 apps/frontend/.wrangler
@@ -18,3 +18,4 @@ Thumbs.db
 apps/frontend/vite.config.js.timestamp-*
 apps/frontend/vite.config.ts.timestamp-*
 
+docker-compose.override.yml
