@@ -1,40 +1,35 @@
-FROM node:18-alpine AS base
-
-RUN npm install -g pnpm
-
+# Base stage for production dependencies
+FROM node:20-alpine AS base
 WORKDIR /app
 
-# Copy workspace files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/ ./packages/
-
-# Copy frontend app
-COPY apps/frontend/package.json ./apps/frontend/
-COPY apps/frontend/ ./apps/frontend/
-
-# Install dependencies and build
-RUN pnpm install --frozen-lockfile
-RUN pnpm --filter frontend build
-
-# Production stage
-FROM node:18-alpine AS production
-
-WORKDIR /app
+# Install pnpm
 RUN npm install -g pnpm
 
-# Copy workspace configuration
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/ ./packages/
+# Copy dependency manifests
+COPY package.json pnpm-workspace.yaml ./
 COPY apps/frontend/package.json ./apps/frontend/
+COPY packages/drizzle-client/package.json ./packages/drizzle-client/
+COPY packages/valkey-client/package.json ./packages/valkey-client/
 
-# Install production dependencies
-RUN pnpm install --frozen-lockfile --prod
+# Install only production dependencies
+RUN pnpm install --prod --frozen-lockfile=false
 
-# Copy built application
-COPY --from=base /app/apps/frontend/build ./apps/frontend/build
-COPY --from=base /app/apps/frontend/static ./apps/frontend/static
+# Production image
+FROM node:20-alpine AS production
+WORKDIR /app
 
+# Copy production dependencies from the base stage
+COPY --from=base /app/node_modules ./node_modules
+COPY --from=base /app/apps/frontend/node_modules ./apps/frontend/node_modules
+COPY --from=base /app/packages ./packages
+
+# Copy the pre-built application and necessary files
+COPY apps/frontend/build ./apps/frontend/build
+COPY apps/frontend/package.json ./apps/frontend/package.json
+COPY package.json .
+
+# Expose the port the app runs on
 EXPOSE 3000
 
-WORKDIR /app/apps/frontend
-CMD ["node", "-r", "dotenv/config", "build"]
+# Start the app
+CMD ["node", "apps/frontend/build"]
