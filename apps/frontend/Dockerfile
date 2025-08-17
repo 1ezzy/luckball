@@ -22,8 +22,10 @@ COPY . .
 # Build the frontend application
 RUN pnpm --filter frontend build
 
-# Prune dev dependencies after the build
-RUN pnpm prune --prod --filter frontend
+# Prune dev dependencies by running prune inside the app's directory
+WORKDIR /app/apps/frontend
+RUN pnpm prune --prod
+WORKDIR /app
 
 
 # 3. Production stage: Create the final, lean image
