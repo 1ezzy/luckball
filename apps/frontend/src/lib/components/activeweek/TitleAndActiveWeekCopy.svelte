@@ -3,7 +3,7 @@
 </script>
 
 {#snippet copyText()}
-	<div class="flex w-full flex-col gap-2 text-start leading-8">
+	<div class="flex w-full flex-col gap-2 leading-8">
 		{#if weekJoined}
 			<span>
 				{currentWeekText} has begun! You can track both teams below; you are on team
@@ -19,7 +19,7 @@
 {/snippet}
 
 {#snippet titleCopy()}
-	<div class="flex w-full flex-row items-center gap-12">
+	<div class="flex w-full flex-col items-center gap-12 md:flex-row">
 		<h1 class="text-primary text-6xl font-bold">Luckball</h1>
 		<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
 	</div>

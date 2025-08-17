@@ -2,39 +2,29 @@
 	let { currentWeekText } = $props();
 </script>
 
+{#snippet textAndCopy(mobileGap: boolean)}
+	<div class="flex w-full flex-col items-center gap-12 md:flex-row">
+		<h1 class="text-primary text-6xl font-bold">Luckball</h1>
+		<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
+	</div>
+	<div class="flex w-full flex-col gap-8 leading-8">
+		{currentWeekText} has not started yet. You can join the week by entering a display name on the left
+		and clicking the "Join" button.
+	</div>
+{/snippet}
+
 <div class="hidden lg:block">
 	<div class="flex max-w-2xl flex-col gap-8">
-		<div class="flex w-full flex-row items-center gap-12">
-			<h1 class="text-primary text-6xl font-bold">Luckball</h1>
-			<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
-		</div>
-		<div class="flex w-full flex-col gap-8 text-start leading-8">
-			{currentWeekText} has not started yet. You can join the week by entering a display name on the
-			left and clicking the "Join" button.
-		</div>
+		{@render textAndCopy(false)}
 	</div>
 </div>
 <div class="hidden md:block lg:hidden">
-	<div class="flex max-w-2xl flex-col gap-8 text-start">
-		<div class="flex w-full flex-row items-center gap-12">
-			<h1 class="text-primary text-6xl font-bold">Luckball</h1>
-			<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
-		</div>
-		<div class="flex w-full flex-col gap-8 leading-8">
-			{currentWeekText} has not started yet. You can join the week by entering a display name on the
-			left and clicking the "Join" button.
-		</div>
+	<div class="flex max-w-2xl flex-col gap-8">
+		{@render textAndCopy(false)}
 	</div>
 </div>
 <div class="block md:hidden">
 	<div class="flex flex-col gap-8 text-center">
-		<div class="flex w-full flex-col items-center gap-4">
-			<h1 class="text-primary text-6xl font-bold">Luckball</h1>
-			<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
-		</div>
-		<div class="flex w-full flex-col gap-8 text-start leading-8">
-			{currentWeekText} has not started yet. You can join the week by entering a display name below and
-			clicking the "Join" button.
-		</div>
+		{@render textAndCopy(true)}
 	</div>
 </div>
