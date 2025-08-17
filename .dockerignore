@@ -4,7 +4,6 @@
 
 # Node
 node_modules
-pnpm-lock.yaml
 
 # OS
 .DS_Store
@@ -16,6 +15,7 @@ Thumbs.db
 
 # SvelteKit/Vite
 apps/frontend/.svelte-kit
+apps/frontend/build
 apps/frontend/vite.config.js.timestamp-*
 apps/frontend/vite.config.ts.timestamp-*
 
