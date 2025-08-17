@@ -16,7 +16,7 @@ Thumbs.db
 
 # SvelteKit/Vite
 apps/frontend/.svelte-kit
-apps/frontend/.wrangler
+apps/frontend/vite.config.js.timestamp-*
 apps/frontend/vite.config.ts.timestamp-*
 
 # IDE

@@ -11,6 +11,7 @@ COPY package.json ./
 COPY apps/frontend/package.json ./apps/frontend/
 COPY packages/drizzle-client/package.json ./packages/drizzle-client/
 COPY packages/valkey-client/package.json ./packages/valkey-client/
+COPY packages/game-logic/package.json ./packages/game-logic/
 
 # Install all dependencies (including devDependencies needed for build)
 # Using --frozen-lockfile=false to ensure it works without a lock file
@@ -38,6 +39,7 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/frontend/node_modules ./apps/frontend/node_modules
 COPY --from=builder /app/packages/drizzle-client ./packages/drizzle-client
 COPY --from=builder /app/packages/valkey-client ./packages/valkey-client
+COPY --from=builder /app/packages/game-logic ./packages/game-logic
 
 # Expose the port the app runs on
 EXPOSE 3000
