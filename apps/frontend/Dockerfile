@@ -12,8 +12,10 @@ COPY tsconfig.json ./
 RUN pnpm install --frozen-lockfile
 
 ENV SKIP_VALKEY=true
+ENV SKIP_DRIZZLE=true
 RUN pnpm --filter luckball-frontend build
 ENV SKIP_VALKEY=
+ENV SKIP_DRIZZLE=
 
 EXPOSE 3000
 
