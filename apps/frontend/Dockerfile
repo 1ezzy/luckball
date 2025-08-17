@@ -14,7 +14,6 @@ COPY packages/valkey-client/package.json ./packages/valkey-client/
 COPY packages/game-logic/package.json ./packages/game-logic/
 
 # Install all dependencies (including devDependencies needed for build)
-# Using --frozen-lockfile=false to ensure it works without a lock file
 RUN pnpm install --filter frontend --frozen-lockfile=false
 
 # Copy the rest of the source code
@@ -23,18 +22,22 @@ COPY . .
 # Build the frontend application
 RUN pnpm --filter frontend build
 
-# 2. Prune dev dependencies
-RUN pnpm prune --prod
+# Prune dev dependencies after the build
+RUN pnpm prune --prod --filter frontend
 
 
 # 3. Production stage: Create the final, lean image
 FROM node:20-alpine AS production
 WORKDIR /app
 
+# Set the NODE_ENV to production
+ENV NODE_ENV production
+
 # Copy only the necessary production files from the builder stage
 COPY --from=builder /app/apps/frontend/build ./apps/frontend/build
 COPY --from=builder /app/apps/frontend/package.json ./apps/frontend/package.json
 COPY --from=builder /app/package.json ./
+COPY --from=builder /app/pnpm-workspace.yaml ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/frontend/node_modules ./apps/frontend/node_modules
 COPY --from=builder /app/packages/drizzle-client ./packages/drizzle-client
