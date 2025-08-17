@@ -24,7 +24,7 @@ COPY . .
 RUN pnpm --filter frontend build
 
 # 2. Prune dev dependencies
-RUN pnpm -r prune --prod
+RUN pnpm prune --prod
 
 
 # 3. Production stage: Create the final, lean image
