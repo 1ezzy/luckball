@@ -1,7 +1,8 @@
 import { fail, type Actions } from '@sveltejs/kit';
 import { beginWeek, endWeek, startActiveWeek } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
-import { drizzle } from '$lib/clients/drizzle-client';
+// import { drizzle } from '$lib/clients/drizzle-client';
+const drizzle = null;
 
 export const actions: Actions = {
 	beginWeek: async () => {
