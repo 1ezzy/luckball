@@ -1,7 +1,10 @@
 *
 
-# SvelteKit/Vite
-!apps/frontend/.svelte-kit
-!apps/frontend/build
-!apps/frontend/vite.config.js.timestamp-*
-!apps/frontend/vite.config.ts.timestamp-*
+# needed files
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!apps/frontend/**
+!packages/drizzle-client/**
+!packages/valkey-client/**
+!packages/game-logic/**
