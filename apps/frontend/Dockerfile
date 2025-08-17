@@ -37,4 +37,4 @@ COPY --from=base /app/apps/frontend/static ./apps/frontend/static
 EXPOSE 3000
 
 WORKDIR /app/apps/frontend
-CMD ["node", "build"]
+CMD ["node", "-r", "dotenv/config", "build"]
