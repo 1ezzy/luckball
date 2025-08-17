@@ -9,7 +9,7 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      - VALKEY_URL=127.0.0.1
+      - VALKEY_URL=valkey
       - ORIGIN=https://luckball.pro
       - PORT=3000
       - HOST=0.0.0.0
@@ -30,7 +30,7 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      - VALKEY_URL=127.0.0.1
+      - VALKEY_URL=valkey
     depends_on:
       - postgres
       - valkey
