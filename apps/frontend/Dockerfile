@@ -15,7 +15,7 @@ COPY packages/game-logic/package.json ./packages/game-logic/
 
 # Install all dependencies (including devDependencies needed for build)
 # Using --frozen-lockfile=false to ensure it works without a lock file
-RUN pnpm install --frozen-lockfile=false
+RUN pnpm install --filter frontend --frozen-lockfile=false
 
 # Copy the rest of the source code
 COPY . .
