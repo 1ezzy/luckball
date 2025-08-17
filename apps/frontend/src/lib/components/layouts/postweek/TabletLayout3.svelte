@@ -14,11 +14,11 @@
 	} = $props();
 </script>
 
-<div class=" flex h-screen w-full flex-1 flex-col">
+<div class="flex h-screen w-full flex-1 flex-col justify-center">
 	<div class="flex flex-row items-center justify-center gap-16 px-12 pb-16">
 		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
 	</div>
-	<div class="pb-26 grid h-full grid-cols-3 gap-x-12 px-12">
+	<div class="pb-26 grid h-full max-h-[50vh] grid-cols-3 gap-x-12 px-12">
 		<div class="col-span-1 flex h-full items-center justify-center">
 			<WinningTeamCard {winningTeamName} {winningTeamScore} />
 		</div>
