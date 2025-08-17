@@ -1,23 +1,7 @@
-# Git
-.git
-.gitignore
-
-# Node
-node_modules
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Env
-*.env
-*.env.*
+*
 
 # SvelteKit/Vite
-apps/frontend/.svelte-kit
-apps/frontend/build
-apps/frontend/vite.config.js.timestamp-*
-apps/frontend/vite.config.ts.timestamp-*
-
-# IDE
-.vscode
+!apps/frontend/.svelte-kit
+!apps/frontend/build
+!apps/frontend/vite.config.js.timestamp-*
+!apps/frontend/vite.config.ts.timestamp-*
