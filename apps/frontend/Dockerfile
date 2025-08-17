@@ -16,14 +16,10 @@ COPY packages/game-logic/package.json ./packages/game-logic/
 RUN pnpm install --frozen-lockfile
 COPY . .
 
-ARG DATABASE_URL="postgresql://user:pass@localhost:5432/db"
-ARG VALKEY_URL="localhost"
-ENV DATABASE_URL=$DATABASE_URL
-ENV VALKEY_URL=$VALKEY_URL
 RUN pnpm --filter luckball-frontend build
 
 # Expose the port
 EXPOSE 3000
 
 # Start the app
-CMD ["pnpm", "--filter", "frontend", "start"]
+CMD ["pnpm", "--filter", "luckball-frontend", "start"]

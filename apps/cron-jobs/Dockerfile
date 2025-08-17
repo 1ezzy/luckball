@@ -19,4 +19,4 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Start the cron-jobs app
-CMD ["pnpm", "--filter", "cron-jobs", "start"]
+CMD ["pnpm", "--filter", "luckball-cron-jobs", "start"]
