@@ -13,9 +13,9 @@ COPY packages/valkey-client/package.json ./packages/valkey-client/
 COPY packages/game-logic/package.json ./packages/game-logic/
 
 # Install dependencies and build the frontend
-RUN pnpm install --filter frontend --frozen-lockfile
+RUN pnpm install --filter luckball-frontend --frozen-lockfile
 COPY . .
-RUN pnpm --filter frontend build
+RUN pnpm --filter luckball-frontend build
 
 # Expose the port
 EXPOSE 3000
