@@ -6,6 +6,7 @@
 !pnpm-workspace.yaml
 !tsconfig.json
 !apps/frontend/**
+!apps/cron-jobs/**
 !packages/drizzle-client/**
 !packages/valkey-client/**
 !packages/game-logic/**
