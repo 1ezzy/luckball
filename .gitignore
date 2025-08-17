@@ -17,6 +17,3 @@ Thumbs.db
 # Vite
 apps/frontend/vite.config.js.timestamp-*
 apps/frontend/vite.config.ts.timestamp-*
-
-docker-compose.override.yml
-pnpm-lock.yaml
