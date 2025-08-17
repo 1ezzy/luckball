@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    container_name: luckball-frontend
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - VALKEY_URL=valkey://valkey:6379
+      - ORIGIN=https://luckball.pro
+      - PORT=3000
+      - HOST=0.0.0.0
+      - PROTOCOL_HEADER=x-forwarded-proto
+      - HOST_HEADER=x-forwarded-host
+    depends_on:
+      - postgres
+      - valkey
+    restart: unless-stopped
+    networks:
+      - luckball-network
+
+  cron-jobs:
+    build:
+      context: .
+      dockerfile: apps/cron-jobs/Dockerfile
+    container_name: luckball-cron-jobs
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - VALKEY_URL=valkey://valkey:6379
+    depends_on:
+      - postgres
+      - valkey
+    restart: unless-stopped
+    networks:
+      - luckball-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: luckball-postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+    networks:
+      - luckball-network
+
+  valkey:
+    image: valkey/valkey:8-alpine
+    container_name: luckball-valkey
+    ports:
+      - '6379:6379'
+    volumes:
+      - valkey_data:/data
+    restart: unless-stopped
+    networks:
+      - luckball-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: luckball-nginx
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - frontend
+    restart: unless-stopped
+    networks:
+      - luckball-network
+
+volumes:
+  postgres_data:
+  valkey_data:
+
+networks:
+  luckball-network:
+    driver: bridge

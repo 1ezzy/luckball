@@ -14,7 +14,7 @@ This project is a pnpm monorepo that includes two packages and two applications.
 
 Some other technologies used in this project include:
 
-1. Cloudflare Workers for all apps in the repository (frontend worker uses the custom domain luckball.ezzy.dog)
+1.DigitalOcean Droplet: This project is hosted in a Docker Container that runs the app and my two databases.
 
 # Project Description
 
