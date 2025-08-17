@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { Card } from 'svelte-ux';
 
-	let { winningTeamName } = $props();
-
-	const winningTeamScore = 0;
+	let { winningTeamName, winningTeamScore } = $props();
 </script>
 
 <Card class="flex h-full flex-1 flex-col items-center justify-center gap-16 p-8 text-center">

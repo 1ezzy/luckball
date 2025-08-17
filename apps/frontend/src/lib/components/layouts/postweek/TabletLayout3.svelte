@@ -5,23 +5,22 @@
 	import RecordsCard from '$lib/components/postweek/RecordsCard.svelte';
 
 	let {
-		teamName,
-		userTeamName,
-		seasonPrefix,
-		currentWeek,
+		currentWeekText,
 		displayName,
 		winningTeamName,
+		winningTeamScore,
+		userTeamName,
 		bestNflTeamName
 	} = $props();
 </script>
 
 <div class=" flex h-screen w-full flex-1 flex-col">
 	<div class="flex flex-row items-center justify-center gap-16 px-12 pb-16">
-		<TitleAndPostWeekCopy {seasonPrefix} {currentWeek} {displayName} {teamName} {userTeamName} />
+		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
 	</div>
 	<div class="pb-26 grid h-full grid-cols-3 gap-x-12 px-12">
 		<div class="col-span-1 flex h-full items-center justify-center">
-			<WinningTeamCard {winningTeamName} />
+			<WinningTeamCard {winningTeamName} {winningTeamScore} />
 		</div>
 		<div class="col-span-1 flex h-full items-center justify-center">
 			<BestTeamCard {bestNflTeamName} />

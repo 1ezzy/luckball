@@ -1,7 +1,7 @@
 <script lang="ts">
-	let { seasonPrefix, currentWeek, displayName, teamName, userTeamName } = $props();
+	let { currentWeekText, displayName, winningTeamName, userTeamName } = $props();
 
-	let won = teamName === userTeamName;
+	let won = winningTeamName === userTeamName;
 </script>
 
 {#snippet textAndCopy(mobileGap: boolean)}
@@ -15,8 +15,7 @@
 			{won ? 'You Won This Week!' : 'You Lost This Week'}
 		</span>
 		<span>
-			{seasonPrefix} Week {currentWeek} has ended! Check out this week's winning team below. The next
-			round starts soon.
+			{currentWeekText} has ended! Check out this week's winning team below. The next round starts soon.
 		</span>
 	</div>
 {/snippet}

@@ -45,8 +45,17 @@
 		weekJoined: displayName
 	});
 
+	const postWeekLayoutProps = $derived({
+		currentWeekText: currentWeekData?.currentWeekText,
+		displayName: displayName,
+		winningTeamName: currentWeekData?.winningTeamName,
+		winningTeamScore: currentWeekData?.winningTeamScore,
+		bestNflTeamName: currentWeekData?.bestNflTeamName,
+		userTeamName: currentUserData?.teamAssignment
+	});
+
 	// onMount(() => {
-	// 	console.log('page', teamData);
+	// 	console.log('page', currentWeekData);
 	// });
 </script>
 
@@ -72,12 +81,12 @@
 	</div>
 {:else}
 	<div class="hidden h-screen lg:block">
-		<DesktopLayout3 {...layoutProps} />
+		<DesktopLayout3 {...postWeekLayoutProps} />
 	</div>
 	<div class="hidden h-screen md:block lg:hidden">
-		<TabletLayout3 {...layoutProps} />
+		<TabletLayout3 {...postWeekLayoutProps} />
 	</div>
 	<div class="block md:hidden">
-		<MobileLayout3 {...layoutProps} />
+		<MobileLayout3 {...postWeekLayoutProps} />
 	</div>
 {/if}

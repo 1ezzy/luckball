@@ -8,7 +8,7 @@ export async function getWeekAndUserData(
 	const weekDataKey = `${seasonType}:week:${week}:data`;
 	const allUsersDataKey = `${seasonType}:week:${week}:users`;
 
-	const results = await valkey.multi().get(weekDataKey).hgetall(allUsersDataKey).exec();
+	const results = await valkey?.multi().get(weekDataKey).hgetall(allUsersDataKey).exec();
 	if (!results) {
 		return { weekData: null, allUserData: null };
 	}
@@ -29,7 +29,7 @@ export async function getWeekData(
 	week: number
 ): Promise<{ weekData: WeekData }> {
 	const weekDataKey = `${seasonType}:week:${week}:data`;
-	const weekDataString = await valkey.get(weekDataKey);
+	const weekDataString = await valkey?.get(weekDataKey);
 	const weekData = weekDataString ? JSON.parse(weekDataString as string) : null;
 
 	return { weekData };
@@ -40,7 +40,7 @@ export async function getAllUsersData(
 	week: number
 ): Promise<{ allUsersData: AllUsersData | null }> {
 	const userDataKey = `${seasonType}:week:${week}:users`;
-	const usersDataHash = await valkey.hgetall(userDataKey);
+	const usersDataHash = await valkey?.hgetall(userDataKey);
 
 	if (!usersDataHash) {
 		return { allUsersData: null };
@@ -59,7 +59,7 @@ export async function getUserDataById(
 	userId: string
 ): Promise<{ userData: User }> {
 	const userDataKey = `${seasonType}:week:${week}:users`;
-	const userDataString = await valkey.hget(userDataKey, userId);
+	const userDataString = await valkey?.hget(userDataKey, userId);
 	const userData = userDataString ? JSON.parse(userDataString as string) : null;
 	return { userData };
 }

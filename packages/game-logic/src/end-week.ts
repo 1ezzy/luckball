@@ -21,10 +21,12 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	}
 
 	// get the week data
-	const weekData = await valkey.get(weekDataKey);
-	if (weekData.length === 0) {
+	const weekDataRaw = await valkey.get(weekDataKey);
+	if (weekDataRaw.length === 0) {
 		return { success: false, message: 'No week data found.' };
 	}
+
+	const weekData = JSON.parse(weekDataRaw);
 
 	// get relevant team data for new object
 	const team1Name = weekData.team1?.name;
@@ -33,17 +35,21 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	const team2Players = weekData.team2?.players;
 
 	// determine the win status for both teams
-	let team1WinStatus, team2WinStatus, winningTeam;
+	let team1WinStatus, team2WinStatus, winningTeamName, winningTeamScore;
 	const team1Score = weekData.team1.totalScore;
 	const team2Score = weekData.team2.totalScore;
 	if (team1Score > team2Score) {
 		team1WinStatus = true;
 		team2WinStatus = false;
-		winningTeam = team1Name;
+
+		winningTeamName = team1Name;
+		winningTeamScore = team1Score;
 	} else {
 		team1WinStatus = false;
 		team2WinStatus = true;
-		winningTeam = team2Name;
+
+		winningTeamName = team2Name;
+		winningTeamScore = team2Score;
 	}
 
 	// update the user week to the end status
@@ -61,7 +67,8 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 			winStatus: team2WinStatus
 		},
 		status: 'ended',
-		winningTeam: winningTeam
+		winningTeamName: winningTeamName,
+		winningTeamScore: winningTeamScore
 	};
 
 	// save the results
