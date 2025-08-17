@@ -30,6 +30,7 @@
 		]
 	},
 	"dependencies": {
+		"iovalkey": "^0.3.3",
 		"p-limit": "^6.2.0"
 	}
 }
