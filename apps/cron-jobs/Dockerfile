@@ -14,8 +14,6 @@ COPY packages/game-logic/package.json ./packages/game-logic/
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
-
-# Copy the rest of the source code
 COPY . .
 
 # Start the cron-jobs app
