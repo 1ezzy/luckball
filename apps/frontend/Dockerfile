@@ -13,7 +13,7 @@ COPY packages/valkey-client/package.json ./packages/valkey-client/
 COPY packages/game-logic/package.json ./packages/game-logic/
 
 # Install dependencies and build the frontend
-RUN pnpm install --filter luckball-frontend --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm --filter luckball-frontend build
 

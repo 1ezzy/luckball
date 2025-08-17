@@ -1,36 +1,22 @@
-FROM node:18-alpine AS base
-
-RUN npm install -g pnpm
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy workspace files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/ ./packages/
+# Install pnpm
+RUN npm install -g pnpm
 
-# Copy cron jobs app
+# Copy only the necessary files for dependency installation
+COPY pnpm-workspace.yaml pnpm-lock.yaml package.json ./
 COPY apps/cron-jobs/package.json ./apps/cron-jobs/
-COPY apps/cron-jobs/ ./apps/cron-jobs/
+COPY packages/drizzle-client/package.json ./packages/drizzle-client/
+COPY packages/valkey-client/package.json ./packages/valkey-client/
+COPY packages/game-logic/package.json ./packages/game-logic/
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Production stage
-FROM node:18-alpine AS production
+# Copy the rest of the source code
+COPY . .
 
-WORKDIR /app
-RUN npm install -g pnpm
-
-# Copy workspace configuration
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/ ./packages/
-COPY apps/cron-jobs/package.json ./apps/cron-jobs/
-
-# Install production dependencies
-RUN pnpm install --frozen-lockfile --prod
-
-# Copy application code
-COPY --from=base /app/apps/cron-jobs ./apps/cron-jobs
-
-WORKDIR /app/apps/cron-jobs
-CMD ["node", "index.js"]
+# Start the cron-jobs app
+CMD ["pnpm", "--filter", "cron-jobs", "start"]
