@@ -1,6 +1,6 @@
 import Valkey from 'iovalkey';
 
-export function createValkeyClient(url: string, username: string, password: string) {
+export function createValkeyClient(url: string) {
 	if (!url) {
 		throw new Error('Valkey URL must be provided.');
 	}
@@ -8,8 +8,6 @@ export function createValkeyClient(url: string, username: string, password: stri
 	return new Valkey({
 		port: 6379,
 		host: url,
-		username: username,
-		password: password,
 		db: 0
 	});
 }
