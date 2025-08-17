@@ -4,6 +4,7 @@
 !package.json
 !pnpm-lock.yaml
 !pnpm-workspace.yaml
+!tsconfig.json
 !apps/frontend/**
 !packages/drizzle-client/**
 !packages/valkey-client/**
