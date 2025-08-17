@@ -17,6 +17,9 @@ importers:
       p-limit:
         specifier: ^6.2.0
         version: 6.2.0
+      postgres:
+        specifier: ^3.4.7
+        version: 3.4.7
     devDependencies:
       '@eslint/compat':
         specifier: ^1.2.5

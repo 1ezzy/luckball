@@ -32,6 +32,7 @@
 	"dependencies": {
 		"drizzle-orm": "^0.44.4",
 		"iovalkey": "^0.3.3",
-		"p-limit": "^6.2.0"
+		"p-limit": "^6.2.0",
+		"postgres": "^3.4.7"
 	}
 }
