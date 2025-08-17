@@ -7,19 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      drizzle-orm:
-        specifier: ^0.44.4
-        version: 0.44.4(@cloudflare/workers-types@4.20250802.0)(@types/pg@8.15.5)(@upstash/redis@1.35.3)(postgres@3.4.7)
-      iovalkey:
-        specifier: ^0.3.3
-        version: 0.3.3
-      p-limit:
-        specifier: ^6.2.0
-        version: 6.2.0
-      postgres:
-        specifier: ^3.4.7
-        version: 3.4.7
     devDependencies:
       '@eslint/compat':
         specifier: ^1.2.5
