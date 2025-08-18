@@ -47,8 +47,6 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
     restart: unless-stopped
     networks:
       - luckball-network
@@ -56,8 +54,6 @@ services:
   valkey:
     image: valkey/valkey:8-alpine
     container_name: luckball-valkey
-    ports:
-      - '6379:6379'
     volumes:
       - valkey_data:/data
     restart: unless-stopped
