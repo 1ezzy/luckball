@@ -4,16 +4,8 @@
 	import TitleAndActiveWeekCopy from '$lib/components/activeweek/TitleAndActiveWeekCopy.svelte';
 	import { Tabs } from 'svelte-ux';
 
-	let {
-		matchups,
-		matchupDates,
-		matchupTeams,
-		teamData,
-		userTeamAssignment,
-		currentWeekText,
-		displayName,
-		weekJoined
-	} = $props();
+	let { matchups, teamData, userTeamAssignment, currentWeekText, displayName, weekJoined } =
+		$props();
 
 	const options = [
 		{

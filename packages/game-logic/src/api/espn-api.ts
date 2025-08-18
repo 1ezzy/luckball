@@ -57,6 +57,25 @@ export class EspnApiClient {
 			teams: teams
 		};
 	}
+
+	async getMatchupScores(matchupId: number, teamIndex: number): Promise<number[]> {
+		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events';
+		const response = await this.fetch(
+			`${baseUrl}/${matchupId}/competitions/${matchupId}/competitors`
+		);
+
+		const competitors = await response.json();
+		const scores = await Promise.all(
+			competitors.items.map(async (competitor: any) => {
+				const scoreUrl = competitor.score.$ref.replace('http://', 'https://');
+				const scoreRes = await fetch(scoreUrl);
+				const scoreData = await scoreRes.json();
+				return scoreData.value;
+			})
+		);
+
+		return scores;
+	}
 }
 
 export const createEspnApiClient = (customFetch?: typeof fetch) => {

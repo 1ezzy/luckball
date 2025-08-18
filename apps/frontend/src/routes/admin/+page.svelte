@@ -16,4 +16,7 @@
 	<form method="post" action="?/endWeek" use:enhance>
 		<Button type="submit" variant="fill">End Week</Button>
 	</form>
+	<form method="post" action="?/updateMatchups" use:enhance>
+		<Button type="submit" variant="fill">Update Matchups</Button>
+	</form>
 </div>

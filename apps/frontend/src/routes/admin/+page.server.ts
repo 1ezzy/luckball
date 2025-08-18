@@ -1,5 +1,5 @@
 import { fail, type Actions } from '@sveltejs/kit';
-import { beginWeek, endWeek, startActiveWeek } from '@luckball/game-logic';
+import { beginWeek, endWeek, startActiveWeek, updateMatchups } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 // import { drizzle } from '$lib/clients/drizzle-client';
 const drizzle = null;
@@ -34,6 +34,15 @@ export const actions: Actions = {
 	},
 	endWeek: async () => {
 		const result = await endWeek(valkey, drizzle);
+
+		if (!result.success) {
+			return fail(400, { error: result.message });
+		}
+
+		return { success: true };
+	},
+	updateMatchups: async () => {
+		const result = await updateMatchups(valkey);
 
 		if (!result.success) {
 			return fail(400, { error: result.message });
