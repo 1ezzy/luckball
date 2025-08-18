@@ -4,16 +4,8 @@
 	import TitleAndActiveWeekCopy from '$lib/components/activeweek/TitleAndActiveWeekCopy.svelte';
 	import { Tabs } from 'svelte-ux';
 
-	let {
-		matchups,
-		matchupDates,
-		matchupTeams,
-		teamData,
-		userTeamAssignment,
-		currentWeekText,
-		displayName,
-		weekJoined
-	} = $props();
+	let { matchups, teamData, userTeamAssignment, currentWeekText, displayName, weekJoined } =
+		$props();
 
 	const options = [
 		{
@@ -49,7 +41,7 @@
 				<div class="flex flex-col items-start justify-center gap-8 pt-8">
 					{#if value === 'schedule'}
 						<div class="flex h-full w-full flex-col gap-4 pr-4">
-							<ScheduleCard {matchups} {matchupDates} {matchupTeams} {currentWeekText} />
+							<ScheduleCard {matchups} {currentWeekText} />
 						</div>
 					{:else if value === 'matchups'}
 						<div class="flex h-full w-full flex-col gap-4 pr-4">

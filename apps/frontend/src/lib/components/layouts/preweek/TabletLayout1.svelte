@@ -4,7 +4,7 @@
 	import ScheduleCard from '$lib/components/shared/ScheduleCard.svelte';
 	import TitleAndPreWeekCopy from '$lib/components/preweek/TitleAndPreWeekCopy.svelte';
 
-	let { matchups, matchupDates, matchupTeams, currentWeekText, displayName, weekJoined } = $props();
+	let { matchups, currentWeekText, displayName, weekJoined } = $props();
 </script>
 
 <div class="grid h-screen w-full flex-1 grid-cols-12">
@@ -18,6 +18,6 @@
 		class="col-span-8 flex flex-col items-center justify-start gap-16 overflow-y-auto py-16 pr-12"
 	>
 		<TitleAndPreWeekCopy {currentWeekText} />
-		<ScheduleCard {matchups} {matchupDates} {matchupTeams} {currentWeekText} />
+		<ScheduleCard {matchups} {currentWeekText} />
 	</div>
 </div>

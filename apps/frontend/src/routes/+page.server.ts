@@ -3,7 +3,7 @@ import { dev } from '$app/environment';
 import type { PageServerLoad } from './$types';
 import { addUserToWeek } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
-import { getWeekAndUserData } from '$lib/server/valkey';
+import { getMatchupData, getWeekAndUserData } from '$lib/server/valkey';
 import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 
 export const load: PageServerLoad = async ({ cookies }) => {
@@ -28,6 +28,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		return fail(500, { error: 'Could not load week data. Please try again later.' });
 	}
 
+	const matchupData = await getMatchupData(seasonType, currentWeek);
+
 	const currentUserDataFromId = userId
 		? allUserData[userId]
 			? JSON.parse(allUserData[userId] as string)
@@ -43,6 +45,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		currentWeekNum: currentWeek,
 		currentWeekText: currentWeekText,
 		weekEvents: weekEvents,
+		weekMatchups: matchupData,
 		weekStatus: weekData.status,
 		lastWinningTeam: weekData.lastWinningTeam,
 		winningTeamName: weekData.winningTeamName,

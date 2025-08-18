@@ -67,8 +67,28 @@ export const startActiveWeek = async (valkey: any, drizzle: any) => {
 	const team1Name = generateTeamName();
 	const team2Name = generateTeamName();
 
+	// update each player's teamAssignment
+	for (const userId of team1Players) {
+		const userDataString = await valkey.hget(usersKey, userId);
+		if (userDataString) {
+			const userData = JSON.parse(userDataString);
+			userData.teamAssignment = team1Name;
+			await valkey.hset(usersKey, userId, JSON.stringify(userData));
+		}
+	}
+
+	for (const userId of team2Players) {
+		const userDataString = await valkey.hget(usersKey, userId);
+		if (userDataString) {
+			const userData = JSON.parse(userDataString);
+			userData.teamAssignment = team2Name;
+			await valkey.hset(usersKey, userId, JSON.stringify(userData));
+		}
+	}
+
 	// randomly select one team from each matchup to assign to both teams
-	const [team1NflTeams, team2NflTeams] = shuffleNflTeams(matchups);
+	const matchupEvents = matchups.map((matchup: string) => JSON.parse(matchup).event);
+	const [team1NflTeams, team2NflTeams] = shuffleNflTeams(matchupEvents);
 
 	// create week data with new teams
 	const weekData = {

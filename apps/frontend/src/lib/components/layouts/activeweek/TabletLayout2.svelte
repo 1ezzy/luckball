@@ -46,7 +46,7 @@
 			<svelte:fragment slot="content" let:value>
 				<div class="flex flex-col items-start justify-center gap-8 pt-8">
 					{#if value === 'schedule'}
-						<ScheduleCard {matchups} {matchupDates} {matchupTeams} {currentWeekText} />
+						<ScheduleCard {matchups} {currentWeekText} />
 					{:else if value === 'matchups'}
 						<div class="flex h-full w-full flex-col gap-4 pr-4">
 							<h2 class="text-secondary text-2xl">

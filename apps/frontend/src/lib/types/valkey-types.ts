@@ -12,6 +12,13 @@ export enum WeekStatus {
 	Ended = 'ended'
 }
 
+export interface MatchupData {
+	event: string;
+	id: string;
+	date: Date;
+	teams: string[];
+}
+
 export interface WeekData {
 	team1: Team;
 	team2: Team;

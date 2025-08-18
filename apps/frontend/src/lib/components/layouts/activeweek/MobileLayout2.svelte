@@ -2,16 +2,8 @@
 	import ScheduleCard from '$lib/components/shared/ScheduleCard.svelte';
 	import TeamCard from '$lib/components/activeweek/TeamCard.svelte';
 	import TitleAndActiveWeekCopy from '$lib/components/activeweek/TitleAndActiveWeekCopy.svelte';
-	let {
-		matchups,
-		matchupDates,
-		matchupTeams,
-		teamData,
-		userTeamAssignment,
-		currentWeekText,
-		displayName,
-		weekJoined
-	} = $props();
+	let { matchups, teamData, userTeamAssignment, currentWeekText, displayName, weekJoined } =
+		$props();
 </script>
 
 <div class="flex w-full flex-1 flex-col gap-16 p-8">
@@ -25,5 +17,5 @@
 		</div>
 	</div>
 	<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-	<ScheduleCard {matchups} {matchupDates} {matchupTeams} {currentWeekText} />
+	<ScheduleCard {matchups} {currentWeekText} />
 </div>

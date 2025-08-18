@@ -10,3 +10,6 @@
 - move from cloudflare worker to droplet
   - ensure both databases only work locally
   - use nginx and ssl
+
+- fix bug in active week copy where team isnt shown
+  - append team assignment to user data on start week action

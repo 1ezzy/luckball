@@ -1,5 +1,5 @@
 import { valkey } from '$lib/clients/valkey-client';
-import type { AllUsersData, User, WeekData } from '$lib/types/valkey-types';
+import type { AllUsersData, MatchupData, User, WeekData } from '$lib/types/valkey-types';
 
 export async function getWeekAndUserData(
 	seasonType: string,
@@ -62,4 +62,18 @@ export async function getUserDataById(
 	const userDataString = await valkey?.hget(userDataKey, userId);
 	const userData = userDataString ? JSON.parse(userDataString as string) : null;
 	return { userData };
+}
+
+export async function getMatchupData(
+	seasonType: string,
+	week: number
+): Promise<{ matchupData: MatchupData[] | null }> {
+	const matchupDataKey = `${seasonType}:week:${week}:matchups`;
+	const matchupDataRaw = await valkey?.lrange(matchupDataKey, 0, -1);
+	if (!matchupDataRaw) {
+		return { matchupData: null };
+	}
+
+	const matchupData = matchupDataRaw?.map((item) => JSON.parse(item) as MatchupData);
+	return { matchupData };
 }
