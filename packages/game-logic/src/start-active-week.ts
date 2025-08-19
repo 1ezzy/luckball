@@ -57,6 +57,17 @@ export const startActiveWeek = async (valkey: any, drizzle: any) => {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 
+	const updatedMatchups = matchups.map((matchup: string, idx: number) => {
+		const matchupObj = JSON.parse(matchup);
+		const scoresObjList = matchupObj.teams.map((team: string, i: number) => ({
+			[team]: 0
+		}));
+		return JSON.stringify({
+			...matchupObj,
+			matchupScores: scoresObjList
+		});
+	});
+
 	// shuffle the list of users and split the list into two lists
 	const shuffledUsers = shuffleArray(users);
 	const midpoint = Math.ceil(shuffledUsers.length / 2);
@@ -111,6 +122,10 @@ export const startActiveWeek = async (valkey: any, drizzle: any) => {
 
 	// save the week data to valkey
 	await valkey.set(weekDataKey, JSON.stringify(weekData));
+
+	// save the matchup data to valkey
+	await valkey.del(`${seasonType}:week:${currentWeek}:matchups`);
+	await valkey.lpush(`${seasonType}:week:${currentWeek}:matchups`, updatedMatchups);
 
 	return { success: true, message: `Week ${currentWeek} started successfully.` };
 };

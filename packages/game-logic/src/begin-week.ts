@@ -26,9 +26,27 @@ export const beginWeek = async (valkey: any, drizzle: any, prevWeek = false) => 
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 
+	const matchupScores: number[][] = [];
+	for (let i = 0; i < matchups.length; i++) {
+		const matchup = JSON.parse(matchups[i]);
+		const matchupScoreList = await espnApi.getMatchupScores(matchup.id, matchup.startingIndex);
+		matchupScores.push(matchupScoreList.reverse());
+	}
+
+	const updatedMatchups = matchups.map((matchup: string, idx: number) => {
+		const matchupObj = JSON.parse(matchup);
+		const scoresObjList = matchupObj.teams.map((team: string, i: number) => ({
+			[team]: 0
+		}));
+		return JSON.stringify({
+			...matchupObj,
+			matchupScores: scoresObjList
+		});
+	});
+
 	// update valkey with new match data
 	await valkey.del(`${seasonType}:week:${currentWeek}:matchups`);
-	await valkey.lpush(`${seasonType}:week:${currentWeek}:matchups`, matchups);
+	await valkey.lpush(`${seasonType}:week:${currentWeek}:matchups`, updatedMatchups);
 
 	// get the previous week data
 	const prevWeekData = await valkey.get(prevWeekDataKey);

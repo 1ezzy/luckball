@@ -25,7 +25,7 @@
 	// declaring prop objects for each layout
 	const preWeekLayoutProps = $derived({
 		matchups: matchups?.matchupData,
-		matchupTeams: data.currentWeekData?.weekEvents.teams,
+		matchupTeams: matchups?.matchupData?.map((matchup) => matchup.teams),
 		teamData: teamData,
 		currentWeekText: currentWeekData?.currentWeekText,
 		displayName: displayName,
@@ -34,7 +34,7 @@
 
 	const activeWeekLayoutProps = $derived({
 		matchups: matchups?.matchupData,
-		matchupTeams: data.currentWeekData?.weekEvents.teams,
+		matchupTeams: matchups?.matchupData?.map((matchup) => matchup.teams),
 		teamData: teamData,
 		userTeamAssignment: currentUserData?.teamAssignment,
 		currentWeekText: currentWeekData?.currentWeekText,
@@ -52,7 +52,7 @@
 	});
 
 	// onMount(() => {
-	// 	console.log('page', matchups);
+	// 	console.log('page', data.currentWeekData?.weekScores);
 	// });
 </script>
 

@@ -12,17 +12,23 @@ export enum WeekStatus {
 	Ended = 'ended'
 }
 
+export interface MatchupScore {
+	[teamName: string]: number;
+}
+
 export interface MatchupData {
 	event: string;
 	id: string;
 	date: Date;
 	teams: string[];
+	matchupScores: MatchupScore[];
 }
 
 export interface WeekData {
 	team1: Team;
 	team2: Team;
 	status: WeekStatus;
+	score?: string[];
 	winningTeamName?: string;
 	winningTeamScore?: string;
 	bestNflTeamName?: string;

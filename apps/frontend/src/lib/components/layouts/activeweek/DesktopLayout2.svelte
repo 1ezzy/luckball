@@ -41,7 +41,7 @@
 				<div class="flex flex-col items-start justify-center gap-8 pt-8">
 					{#if value === 'schedule'}
 						<div class="flex h-full w-full flex-col gap-4 pr-4">
-							<ScheduleCard {matchups} {currentWeekText} />
+							<ScheduleCard showScores={true} {matchups} {currentWeekText} />
 						</div>
 					{:else if value === 'matchups'}
 						<div class="flex h-full w-full flex-col gap-4 pr-4">
@@ -49,8 +49,8 @@
 								Teams for {currentWeekText}
 							</h2>
 							<div class="flex w-full flex-row gap-8">
-								<TeamCard teamPlayerData={teamData?.team1} {displayName} />
-								<TeamCard teamPlayerData={teamData?.team2} {displayName} />
+								<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />
+								<TeamCard teamPlayerData={teamData?.team2} {displayName} {matchups} />
 							</div>
 						</div>
 					{/if}

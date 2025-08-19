@@ -12,10 +12,10 @@
 	<div class="flex flex-col gap-4 overflow-y-scroll">
 		<h2 class="text-secondary text-2xl">Teams for {currentWeekText}</h2>
 		<div class="flex flex-col gap-16">
-			<TeamCard teamPlayerData={teamData?.team1} {displayName} />
-			<TeamCard teamPlayerData={teamData?.team2} {displayName} />
+			<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />
+			<TeamCard teamPlayerData={teamData?.team2} {displayName} {matchups} />
 		</div>
 	</div>
 	<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-	<ScheduleCard {matchups} {currentWeekText} />
+	<ScheduleCard showScores={true} {matchups} {currentWeekText} />
 </div>

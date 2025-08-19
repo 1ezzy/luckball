@@ -10,10 +10,12 @@
 		<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
 	</div>
 	<div class="flex w-full flex-col gap-2 leading-8">
-		<span class="text-accent text-2xl">
-			<span class="text-white">{displayName},</span>
-			{won ? 'You Won This Week!' : 'You Lost This Week'}
-		</span>
+		{#if displayName}
+			<span class="text-accent text-2xl">
+				<span class="text-white">{displayName},</span>
+				{won ? 'You Won This Week!' : 'You Lost This Week'}
+			</span>
+		{/if}
 		<span>
 			{currentWeekText} has ended! Check out this week's winning team below. The next round starts soon.
 		</span>
