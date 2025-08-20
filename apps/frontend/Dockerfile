@@ -9,7 +9,6 @@ COPY apps/frontend/package.json ./apps/frontend/
 COPY packages/drizzle-client/package.json ./packages/drizzle-client/
 COPY packages/valkey-client/package.json ./packages/valkey-client/
 COPY packages/game-logic/package.json ./packages/game-logic/
-COPY packages/some-other-package/package.json ./packages/some-other-package/ # Add any other needed package.json files
 
 RUN pnpm install --frozen-lockfile
 
