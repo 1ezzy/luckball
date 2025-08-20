@@ -69,11 +69,11 @@ export async function getMatchupData(
 	week: number
 ): Promise<{ matchupData: MatchupData[] | null }> {
 	const matchupDataKey = `${seasonType}:week:${week}:matchups`;
-	const matchupDataRaw = await valkey?.lrange(matchupDataKey, 0, -1);
+	const matchupDataRaw = await valkey?.get(matchupDataKey);
 	if (!matchupDataRaw) {
 		return { matchupData: null };
 	}
 
-	const matchupData = matchupDataRaw?.map((item) => JSON.parse(item) as MatchupData);
+	const matchupData = JSON.parse(matchupDataRaw)?.map((item: MatchupData) => item);
 	return { matchupData };
 }

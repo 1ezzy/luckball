@@ -1,3 +1,4 @@
+import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 import { createEspnApiClient } from './api/espn-api';
 
 export const beginWeek = async (valkey: any, drizzle: any, prevWeek = false) => {
@@ -15,38 +16,29 @@ export const beginWeek = async (valkey: any, drizzle: any, prevWeek = false) => 
 		const team1 = event.shortName.split(' ')[0];
 		const team2 = event.shortName.split(' ')[2];
 		const teams: string[] = [team1, team2];
-		return JSON.stringify({
+		return {
 			event: event.shortName,
 			id: event.id,
 			date: event.date,
 			teams: teams
-		});
+		};
 	});
 	if (matchups.length === 0) {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 
-	const matchupScores: number[][] = [];
-	for (let i = 0; i < matchups.length; i++) {
-		const matchup = JSON.parse(matchups[i]);
-		const matchupScoreList = await espnApi.getMatchupScores(matchup.id, matchup.startingIndex);
-		matchupScores.push(matchupScoreList.reverse());
-	}
-
-	const updatedMatchups = matchups.map((matchup: string, idx: number) => {
-		const matchupObj = JSON.parse(matchup);
-		const scoresObjList = matchupObj.teams.map((team: string, i: number) => ({
+	const updatedMatchups = matchups.map((matchup: MatchupData) => {
+		const scoresObjList = matchup.teams.map((team: string) => ({
 			[team]: 0
 		}));
-		return JSON.stringify({
-			...matchupObj,
+		return {
+			...matchup,
 			matchupScores: scoresObjList
-		});
+		};
 	});
 
 	// update valkey with new match data
-	await valkey.del(`${seasonType}:week:${currentWeek}:matchups`);
-	await valkey.lpush(`${seasonType}:week:${currentWeek}:matchups`, updatedMatchups);
+	await valkey.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
 
 	// get the previous week data
 	const prevWeekData = await valkey.get(prevWeekDataKey);

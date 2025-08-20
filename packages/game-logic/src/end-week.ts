@@ -6,7 +6,6 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
-	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
 	// get a list of all the users
 	const users = await valkey.hgetall(usersKey);
@@ -14,19 +13,12 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 		return { success: false, message: 'No users to start the week.' };
 	}
 
-	// get a list of all the matchups
-	const matchups = await valkey.lrange(matchupsKey, 0, -1);
-	if (matchups.length === 0) {
-		return { success: false, message: 'No NFL matchups found for the week.' };
-	}
-
 	// get the week data
 	const weekDataRaw = await valkey.get(weekDataKey);
-	if (weekDataRaw.length === 0) {
-		return { success: false, message: 'No week data found.' };
-	}
-
 	const weekData = JSON.parse(weekDataRaw);
+	if (weekData.length === 0) {
+		return { success: false, message: 'No game data found for the week.' };
+	}
 
 	// get relevant team data for new object
 	const team1Name = weekData.team1?.name;

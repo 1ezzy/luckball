@@ -9,9 +9,10 @@ import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 export const load: PageServerLoad = async ({ cookies }) => {
 	const getTeamWithUsernames = (team: { players: string[] }, allUsers: Record<string, string>) => {
 		if (!team || !allUsers) return { ...team, usernames: [] };
-		const usernames = team.players
-			.map((id) => JSON.parse(allUsers[id])?.displayName)
-			.filter(Boolean);
+		const usernames = team.players.map((id) => {
+			if (!allUsers[id]) return [];
+			return JSON.parse(allUsers[id])?.displayName;
+		});
 		return { ...team, usernames };
 	};
 

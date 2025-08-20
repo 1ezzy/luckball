@@ -18,7 +18,7 @@ export interface MatchupScore {
 
 export interface MatchupData {
 	event: string;
-	id: string;
+	id: number;
 	date: Date;
 	teams: string[];
 	matchupScores: MatchupScore[];

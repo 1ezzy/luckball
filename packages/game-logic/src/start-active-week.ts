@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { createEspnApiClient } from './api/espn-api';
+import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 
 const generateTeamName = (): string => {
 	const adj = faker.word.adjective({ length: { min: 5, max: 8 }, strategy: 'fail' });
@@ -52,20 +53,20 @@ export const startActiveWeek = async (valkey: any, drizzle: any) => {
 	}
 
 	// get a list of all the matchups
-	const matchups = await valkey.lrange(matchupsKey, 0, -1);
-	if (matchups.length === 0) {
+	const matchupsRaw = await valkey.get(matchupsKey);
+	if (matchupsRaw.length === 0) {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
+	const matchups = JSON.parse(matchupsRaw);
 
-	const updatedMatchups = matchups.map((matchup: string, idx: number) => {
-		const matchupObj = JSON.parse(matchup);
-		const scoresObjList = matchupObj.teams.map((team: string, i: number) => ({
+	const updatedMatchups = matchups.map((matchup: MatchupData) => {
+		const scoresObjList = matchup.teams.map((team: string) => ({
 			[team]: 0
 		}));
-		return JSON.stringify({
-			...matchupObj,
+		return {
+			...matchup,
 			matchupScores: scoresObjList
-		});
+		};
 	});
 
 	// shuffle the list of users and split the list into two lists
@@ -98,7 +99,7 @@ export const startActiveWeek = async (valkey: any, drizzle: any) => {
 	}
 
 	// randomly select one team from each matchup to assign to both teams
-	const matchupEvents = matchups.map((matchup: string) => JSON.parse(matchup).event);
+	const matchupEvents = matchups.map((matchup: MatchupData) => matchup.event);
 	const [team1NflTeams, team2NflTeams] = shuffleNflTeams(matchupEvents);
 
 	// create week data with new teams
@@ -124,8 +125,7 @@ export const startActiveWeek = async (valkey: any, drizzle: any) => {
 	await valkey.set(weekDataKey, JSON.stringify(weekData));
 
 	// save the matchup data to valkey
-	await valkey.del(`${seasonType}:week:${currentWeek}:matchups`);
-	await valkey.lpush(`${seasonType}:week:${currentWeek}:matchups`, updatedMatchups);
+	await valkey.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
 
 	return { success: true, message: `Week ${currentWeek} started successfully.` };
 };
