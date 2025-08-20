@@ -5,16 +5,7 @@ import cron from 'node-cron';
 
 interface Env {
 	LUCKBALL_DATA_VALKEY?: string;
-	VALKEY_USER?: string;
-	VALKEY_PASSWORD?: string;
 }
-
-const env: Env = {
-	LUCKBALL_DATA_VALKEY: process.env.LUCKBALL_DATA_VALKEY,
-	VALKEY_USER: process.env.VALKEY_USER,
-	VALKEY_PASSWORD: process.env.VALKEY_PASSWORD
-	// ...other variables
-};
 
 export class CronJobRunner {
 	valkey: ReturnType<typeof createValkeyClient>;
