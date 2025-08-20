@@ -3,11 +3,11 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"start": "pnpm tsx apps/cron-jobs/src/index.ts",
-		"begin-week": "pnpm tsx apps/cron-jobs/src/cli.ts begin-week",
-		"start-active-week": "pnpm tsx apps/cron-jobs/src/cli.ts start-active-week",
-		"end-week": "pnpm tsx apps/cron-jobs/src/cli.ts end-week",
-		"update-scores": "pnpm tsx apps/cron-jobs/src/cli.ts update-scores"
+		"start": "pnpm tsx src/index.ts",
+		"begin-week": "pnpm tsx src/cli.ts begin-week",
+		"start-active-week": "pnpm tsx src/cli.ts start-active-week",
+		"end-week": "pnpm tsx src/cli.ts end-week",
+		"update-scores": "pnpm tsx src/cli.ts update-scores"
 	},
 	"dependencies": {
 		"@luckball/drizzle-client": "workspace:*",
