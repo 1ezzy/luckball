@@ -1,8 +1,14 @@
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { beginWeek, endWeek, startActiveWeek, updateScores } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 // import { drizzle } from '$lib/clients/drizzle-client';
 const drizzle = null;
+
+export const load = () => {
+	if (process.env.NODE_ENV === 'production') {
+		throw redirect(302, '/');
+	}
+};
 
 export const actions: Actions = {
 	beginWeek: async () => {
