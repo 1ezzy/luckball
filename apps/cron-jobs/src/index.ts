@@ -42,7 +42,7 @@ cron.schedule('0 17 * * 4', () => runner.handleStartActiveWeek()); // Thursday 1
 cron.schedule('0 2 * * 2', () => runner.handleEndWeek()); // Tuesday 2:00
 
 // cron jobs to update schedules
-cron.schedule('*/20 19-23 * * 4', () => runner.updateScores()); // Thursday 19:00–23:59
-cron.schedule('*/20 * * * 6', () => runner.updateScores()); // Saturday 00:00–23:59
-cron.schedule('*/20 * * * 0', () => runner.updateScores()); // Sunday 00:00–23:59
-cron.schedule('*/20 19-23 * * 1', () => runner.updateScores()); // Monday 19:00-23:59
+cron.schedule('*/10 19-23 * * 4', () => runner.updateScores()); // Thursday 19:00–23:59
+cron.schedule('*/10 8-23 * * 6', () => runner.updateScores()); // Saturday 00:00–23:59
+cron.schedule('*/10 8-23 * * 0', () => runner.updateScores()); // Sunday 00:00–23:59
+cron.schedule('*/10 19-23 * * 1', () => runner.updateScores()); // Monday 19:00-23:59
