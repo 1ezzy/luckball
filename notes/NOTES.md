@@ -1,15 +1,18 @@
 # TODO
 
-- update user data in each phase (set team in phase 2, set wins, loss, and win streak in phase 3)
-  - make sure this is done
+## Goals for Regular Season Week 1
 
-- automate week changing
+database and user tracking
 
-- calculate scores during live games
+- databse is connected
+- users can create an account
 
-- move from cloudflare worker to droplet
-  - ensure both databases only work locally
-  - use nginx and ssl
+game logic
 
-- fix bug in active week copy where team isnt shown
-  - append team assignment to user data on start week action
+- users can select n teams from their team to "boost"
+  - should these boosts impact their teams score?
+  - this will give users and individual score too
+
+other stuff
+
+- add a "how to play" page
