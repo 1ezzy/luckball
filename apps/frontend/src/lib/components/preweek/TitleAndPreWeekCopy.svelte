@@ -8,7 +8,9 @@
 		<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
 	</div>
 	<div class="flex w-full flex-col gap-8 leading-8">
-		{currentWeekText} has not started yet. You can join the week by entering a display name on the left
+		{currentWeekText} has not started yet. You can join the week by entering a display name {mobileGap
+			? 'below'
+			: 'on the left'}
 		and clicking the "Join" button.
 	</div>
 {/snippet}
