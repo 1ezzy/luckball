@@ -10,6 +10,7 @@ program
 	.action(async () => {
 		const result = await runner.handleBeginWeek();
 		console.log(result);
+		process.exit(0);
 	});
 
 program
@@ -18,6 +19,7 @@ program
 	.action(async () => {
 		const result = await runner.handleStartActiveWeek();
 		console.log(result);
+		process.exit(0);
 	});
 
 program
@@ -26,6 +28,7 @@ program
 	.action(async () => {
 		const result = await runner.handleEndWeek();
 		console.log(result);
+		process.exit(0);
 	});
 
 program
@@ -33,6 +36,7 @@ program
 	.description('Trigger updateScores cron job')
 	.action(async () => {
 		await runner.updateScores();
+		process.exit(0);
 	});
 
 program.parseAsync(process.argv);
