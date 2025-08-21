@@ -10,7 +10,8 @@
 		winningTeamName,
 		winningTeamScore,
 		userTeamName,
-		bestNflTeamName
+		bestNflTeamName,
+		bestNflTeamScore
 	} = $props();
 </script>
 
@@ -18,6 +19,6 @@
 	<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
 	<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 	<WinningTeamCard {winningTeamName} {winningTeamScore} />
-	<BestTeamCard {bestNflTeamName} />
+	<BestTeamCard {bestNflTeamName} {bestNflTeamScore} />
 	<RecordsCard />
 </div>

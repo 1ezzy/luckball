@@ -10,7 +10,8 @@
 		winningTeamName,
 		winningTeamScore,
 		userTeamName,
-		bestNflTeamName
+		bestNflTeamName,
+		bestNflTeamScore
 	} = $props();
 </script>
 
@@ -25,7 +26,7 @@
 			<WinningTeamCard {winningTeamName} {winningTeamScore} />
 		</div>
 		<div class="col-span-1 flex h-full w-full items-center justify-center">
-			<BestTeamCard {bestNflTeamName} />
+			<BestTeamCard {bestNflTeamName} {bestNflTeamScore} />
 		</div>
 		<div class="col-span-1 flex h-full w-full items-center justify-center">
 			<RecordsCard />

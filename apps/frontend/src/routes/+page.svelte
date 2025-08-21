@@ -48,6 +48,7 @@
 		winningTeamName: currentWeekData?.winningTeamName,
 		winningTeamScore: currentWeekData?.winningTeamScore,
 		bestNflTeamName: currentWeekData?.bestNflTeamName,
+		bestNflTeamScore: currentWeekData?.bestNflTeamScore,
 		userTeamName: currentUserData?.teamAssignment
 	});
 
