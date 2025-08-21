@@ -4,10 +4,10 @@
 	"private": true,
 	"scripts": {
 		"start": "pnpm tsx src/index.ts",
-		"begin-week": "pnpm tsx src/cli.ts begin-week",
-		"start-active-week": "pnpm tsx src/cli.ts start-active-week",
-		"end-week": "pnpm tsx src/cli.ts end-week",
-		"update-scores": "pnpm tsx src/cli.ts update-scores"
+		"begin-week": "pnpm tsx src/commands.ts begin-week",
+		"start-active-week": "pnpm tsx src/commands.ts start-active-week",
+		"end-week": "pnpm tsx src/commands.ts end-week",
+		"update-scores": "pnpm tsx src/commands.ts update-scores"
 	},
 	"dependencies": {
 		"@luckball/drizzle-client": "workspace:*",
