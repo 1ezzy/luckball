@@ -15,21 +15,25 @@ export class CronJobRunner {
 
 	async handleBeginWeek() {
 		const result = await beginWeek(this.valkey, this.drizzle);
+		console.log('♣ Beginning Week..');
 		return result.success ? { success: true } : { success: false, error: result.message };
 	}
 
 	async handleStartActiveWeek() {
 		const result = await startActiveWeek(this.valkey, this.drizzle);
+		console.log('♣ Starting Active Week...');
 		return result.success ? { success: true } : { success: false, error: result.message };
 	}
 
 	async handleEndWeek() {
 		const result = await endWeek(this.valkey, this.drizzle);
+		console.log('♣ Ending Week...');
 		return result.success ? { success: true } : { success: false, error: result.message };
 	}
 
 	async updateScores() {
 		const result = await updateScores(this.valkey);
+		console.log('♣ Updating Scores...');
 		return result.success ? { success: true } : { success: false, error: result.message };
 	}
 }
@@ -37,12 +41,12 @@ export class CronJobRunner {
 const runner = new CronJobRunner(process.env);
 
 // cron jobs for game state
-cron.schedule('0 2 * * 3', () => runner.handleBeginWeek()); // Every Wednesday 2:00
-cron.schedule('0 17 * * 4', () => runner.handleStartActiveWeek()); // Thursday 17:00
-cron.schedule('0 2 * * 2', () => runner.handleEndWeek()); // Tuesday 2:00
+cron.schedule('0 6 * * 3', () => runner.handleBeginWeek()); // Wednesday 06:00 UTC
+cron.schedule('0 21 * * 4', () => runner.handleStartActiveWeek()); // Thursday 21:00 UTC
+cron.schedule('0 6 * * 2', () => runner.handleEndWeek()); // Tuesday 06:00 UTC
 
 // cron jobs to update schedules
-cron.schedule('*/10 19-23 * * 4', () => runner.updateScores()); // Thursday 19:00–23:59
-cron.schedule('*/10 8-23 * * 6', () => runner.updateScores()); // Saturday 00:00–23:59
-cron.schedule('*/10 8-23 * * 0', () => runner.updateScores()); // Sunday 00:00–23:59
-cron.schedule('*/10 19-23 * * 1', () => runner.updateScores()); // Monday 19:00-23:59
+cron.schedule('*/10 23-3 * * 4', () => runner.updateScores()); // Thursday 23:00–03:59 UTC
+cron.schedule('*/10 12-3 * * 6', () => runner.updateScores()); // Saturday 12:00–03:59 UTC
+cron.schedule('*/10 12-3 * * 0', () => runner.updateScores()); // Sunday 12:00–03:59 UTC
+cron.schedule('*/10 23-3 * * 1', () => runner.updateScores()); // Monday 23:00–03:59 UTC
