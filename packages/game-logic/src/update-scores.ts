@@ -28,11 +28,12 @@ export const updateScores = async (valkey: any) => {
 	const matchupScores = await Promise.all(
 		matchups.map((m: MatchupData, index: number) => espnApi.getMatchupScores(m.id, index))
 	);
+	const reversedMatchupScores = matchupScores.map((scores) => [...scores].reverse());
 
 	const updatedMatchups = matchups.map((matchup: MatchupData, index: number) => ({
 		...matchup,
 		matchupScores: matchup.teams.map((team: string, i: number) => ({
-			[team]: matchupScores[index][i]
+			[team]: reversedMatchupScores[index][i]
 		}))
 	}));
 
