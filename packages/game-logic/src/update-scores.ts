@@ -31,11 +31,9 @@ export const updateScores = async (valkey: any) => {
 
 	const updatedMatchups = matchups.map((matchup: MatchupData, index: number) => ({
 		...matchup,
-		matchupScores: matchup.teams
-			.map((team: string, i: number) => ({
-				[team]: matchupScores[index][i]
-			}))
-			.reverse()
+		matchupScores: matchup.teams.map((team: string, i: number) => ({
+			[team]: matchupScores[index][i]
+		}))
 	}));
 
 	// update valkey with new match data
