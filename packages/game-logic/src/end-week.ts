@@ -1,3 +1,4 @@
+import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 import { createEspnApiClient } from './api/espn-api';
 
 export const endWeek = async (valkey: any, drizzle: any) => {
@@ -6,6 +7,7 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
+	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
 	// get a list of all the users
 	const users = await valkey.hgetall(usersKey);
@@ -44,6 +46,25 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 		winningTeamScore = team2Score;
 	}
 
+	// find the best nfl team for the week
+	const matchupsRaw = await valkey.get(matchupsKey);
+	if (matchupsRaw.length === 0) {
+		return { success: false, message: 'No NFL matchups found for the week.' };
+	}
+	const matchups: MatchupData[] = JSON.parse(matchupsRaw);
+
+	let bestNflTeamScore = 0;
+	let bestNflTeamName;
+	for (const matchup of matchups) {
+		for (const scoreObj of matchup.matchupScores) {
+			const [team, score] = Object.entries(scoreObj)[0];
+			if (score > bestNflTeamScore) {
+				bestNflTeamScore = score;
+				bestNflTeamName = team;
+			}
+		}
+	}
+
 	// update the user week to the end status
 	const updatedWeekData = {
 		team1: {
@@ -60,7 +81,9 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 		},
 		status: 'ended',
 		winningTeamName: winningTeamName,
-		winningTeamScore: winningTeamScore
+		winningTeamScore: winningTeamScore,
+		bestNflTeamName: bestNflTeamName,
+		bestNflTeamScore: bestNflTeamScore
 	};
 
 	// save the results

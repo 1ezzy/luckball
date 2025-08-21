@@ -4,13 +4,16 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"install:all": "pnpm install --recursive",
 		"dev:frontend": "pnpm --filter luckball-frontend dev",
 		"format": "prettier --write .",
 		"lint": "eslint . --max-warnings 0",
 		"lint:fix": "eslint . --fix --max-warnings 0",
 		"format:check": "prettier --check .",
-		"fix:all": "prettier --write . && eslint . --fix --max-warnings 0"
+		"fix:all": "prettier --write . && eslint . --fix --max-warnings 0",
+		"docker:begin-week": "docker exec -it luckball-cron-jobs pnpm --filter luckball-cron-jobs begin-week",
+		"docker:start-active-week": "docker exec -it luckball-cron-jobs pnpm --filter luckball-cron-jobs start-active-week",
+		"docker:end-week": "docker exec -it luckball-cron-jobs pnpm --filter luckball-cron-jobs end-week",
+		"docker:update-scores": "docker exec -it luckball-cron-jobs pnpm --filter luckball-cron-jobs update-scores"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
