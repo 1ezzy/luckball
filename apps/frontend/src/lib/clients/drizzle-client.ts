@@ -1,5 +1,4 @@
-// import { createDrizzleClient } from '@luckball/drizzle-client';
+import { POSTGRES_URL } from '$env/static/private';
+import { createDrizzleClient } from '@luckball/drizzle-client';
 
-// export const drizzle = (platform: App.Platform) => {
-// 	return createDrizzleClient(platform.env);
-// };
+export const drizzle = createDrizzleClient(POSTGRES_URL);
