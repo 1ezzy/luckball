@@ -13,7 +13,6 @@
 		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 		<Records />
 	</div>
-	<div class="w-[1px] grid-cols-1 justify-self-center bg-white"></div>
 	<div
 		class="col-span-8 flex flex-col items-center justify-start gap-16 overflow-y-auto py-16 pr-12"
 	>

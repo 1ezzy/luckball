@@ -1,12 +1,22 @@
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { dev } from '$app/environment';
-import type { PageServerLoad } from './$types';
 import { addUserToWeek } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 import { getMatchupData, getWeekAndUserData } from '$lib/server/valkey';
 import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
+import { auth } from '$lib/auth/auth';
+import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ cookies }) => {
+export const load: PageServerLoad = async ({ cookies, request }) => {
+	const session = await auth.api.getSession({
+		headers: request.headers
+	});
+
+	// Redirect to login if no session exists
+	if (!session) {
+		throw redirect(307, '/login');
+	}
+
 	const getTeamWithUsernames = (team: { players: string[] }, allUsers: Record<string, string>) => {
 		if (!team || !allUsers || !team.players) return { ...team, usernames: [] };
 		const usernames = team.players.map((id) => {
@@ -63,7 +73,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	return {
 		currentWeekData,
 		currentUserData,
-		teamData
+		teamData,
+		session
 	};
 };
 

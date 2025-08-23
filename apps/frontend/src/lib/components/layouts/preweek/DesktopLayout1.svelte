@@ -13,7 +13,6 @@
 		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 		<Records />
 	</div>
-	<div class="w-[1px] grid-cols-1 justify-self-center bg-white"></div>
 	<div class="col-span-8 flex flex-col items-start justify-center gap-8 py-20 pr-16">
 		<TitleAndPreWeekCopy {currentWeekText} />
 		<ScheduleCard {matchups} {currentWeekText} />
