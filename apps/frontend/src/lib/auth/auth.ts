@@ -1,10 +1,15 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { drizzle } from '$lib/clients/drizzle-client';
 import { sveltekitCookies } from 'better-auth/svelte-kit';
+import { drizzle } from '$lib/clients/drizzle-client';
 import { getRequestEvent } from '$app/server';
-import { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } from '$env/static/private';
 import * as schema from '$lib/db/schema';
+import {
+	DISCORD_CLIENT_ID,
+	DISCORD_CLIENT_SECRET,
+	GOOGLE_CLIENT_ID,
+	GOOGLE_CLIENT_SECRET
+} from '$env/static/private';
 
 export const auth = betterAuth({
 	plugins: [sveltekitCookies(getRequestEvent)],
@@ -13,12 +18,16 @@ export const auth = betterAuth({
 		schema: schema
 	}),
 	emailAndPassword: {
-		enabled: true
+		enabled: false
 	},
 	socialProviders: {
 		discord: {
 			clientId: DISCORD_CLIENT_ID as string,
 			clientSecret: DISCORD_CLIENT_SECRET as string
+		},
+		google: {
+			clientId: GOOGLE_CLIENT_ID as string,
+			clientSecret: GOOGLE_CLIENT_SECRET as string
 		}
 	}
 });
