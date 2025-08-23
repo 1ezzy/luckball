@@ -14,7 +14,7 @@
 </script>
 
 {#snippet team1LogoScore(matchup: MatchupData)}
-	<div class="flex h-10 flex-col items-start justify-between">
+	<div class="flex h-10 flex-col items-start justify-between gap-1">
 		<img
 			class="h-6"
 			height="32"
@@ -30,7 +30,7 @@
 {/snippet}
 
 {#snippet team2LogoScore(matchup: MatchupData)}
-	<div class="flex h-10 flex-col items-end justify-between">
+	<div class="flex h-10 flex-col items-end justify-between gap-1">
 		<img
 			class="h-6"
 			height="32"
@@ -64,7 +64,7 @@
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
 		<Card class="h-full">
 			<div
-				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-x-8 gap-y-4 p-4"
+				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-8 p-4"
 			>
 				{#each matchups as matchup}
 					<div class="flex w-full flex-row items-stretch justify-between gap-1">

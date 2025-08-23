@@ -3,7 +3,7 @@
 	import { Button } from 'svelte-ux';
 </script>
 
-<div class="flex h-screen w-full flex-col items-center justify-center gap-8">
+<div class="flex h-full w-full flex-col items-center justify-center gap-8">
 	<form method="post" action="?/beginWeek" use:enhance>
 		<Button type="submit" variant="fill">Begin Week</Button>
 	</form>

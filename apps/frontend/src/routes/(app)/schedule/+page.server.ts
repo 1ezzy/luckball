@@ -17,63 +17,33 @@ export const load: PageServerLoad = async ({ cookies, request }) => {
 		throw redirect(307, '/login');
 	}
 
-	const getTeamWithUsernames = (team: { players: string[] }, allUsers: Record<string, string>) => {
-		if (!team || !allUsers || !team.players) return { ...team, usernames: [] };
-		const usernames = team.players.map((id) => {
-			if (!allUsers[id]) return [];
-			return JSON.parse(allUsers[id])?.displayName;
-		});
-		return { ...team, usernames };
-	};
-
 	const userId = cookies.get('userId');
 
 	const espnApi = createEspnApiClient();
 	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
+	const matchupData = await getMatchupData(seasonType, currentWeek);
 
-	const [{ weekData, allUserData }, weekEvents] = await Promise.all([
-		getWeekAndUserData(seasonType, currentWeek),
-		espnApi.getWeekEvents(seasonType, currentWeek)
-	]);
-	if (!weekData || !allUserData || !weekEvents) {
+	const { weekData, allUserData } = await getWeekAndUserData(seasonType, currentWeek);
+	if (!weekData || !allUserData) {
 		return fail(500, { error: 'Could not load week data. Please try again later.' });
 	}
-
-	const matchupData = await getMatchupData(seasonType, currentWeek);
 
 	const currentUserDataFromId = userId
 		? allUserData[userId]
 			? JSON.parse(allUserData[userId] as string)
 			: null
 		: null;
-
 	const currentUserData = userId ? { ...currentUserDataFromId, userId } : null;
-	const team1Data = getTeamWithUsernames(weekData?.team1, allUserData);
-	const team2Data = getTeamWithUsernames(weekData?.team2, allUserData);
-
-	const currentWeekData = {
-		seasonType: seasonType,
-		currentWeekNum: currentWeek,
-		currentWeekText: currentWeekText,
-		weekEvents: weekEvents,
-		weekMatchups: matchupData,
-		weekStatus: weekData.status,
-		lastWinningTeam: weekData.lastWinningTeam,
-		winningTeamName: weekData.winningTeamName,
-		winningTeamScore: weekData.winningTeamScore,
-		bestNflTeamName: weekData.bestNflTeamName,
-		bestNflTeamScore: weekData.bestNflTeamScore
-	};
-
-	const teamData = {
-		team1: team1Data,
-		team2: team2Data
-	};
 
 	return {
-		currentWeekData,
-		currentUserData,
-		teamData
+		currentWeekText: currentWeekText,
+		weekMatchups: matchupData,
+		weekStatus: weekData?.status,
+		weekJoined: currentUserData?.displayName,
+		displayName: currentUserData?.displayName,
+		userTeamAssignment: currentUserData?.teamAssignment,
+		winningTeamName: weekData?.winningTeamName,
+		userTeamName: currentUserData?.teamAssignment
 	};
 };
 

@@ -1,15 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import DesktopLayout1 from '$lib/components/layouts/preweek/DesktopLayout1.svelte';
-	import TabletLayout1 from '$lib/components/layouts/preweek/TabletLayout1.svelte';
-	import MobileLayout1 from '$lib/components/layouts/preweek/MobileLayout1.svelte';
-	import DesktopLayout2 from '$lib/components/layouts/activeweek/DesktopLayout2.svelte';
-	import TabletLayout2 from '$lib/components/layouts/activeweek/TabletLayout2.svelte';
-	import MobileLayout2 from '$lib/components/layouts/activeweek/MobileLayout2.svelte';
-	import DesktopLayout3 from '$lib/components/layouts/postweek/DesktopLayout3.svelte';
 	import { WeekStatus } from '$lib/types/valkey-types.js';
-	import TabletLayout3 from '$lib/components/layouts/postweek/TabletLayout3.svelte';
-	import MobileLayout3 from '$lib/components/layouts/postweek/MobileLayout3.svelte';
+	import PreWeek from '$lib/components/layouts/home/PreWeek.svelte';
+	import ActiveWeek from '$lib/components/layouts/home/ActiveWeek.svelte';
+	import PostWeek from '$lib/components/layouts/home/PostWeek.svelte';
 
 	let { data } = $props();
 
@@ -58,33 +52,9 @@
 </script>
 
 {#if currentWeekData?.weekStatus === WeekStatus.Pending}
-	<div class="hidden h-screen lg:block">
-		<DesktopLayout1 {...preWeekLayoutProps} />
-	</div>
-	<div class="hidden h-screen md:block lg:hidden">
-		<TabletLayout1 {...preWeekLayoutProps} />
-	</div>
-	<div class="block md:hidden">
-		<MobileLayout1 {...preWeekLayoutProps} />
-	</div>
+	<PreWeek {...preWeekLayoutProps} />
 {:else if currentWeekData?.weekStatus == WeekStatus.InProgress}
-	<div class="hidden h-screen lg:block">
-		<DesktopLayout2 {...activeWeekLayoutProps} />
-	</div>
-	<div class="hidden h-screen md:block lg:hidden">
-		<TabletLayout2 {...activeWeekLayoutProps} />
-	</div>
-	<div class="block md:hidden">
-		<MobileLayout2 {...activeWeekLayoutProps} />
-	</div>
+	<ActiveWeek {...activeWeekLayoutProps} />
 {:else}
-	<div class="hidden h-screen lg:block">
-		<DesktopLayout3 {...postWeekLayoutProps} />
-	</div>
-	<div class="hidden h-screen md:block lg:hidden">
-		<TabletLayout3 {...postWeekLayoutProps} />
-	</div>
-	<div class="block md:hidden">
-		<MobileLayout3 {...postWeekLayoutProps} />
-	</div>
+	<PostWeek {...postWeekLayoutProps} />
 {/if}

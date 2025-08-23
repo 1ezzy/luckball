@@ -22,7 +22,7 @@
 
 <AppLayout areas="'header header' 'aside main'">
 	<svelte:fragment slot="nav">
-		<nav class="border-r-1 bg-surface-300 flex h-full flex-col items-start gap-8 px-8 py-16">
+		<nav class=" bg-surface-200 flex h-full flex-col items-start gap-8 px-8 py-16">
 			<div class="flex flex-row items-center justify-center gap-2">
 				<LucideHouse size={20} strokeWidth={3} />
 				<NavItem text="Home" currentUrl={page.url} path="/" />
@@ -38,7 +38,7 @@
 		</nav>
 	</svelte:fragment>
 
-	<AppBar title="Luckball" class="bg-primary text-primary-content px-8" menuIcon={null}>
+	<AppBar title="Luckball" class="bg-primary text-primary-content px-8">
 		<div slot="actions">
 			{#if data?.session}
 				<Button
@@ -60,7 +60,7 @@
 		</div>
 	</AppBar>
 
-	<main class="bg-surface-200 flex h-screen w-full flex-col">
+	<main class="bg-surface-300 border-l-1 flex h-full flex-col border-l-gray-500 p-4 md:p-0">
 		{@render children()}
 	</main>
 </AppLayout>

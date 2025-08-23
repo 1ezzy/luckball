@@ -16,7 +16,7 @@
 
 {#snippet joinForm()}
 	<form
-		class="flex w-full flex-col gap-8 text-center"
+		class="flex w-full flex-col gap-8 text-center md:w-[50%]"
 		method="post"
 		action="?/joinWeek"
 		use:enhance={() => {
