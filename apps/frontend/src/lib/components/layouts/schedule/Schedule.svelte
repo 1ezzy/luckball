@@ -22,19 +22,16 @@
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
 			<TitleAndPreWeekCopy {currentWeekText} />
-			<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 			<ScheduleCard {matchups} {currentWeekText} />
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
 		<PageShell>
 			<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
-			<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 			<ScheduleCard {matchups} {currentWeekText} showScores />
 		</PageShell>
 	{:else}
 		<PageShell>
 			<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
-			<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 			<ScheduleCard {matchups} {currentWeekText} showScores />
 		</PageShell>
 	{/if}

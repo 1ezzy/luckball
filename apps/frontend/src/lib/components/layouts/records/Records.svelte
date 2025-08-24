@@ -13,7 +13,11 @@
 		userTeamAssignment,
 		displayName,
 		userTeamName,
-		winningTeamName
+		winningTeamName,
+		totalWins,
+		totalLosses,
+		highestScoringTeamName,
+		highestScoringTeamScore
 	} = $props();
 </script>
 
@@ -21,30 +25,42 @@
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
 			<TitleAndPreWeekCopy {currentWeekText} />
-			<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-			<div class="flex flex-col gap-8 md:flex-row">
+			<div class="my-auto flex flex-col gap-8 md:flex-row">
 				<div class="flex flex-1 items-center justify-center">
-					<RecordsCard />
+					<RecordsCard
+						{totalWins}
+						{totalLosses}
+						{highestScoringTeamName}
+						{highestScoringTeamScore}
+					/>
 				</div>
 			</div>
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
 		<PageShell>
 			<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
-			<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-			<div class="flex flex-col gap-8 md:flex-row">
+			<div class="my-auto flex flex-col gap-8 md:flex-row">
 				<div class="flex flex-1 items-center justify-center">
-					<RecordsCard />
+					<RecordsCard
+						{totalWins}
+						{totalLosses}
+						{highestScoringTeamName}
+						{highestScoringTeamScore}
+					/>
 				</div>
 			</div>
 		</PageShell>
 	{:else}
 		<PageShell>
 			<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
-			<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-			<div class="flex flex-col gap-8 md:flex-row">
+			<div class="my-auto flex flex-col gap-8 md:flex-row">
 				<div class="flex flex-1 items-center justify-center">
-					<RecordsCard />
+					<RecordsCard
+						{totalWins}
+						{totalLosses}
+						{highestScoringTeamName}
+						{highestScoringTeamScore}
+					/>
 				</div>
 			</div>
 		</PageShell>

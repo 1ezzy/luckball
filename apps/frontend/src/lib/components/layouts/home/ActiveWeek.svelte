@@ -22,20 +22,24 @@
 <div class="hidden h-[calc(100vh-4rem)] lg:block">
 	<PageShell>
 		<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div class="flex w-full flex-row gap-8">
-			<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />
-			<TeamCard teamPlayerData={teamData?.team2} {displayName} {matchups} />
+		<div class="flex w-full flex-col gap-8 overflow-y-scroll">
+			<h2 class="text-secondary text-2xl">Teams for {currentWeekText}</h2>
+			<div class="flex flex-row gap-16">
+				<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />
+				<TeamCard teamPlayerData={teamData?.team2} {displayName} {matchups} />
+			</div>
 		</div>
 	</PageShell>
 </div>
 <div class="hidden h-[calc(100vh-4rem)] md:block lg:hidden">
 	<PageShell>
 		<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div class="flex w-full flex-row gap-8">
-			<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />
-			<TeamCard teamPlayerData={teamData?.team2} {displayName} {matchups} />
+		<div class="flex w-full flex-col gap-8 overflow-y-scroll">
+			<h2 class="text-secondary text-2xl">Teams for {currentWeekText}</h2>
+			<div class="flex flex-row gap-16">
+				<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />
+				<TeamCard teamPlayerData={teamData?.team2} {displayName} {matchups} />
+			</div>
 		</div>
 	</PageShell>
 </div>

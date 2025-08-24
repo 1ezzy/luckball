@@ -45,6 +45,7 @@
 		"@faker-js/faker": "^9.9.0",
 		"@layerstack/tailwind": "2.0.0-next.15",
 		"@layerstack/utils": "2.0.0-next.12",
+		"@lucide/svelte": "^0.541.0",
 		"@luckball/drizzle-client": "workspace:*",
 		"@luckball/game-logic": "workspace:*",
 		"@luckball/valkey-client": "workspace:*",
@@ -52,7 +53,6 @@
 		"drizzle-orm": "^0.44.4",
 		"iovalkey": "^0.3.3",
 		"layerchart": "2.0.0-next.27",
-		"@lucide/svelte": "^0.541.0",
 		"postgres": "^3.4.7",
 		"svelte-ux": "2.0.0-next.13"
 	}

@@ -1,5 +1,7 @@
+import { user_profile } from 'luckball-frontend/src/lib/db/schema';
 import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 import { createEspnApiClient } from './api/espn-api';
+import { eq, sql } from 'drizzle-orm';
 
 export const endWeek = async (valkey: any, drizzle: any) => {
 	const espnApi = createEspnApiClient();
@@ -29,7 +31,12 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	const team2Players = weekData.team2?.players;
 
 	// determine the win status for both teams
-	let team1WinStatus, team2WinStatus, winningTeamName, winningTeamScore;
+	let team1WinStatus,
+		team2WinStatus,
+		winningTeamName,
+		winningTeamScore,
+		losingTeamName,
+		losingTeamScore;
 	const team1Score = weekData.team1.totalScore;
 	const team2Score = weekData.team2.totalScore;
 	if (team1Score > team2Score) {
@@ -38,12 +45,16 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 
 		winningTeamName = team1Name;
 		winningTeamScore = team1Score;
+		losingTeamName = team2Name;
+		losingTeamScore = team2Score;
 	} else {
 		team1WinStatus = false;
 		team2WinStatus = true;
 
 		winningTeamName = team2Name;
 		winningTeamScore = team2Score;
+		losingTeamName = team1Name;
+		losingTeamScore = team1Score;
 	}
 
 	// find the best nfl team for the week
@@ -65,7 +76,7 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 		}
 	}
 
-	// update the user week to the end status
+	// update the week to the end status
 	const updatedWeekData = {
 		team1: {
 			name: team1Name,
@@ -88,6 +99,40 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 
 	// save the results
 	await valkey.set(weekDataKey, JSON.stringify(updatedWeekData));
+
+	// update user data for all users in postgres database
+	const updateUserProfileStats = async (
+		teamName: string,
+		teamScore: number,
+		userId: string,
+		won: boolean
+	) => {
+		const [userProfile] = await drizzle
+			.select({ highestScoringTeamScore: user_profile.highestScoringTeamScore })
+			.from(user_profile)
+			.where(eq(user_profile.userId, userId));
+
+		const shouldUpdateHighScore = !userProfile || userProfile.highestScoringTeamScore < teamScore;
+
+		await drizzle
+			.update(user_profile)
+			.set({
+				totalWins: sql`${user_profile.totalWins} + ${won ? 1 : 0}`,
+				totalLosses: sql`${user_profile.totalLosses} + ${won ? 0 : 1}`,
+				highestScoringTeamName: shouldUpdateHighScore ? teamName : undefined,
+				highestScoringTeamScore: shouldUpdateHighScore ? teamScore : undefined,
+				updatedAt: new Date()
+			})
+			.where(eq(user_profile.userId, userId));
+	};
+	for (const userId of Object.keys(users)) {
+		const parsedUserData = JSON.parse(users[userId]);
+		if (parsedUserData.teamAssignment === winningTeamName) {
+			updateUserProfileStats(winningTeamName, winningTeamScore, userId, true);
+		} else {
+			updateUserProfileStats(losingTeamName, losingTeamScore, userId, false);
+		}
+	}
 
 	return { success: true, message: `Week ${currentWeek} started ended.` };
 };

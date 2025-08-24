@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, boolean, integer } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('user', {
 	id: text('id').primaryKey(),
@@ -54,4 +54,18 @@ export const verification = pgTable('verification', {
 	expiresAt: timestamp('expires_at').notNull(),
 	createdAt: timestamp('created_at').$defaultFn(() => /* @__PURE__ */ new Date()),
 	updatedAt: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date())
+});
+
+export const user_profile = pgTable('user_profile', {
+	userId: text('user_id')
+		.primaryKey()
+		.notNull()
+		.references(() => user.id, { onDelete: 'cascade' }),
+	displayName: text('display_name'),
+	totalWins: integer('total_wins'),
+	totalLosses: integer('total_losses'),
+	highestScoringTeamName: text('highest_scoring_team_name'),
+	highestScoringTeamScore: integer('highest_scoring_team_score'),
+	createdAt: timestamp('created_at').notNull(),
+	updatedAt: timestamp('updated_at').notNull()
 });

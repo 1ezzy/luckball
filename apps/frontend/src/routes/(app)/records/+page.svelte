@@ -11,6 +11,11 @@
 	const displayName = $derived(data?.displayName);
 	const winningTeamName = $derived(data?.winningTeamName);
 	const userTeamName = $derived(data?.userTeamName);
+
+	const totalWins = $derived(data?.totalWins);
+	const totalLosses = $derived(data?.totalLosses);
+	const highestScoringTeamName = $derived(data?.highestScoringTeamName);
+	const highestScoringTeamScore = $derived(data?.highestScoringTeamName);
 </script>
 
 <Records
@@ -21,4 +26,8 @@
 	{displayName}
 	{userTeamName}
 	{winningTeamName}
+	{totalWins}
+	{totalLosses}
+	{highestScoringTeamName}
+	{highestScoringTeamScore}
 />

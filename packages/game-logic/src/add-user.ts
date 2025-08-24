@@ -1,6 +1,13 @@
 import { createEspnApiClient } from './api/espn-api';
+import { user_profile } from 'luckball-frontend/src/lib/db/schema';
+import { eq } from 'drizzle-orm';
 
-export const addUserToWeek = async (displayName: string, userId: string, valkey: any) => {
+export const addUserToWeek = async (
+	displayName: string,
+	userId: string,
+	valkey: any,
+	drizzle: any
+) => {
 	if (!displayName || !userId) {
 		return { success: false, message: 'displayName and userId are required' };
 	}
@@ -33,6 +40,25 @@ export const addUserToWeek = async (displayName: string, userId: string, valkey:
 	await valkey.hset(`${seasonType}:week:${currentWeek}:users`, {
 		[userId]: JSON.stringify(userData)
 	});
+
+	// update user display name in Postgres
+	const updateResult = await drizzle
+		.update(user_profile)
+		.set({ displayName, updatedAt: new Date() })
+		.where(eq(user_profile.userId, userId))
+		.returning({ updatedDisplayName: user_profile.displayName });
+
+	// if user was not updated, create a new entry for the user
+	if (updateResult.length === 0) {
+		await drizzle.insert(user_profile).values({
+			userId,
+			displayName,
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			totalWins: 0,
+			totalLosses: 0
+		});
+	}
 
 	return { success: true, message: 'User joined successfully!' };
 };

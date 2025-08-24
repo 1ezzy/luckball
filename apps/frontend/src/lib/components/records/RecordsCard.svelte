@@ -1,29 +1,25 @@
 <script lang="ts">
 	import { Card } from 'svelte-ux';
 
-	let wins: number = 0;
-	let losses: number = 0;
-	let winStreak: number = 0;
-	let bestTeam: string = 'N/A';
+	let { totalWins, totalLosses, highestScoringTeamName, highestScoringTeamScore } = $props();
 </script>
 
 <Card class="flex h-full flex-1 items-center justify-center p-8">
 	<div class="hidden lg:block">
-		<div class="flex flex-col gap-16 text-center">
+		<div class="flex flex-col gap-8 text-center 2xl:gap-16">
 			<div class="flex flex-col gap-4">
 				<h2 class="text-secondary mb-2 text-2xl">Record (All-Time)</h2>
-				<span class="text-sm">{wins} wins</span>
-				<span class="text-sm">{losses} losses</span>
-				<span class="text-sm">Current win streak: {winStreak}</span>
+				<span class="text-sm">{totalWins} wins</span>
+				<span class="text-sm">{totalLosses} losses</span>
 			</div>
 			<div class="flex flex-col gap-4">
 				<h2 class="text-secondary mb-2 text-2xl">Other Stats</h2>
-				<span class="text-sm">Your Best Team: coming soon</span>
+				<span class="text-sm">Your Best Team: {highestScoringTeamName}</span>
 			</div>
 		</div>
 	</div>
 	<div class="hidden md:block lg:hidden">
-		<div class="flex flex-col gap-16 text-center">
+		<div class="flex flex-col gap-8 text-center">
 			<div class="flex flex-col gap-4">
 				<h2 class="text-secondary mb-2 text-2xl">Record (All-Time)</h2>
 				<span class="text-sm">0 wins</span>
@@ -37,7 +33,7 @@
 		</div>
 	</div>
 	<div class="block md:hidden">
-		<div class="flex flex-col gap-16 text-center">
+		<div class="flex flex-col gap-8 text-center">
 			<div class="flex flex-col gap-4">
 				<h2 class="text-secondary mb-2 text-2xl">Record (All-Time)</h2>
 				<span class="text-sm">0 wins</span>

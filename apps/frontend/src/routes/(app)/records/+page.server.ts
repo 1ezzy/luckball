@@ -1,23 +1,25 @@
-import { fail, redirect, type Actions } from '@sveltejs/kit';
-import { dev } from '$app/environment';
-import { addUserToWeek } from '@luckball/game-logic';
-import { valkey } from '$lib/clients/valkey-client';
+import { fail, redirect } from '@sveltejs/kit';
 import { getMatchupData, getWeekAndUserData } from '$lib/server/valkey';
 import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 import { auth } from '$lib/auth/auth';
 import type { PageServerLoad } from './$types';
+import { drizzle } from '$lib/clients/drizzle-client';
+import { user_profile } from '$lib/db/schema';
+import { eq } from 'drizzle-orm';
 
-export const load: PageServerLoad = async ({ cookies, request }) => {
+export const load: PageServerLoad = async ({ request }) => {
 	const session = await auth.api.getSession({
 		headers: request.headers
 	});
 
-	// Redirect to login if no session exists
 	if (!session) {
 		throw redirect(307, '/login');
 	}
 
-	const userId = cookies.get('userId');
+	const userId = session?.user.id;
+	if (!userId) {
+		return fail(400, { userId, error: 'User ID is required' });
+	}
 
 	const espnApi = createEspnApiClient();
 	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
@@ -33,7 +35,35 @@ export const load: PageServerLoad = async ({ cookies, request }) => {
 			? JSON.parse(allUserData[userId] as string)
 			: null
 		: null;
-	const currentUserData = userId ? { ...currentUserDataFromId, userId } : null;
+
+	const userProfileResult = await drizzle
+		.select({
+			displayName: user_profile.displayName,
+			totalWins: user_profile.totalWins,
+			totalLosses: user_profile.totalLosses,
+			highestScoringTeamName: user_profile.highestScoringTeamName,
+			highestScoringTeamScore: user_profile.highestScoringTeamScore
+		})
+		.from(user_profile)
+		.where(eq(user_profile.userId, userId));
+
+	const prevDisplayName = userProfileResult[0]?.displayName;
+	const totalWins = userProfileResult[0]?.totalWins;
+	const totalLosses = userProfileResult[0]?.totalLosses;
+	const highestScoringTeamName = userProfileResult[0]?.highestScoringTeamName;
+	const highestScoringTeamScore = userProfileResult[0]?.highestScoringTeamScore;
+
+	const currentUserData = userId
+		? {
+				...currentUserDataFromId,
+				userId,
+				prevDisplayName: prevDisplayName,
+				totalWins: totalWins,
+				totalLosses: totalLosses,
+				highestScoringTeamName: highestScoringTeamName,
+				highestScoringTeamScore: highestScoringTeamScore
+			}
+		: null;
 
 	return {
 		currentWeekText: currentWeekText,
@@ -43,36 +73,10 @@ export const load: PageServerLoad = async ({ cookies, request }) => {
 		displayName: currentUserData?.displayName,
 		userTeamAssignment: currentUserData?.teamAssignment,
 		userTeamName: currentUserData?.teamAssignment,
-		winningTeamName: weekData?.winningTeamName
+		winningTeamName: weekData?.winningTeamName,
+		totalWins: currentUserData?.totalWins,
+		totalLosses: currentUserData?.totalLosses,
+		highestScoringTeamName: currentUserData?.highestScoringTeamName,
+		highestScoringTeamScore: currentUserData?.highestScoringTeamScore
 	};
-};
-
-export const actions: Actions = {
-	joinWeek: async ({ request, cookies }) => {
-		const data = await request.formData();
-		const displayName = data.get('displayName')?.toString();
-
-		if (!displayName) {
-			return fail(400, { displayName, error: 'Display name is required' });
-		}
-
-		let userId = cookies.get('userId');
-		if (!userId) {
-			userId = crypto.randomUUID();
-			cookies.set('userId', userId, {
-				path: '/',
-				maxAge: 60 * 60 * 24 * 365,
-				httpOnly: true,
-				secure: !dev,
-				sameSite: 'strict'
-			});
-		}
-
-		const result = await addUserToWeek(displayName, userId, valkey);
-		if (!result.success) {
-			return fail(400, { displayName, error: result.message });
-		}
-
-		return { success: true };
-	}
 };

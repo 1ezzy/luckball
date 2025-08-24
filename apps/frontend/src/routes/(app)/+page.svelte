@@ -15,6 +15,7 @@
 	const matchups = $derived(currentWeekData?.weekMatchups);
 
 	const displayName = $derived(currentUserData?.displayName);
+	const prevDisplayName = $derived(currentUserData?.prevDisplayName);
 
 	// declaring prop objects for each layout
 	const preWeekLayoutProps = $derived({
@@ -23,6 +24,7 @@
 		teamData: teamData,
 		currentWeekText: currentWeekData?.currentWeekText,
 		displayName: displayName,
+		prevDisplayName: prevDisplayName,
 		weekJoined: displayName
 	});
 
@@ -43,7 +45,11 @@
 		winningTeamScore: currentWeekData?.winningTeamScore,
 		bestNflTeamName: currentWeekData?.bestNflTeamName,
 		bestNflTeamScore: currentWeekData?.bestNflTeamScore,
-		userTeamName: currentUserData?.teamAssignment
+		userTeamName: currentUserData?.teamAssignment,
+		totalWins: currentUserData?.totalWins,
+		totalLosses: currentUserData?.totalLosses,
+		highestScoringTeamName: currentUserData?.highestScoringTeamName,
+		highestScoringTeamScore: currentUserData?.highestScoringTeamScore
 	});
 
 	// onMount(() => {

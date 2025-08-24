@@ -7,9 +7,6 @@
 	<form method="post" action="?/beginWeek" use:enhance>
 		<Button type="submit" variant="fill">Begin Week</Button>
 	</form>
-	<form method="post" action="?/beginPrevWeek" use:enhance>
-		<Button type="submit" variant="fill">Begin Previous Week</Button>
-	</form>
 	<form method="post" action="?/startActiveWeek" use:enhance>
 		<Button type="submit" variant="fill">Start Active Week</Button>
 	</form>

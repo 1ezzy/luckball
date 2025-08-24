@@ -12,15 +12,18 @@
 		winningTeamScore,
 		userTeamName,
 		bestNflTeamName,
-		bestNflTeamScore
+		bestNflTeamScore,
+		totalWins,
+		totalLosses,
+		highestScoringTeamName,
+		highestScoringTeamScore
 	} = $props();
 </script>
 
 <div class="hidden h-[calc(100vh-4rem)] lg:block">
 	<PageShell>
 		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div class="flex flex-col gap-8 md:flex-row">
+		<div class="my-auto flex flex-col gap-8 md:flex-row">
 			<div class="flex flex-1 items-center justify-center">
 				<WinningTeamCard {winningTeamName} {winningTeamScore} />
 			</div>
@@ -28,7 +31,7 @@
 				<BestTeamCard {bestNflTeamName} {bestNflTeamScore} />
 			</div>
 			<div class="justify-centerr flex flex-1 items-center">
-				<RecordsCard />
+				<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
 			</div>
 		</div>
 	</PageShell>
@@ -36,8 +39,7 @@
 <div class="hidden h-[calc(100vh-4rem)] md:block lg:hidden">
 	<PageShell>
 		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div class="flex flex-col gap-8 md:flex-row">
+		<div class="my-auto flex flex-col gap-8 md:flex-row">
 			<div class="flex flex-1 items-center justify-center">
 				<WinningTeamCard {winningTeamName} {winningTeamScore} />
 			</div>
@@ -45,7 +47,7 @@
 				<BestTeamCard {bestNflTeamName} {bestNflTeamScore} />
 			</div>
 			<div class="flex flex-1 items-center justify-center">
-				<RecordsCard />
+				<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
 			</div>
 		</div>
 	</PageShell>
@@ -56,6 +58,6 @@
 		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 		<WinningTeamCard {winningTeamName} {winningTeamScore} />
 		<BestTeamCard {bestNflTeamName} {bestNflTeamScore} />
-		<RecordsCard />
+		<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
 	</PageShell>
 </div>

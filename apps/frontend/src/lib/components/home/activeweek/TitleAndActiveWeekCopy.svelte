@@ -25,20 +25,20 @@
 	</div>
 {/snippet}
 
-<div class="hidden w-full lg:block">
-	<div class="flex w-full flex-col gap-8">
+<div class="hidden w-full self-start lg:block">
+	<div class="flex w-full flex-col gap-4 2xl:gap-8">
 		{@render titleCopy()}
 		{@render copyText()}
 	</div>
 </div>
-<div class="hidden w-full md:block lg:hidden">
-	<div class="flex w-full flex-col gap-8">
+<div class="hidden w-full self-start md:block lg:hidden">
+	<div class="flex w-full flex-col gap-4">
 		{@render titleCopy()}
 		{@render copyText()}
 	</div>
 </div>
 <div class="block md:hidden">
-	<div class="flex flex-col gap-8 text-center">
+	<div class="flex flex-col gap-4 text-center">
 		{@render titleCopy()}
 		{@render copyText()}
 	</div>

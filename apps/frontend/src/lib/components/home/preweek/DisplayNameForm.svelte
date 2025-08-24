@@ -1,14 +1,19 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { onMount } from 'svelte';
 	import { Button, TextField } from 'svelte-ux';
 
-	let { weekJoined, currentWeekText, displayName } = $props();
+	let { weekJoined, currentWeekText, displayName, prevDisplayName } = $props();
 
 	let loading = $state(false);
+
+	onMount(() => {
+		console.log(prevDisplayName);
+	});
 </script>
 
 {#snippet joined()}
-	<div class="flex w-full flex-col gap-8 text-center">
+	<div class="my-auto flex w-full flex-col gap-8 text-center">
 		<span>You've successfully joined {currentWeekText}!</span>
 		<span class="text-primary">Display Name: {displayName}</span>
 	</div>
@@ -16,7 +21,7 @@
 
 {#snippet joinForm()}
 	<form
-		class="flex w-full flex-col gap-8 text-center md:w-[50%]"
+		class="my-auto flex w-full flex-col gap-8 text-center md:w-[50%]"
 		method="post"
 		action="?/joinWeek"
 		use:enhance={() => {
@@ -27,7 +32,8 @@
 			};
 		}}
 	>
-		<TextField name="displayName" placeholder="Enter Display Name" />
+		<h3 class="text-secondary text-2xl">Join {currentWeekText} now!</h3>
+		<TextField name="displayName" placeholder="Enter Display Name" bind:value={prevDisplayName} />
 		<Button
 			type="submit"
 			color="primary"
@@ -35,7 +41,7 @@
 			classes={{ root: '!text-wrap' }}
 			{loading}
 		>
-			Join {currentWeekText}
+			Join Week
 		</Button>
 	</form>
 {/snippet}

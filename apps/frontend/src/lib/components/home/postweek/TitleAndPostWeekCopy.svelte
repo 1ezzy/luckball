@@ -22,18 +22,18 @@
 	</div>
 {/snippet}
 
-<div class="hidden w-full lg:block">
-	<div class="flex w-full flex-col gap-8">
+<div class="hidden w-full self-start lg:block">
+	<div class="flex w-full flex-col gap-4 2xl:gap-8">
 		{@render textAndCopy(false)}
 	</div>
 </div>
-<div class="hidden w-full md:block lg:hidden">
-	<div class="flex w-full flex-col gap-8">
+<div class="hidden w-full self-start md:block lg:hidden">
+	<div class="flex w-full flex-col gap-4">
 		{@render textAndCopy(false)}
 	</div>
 </div>
 <div class="block md:hidden">
-	<div class="flex flex-col gap-8 text-center">
+	<div class="flex flex-col gap-4 text-center">
 		{@render textAndCopy(true)}
 	</div>
 </div>
