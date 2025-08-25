@@ -15,7 +15,7 @@
 	const totalWins = $derived(data?.totalWins);
 	const totalLosses = $derived(data?.totalLosses);
 	const highestScoringTeamName = $derived(data?.highestScoringTeamName);
-	const highestScoringTeamScore = $derived(data?.highestScoringTeamName);
+	const highestScoringTeamScore = $derived(data?.highestScoringTeamScore);
 </script>
 
 <Records

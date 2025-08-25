@@ -95,7 +95,7 @@
 		</Card>
 	</div>
 </div>
-<div class="my-auto block w-full md:hidden">
+<div class="block w-full md:hidden">
 	<div class="flex flex-col gap-4 text-center">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
 		<Card class="h-full gap-4 p-4">

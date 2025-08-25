@@ -21,17 +21,28 @@
 <div class="md:h-[calc(100vh-4rem)]">
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
-			<TitleAndPreWeekCopy {currentWeekText} />
+			<TitleAndPreWeekCopy {currentWeekText} mainPage={false} />
 			<ScheduleCard {matchups} {currentWeekText} />
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
 		<PageShell>
-			<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
+			<TitleAndActiveWeekCopy
+				{currentWeekText}
+				{weekJoined}
+				{userTeamAssignment}
+				mainPage={false}
+			/>
 			<ScheduleCard {matchups} {currentWeekText} showScores />
 		</PageShell>
 	{:else}
 		<PageShell>
-			<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
+			<TitleAndPostWeekCopy
+				{currentWeekText}
+				{displayName}
+				{winningTeamName}
+				{userTeamName}
+				mainPage={false}
+			/>
 			<ScheduleCard {matchups} {currentWeekText} showScores />
 		</PageShell>
 	{/if}

@@ -22,7 +22,7 @@
 <div class="hidden h-[calc(100vh-4rem)] lg:block">
 	<PageShell>
 		<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
-		<div class="flex w-full flex-col gap-8 overflow-y-scroll">
+		<div class="my-auto flex w-full flex-col gap-8 overflow-y-scroll">
 			<h2 class="text-secondary text-2xl">Teams for {currentWeekText}</h2>
 			<div class="flex flex-row gap-16">
 				<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />
@@ -34,7 +34,7 @@
 <div class="hidden h-[calc(100vh-4rem)] md:block lg:hidden">
 	<PageShell>
 		<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
-		<div class="flex w-full flex-col gap-8 overflow-y-scroll">
+		<div class="my-auto flex w-full flex-col gap-8 overflow-y-scroll">
 			<h2 class="text-secondary text-2xl">Teams for {currentWeekText}</h2>
 			<div class="flex flex-row gap-16">
 				<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />

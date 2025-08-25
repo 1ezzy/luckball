@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { currentWeekText, displayName, winningTeamName, userTeamName } = $props();
+	let { currentWeekText, displayName, winningTeamName, userTeamName, mainPage = true } = $props();
 
 	let won = winningTeamName === userTeamName;
 </script>
@@ -22,12 +22,12 @@
 	</div>
 {/snippet}
 
-<div class="hidden w-full self-start lg:block">
+<div class="hidden w-full lg:block">
 	<div class="flex w-full flex-col gap-4 2xl:gap-8">
 		{@render textAndCopy(false)}
 	</div>
 </div>
-<div class="hidden w-full self-start md:block lg:hidden">
+<div class="hidden w-full md:block lg:hidden">
 	<div class="flex w-full flex-col gap-4">
 		{@render textAndCopy(false)}
 	</div>
