@@ -8,6 +8,8 @@ services:
       - '3000:3000'
     environment:
       - NODE_ENV=production
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+      - PUBLIC_BETTER_AUTH_URL=${PUBLIC_BETTER_AUTH_URL}
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       - VALKEY_URL=valkey
       - ORIGIN=https://luckball.pro
