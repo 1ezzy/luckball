@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: apps/frontend/Dockerfile
     container_name: luckball-frontend
+    mem_limit: 250m
     ports:
       - '3000:3000'
     environment:
@@ -29,6 +30,7 @@ services:
       context: .
       dockerfile: apps/cron-jobs/Dockerfile
     container_name: luckball-cron-jobs
+    mem_limit: 100m
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
@@ -43,6 +45,7 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: luckball-postgres
+    mem_limit: 300m
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -58,6 +61,7 @@ services:
   valkey:
     image: valkey/valkey:8-alpine
     container_name: luckball-valkey
+    mem_limit: 100m
     volumes:
       - valkey_data:/data
     restart: unless-stopped
@@ -67,6 +71,7 @@ services:
   nginx:
     image: nginx:alpine
     container_name: luckball-nginx
+    mem_limit: 50m
     ports:
       - '80:80'
       - '443:443'

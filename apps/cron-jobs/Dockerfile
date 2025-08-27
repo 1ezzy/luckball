@@ -10,7 +10,7 @@ COPY packages/drizzle-client/package.json ./packages/drizzle-client/
 COPY packages/valkey-client/package.json ./packages/valkey-client/
 COPY packages/game-logic/package.json ./packages/game-logic/
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --network-concurrency=1
 COPY . .
 
 CMD ["pnpm", "--filter", "luckball-cron-jobs", "start"]
