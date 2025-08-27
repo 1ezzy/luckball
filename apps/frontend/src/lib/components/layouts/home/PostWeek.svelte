@@ -23,7 +23,7 @@
 <div class="hidden h-[calc(100vh-4rem)] lg:block">
 	<PageShell>
 		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
-		<div class=" flex flex-col gap-8 md:flex-row">
+		<div class="my-auto flex flex-col gap-8 md:flex-row">
 			<div class="flex flex-1 items-center justify-center">
 				<WinningTeamCard {winningTeamName} {winningTeamScore} />
 			</div>
@@ -39,7 +39,7 @@
 <div class="hidden h-[calc(100vh-4rem)] md:block lg:hidden">
 	<PageShell>
 		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
-		<div class=" flex flex-col gap-8 md:flex-row">
+		<div class="my-auto flex flex-col gap-8 md:flex-row">
 			<div class="flex flex-1 items-center justify-center">
 				<WinningTeamCard {winningTeamName} {winningTeamScore} />
 			</div>

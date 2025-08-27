@@ -26,14 +26,7 @@
 		<PageShell>
 			<TitleAndPreWeekCopy {currentWeekText} mainPage={false} />
 			<div class="my-auto flex flex-col gap-8 md:flex-row">
-				<div class="flex flex-1 items-center justify-center">
-					<RecordsCard
-						{totalWins}
-						{totalLosses}
-						{highestScoringTeamName}
-						{highestScoringTeamScore}
-					/>
-				</div>
+				<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
 			</div>
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
@@ -45,14 +38,7 @@
 				mainPage={false}
 			/>
 			<div class="my-auto flex flex-col gap-8 md:flex-row">
-				<div class="flex flex-1 items-center justify-center">
-					<RecordsCard
-						{totalWins}
-						{totalLosses}
-						{highestScoringTeamName}
-						{highestScoringTeamScore}
-					/>
-				</div>
+				<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
 			</div>
 		</PageShell>
 	{:else}
@@ -64,15 +50,8 @@
 				{userTeamName}
 				mainPage={false}
 			/>
-			<div class="flex flex-col gap-8 md:flex-row">
-				<div class="flex flex-1 items-center justify-center">
-					<RecordsCard
-						{totalWins}
-						{totalLosses}
-						{highestScoringTeamName}
-						{highestScoringTeamScore}
-					/>
-				</div>
+			<div class="my-auto flex flex-col gap-8 md:flex-row">
+				<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
 			</div>
 		</PageShell>
 	{/if}

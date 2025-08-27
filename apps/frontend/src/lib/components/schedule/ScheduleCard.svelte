@@ -59,7 +59,7 @@
 	</div>
 {/snippet}
 
-<div class="my-auto hidden w-full lg:block">
+<div class="hidden w-full lg:block">
 	<div class="flex h-full w-full flex-col gap-4">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
 		<Card class="h-full">
@@ -77,7 +77,7 @@
 		</Card>
 	</div>
 </div>
-<div class="my-auto hidden w-full md:block lg:hidden">
+<div class="hidden w-full md:block lg:hidden">
 	<div class="flex h-full w-full flex-col gap-4">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
 		<Card class="h-full">
