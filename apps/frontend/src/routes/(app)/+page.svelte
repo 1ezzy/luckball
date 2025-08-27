@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { WeekStatus } from '$lib/types/valkey-types.js';
 	import PreWeek from '$lib/components/layouts/home/PreWeek.svelte';
 	import ActiveWeek from '$lib/components/layouts/home/ActiveWeek.svelte';
@@ -51,10 +50,6 @@
 		highestScoringTeamName: currentUserData?.highestScoringTeamName,
 		highestScoringTeamScore: currentUserData?.highestScoringTeamScore
 	});
-
-	// onMount(() => {
-	// 	console.log('page', data.currentWeekData?.weekScores);
-	// });
 </script>
 
 {#if currentWeekData?.weekStatus === WeekStatus.Pending}

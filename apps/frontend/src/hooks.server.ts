@@ -3,12 +3,12 @@ import { svelteKitHandler } from 'better-auth/svelte-kit';
 import { building } from '$app/environment';
 
 export async function handle({ event, resolve }) {
-	// Fetch current session from Better Auth
+	// fetch current session from Better Auth
 	const session = await auth.api.getSession({
 		headers: event.request.headers
 	});
 
-	// Make session and user available on server
+	// provide session and user to runtime server
 	if (session) {
 		event.locals.session = session.session;
 		event.locals.user = session.user;

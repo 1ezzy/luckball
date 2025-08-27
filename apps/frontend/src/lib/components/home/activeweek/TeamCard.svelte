@@ -42,9 +42,9 @@
 		<h3 class="text-accent">Teams</h3>
 		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 		<div
-			class="grid grid-cols-1 gap-2 {mobileGrid
+			class="grid gap-2 {mobileGrid
 				? 'grid-cols-1'
-				: 'grid-cols-[repeat(auto-fit,minmax(120px,1fr))'}"
+				: 'grid-cols-[repeat(auto-fit,minmax(120px,1fr))]'}"
 		>
 			{#each data?.nflTeams as team, i}
 				<div class="w-30 flex flex-row items-center justify-between p-2">
@@ -70,10 +70,10 @@
 {/snippet}
 
 <div class="hidden w-full flex-1 lg:block">
-	{@render titleAndCard(teamPlayerData)}
+	{@render titleAndCard(teamPlayerData, false)}
 </div>
 <div class="hidden w-full flex-1 md:block lg:hidden">
-	{@render titleAndCard(teamPlayerData)}
+	{@render titleAndCard(teamPlayerData, false)}
 </div>
 <div class="block md:hidden">
 	{@render titleAndCard(teamPlayerData, true)}

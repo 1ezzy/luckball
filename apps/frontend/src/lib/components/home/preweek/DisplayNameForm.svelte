@@ -1,15 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { onMount } from 'svelte';
 	import { Button, TextField } from 'svelte-ux';
 
 	let { weekJoined, currentWeekText, displayName, prevDisplayName } = $props();
 
 	let loading = $state(false);
-
-	onMount(() => {
-		console.log(prevDisplayName);
-	});
 </script>
 
 {#snippet joined()}
