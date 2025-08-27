@@ -5,6 +5,7 @@ import { drizzle } from '$lib/clients/drizzle-client';
 import { getRequestEvent } from '$app/server';
 import * as schema from '$lib/db/schema';
 import {
+	BETTER_AUTH_SECRET,
 	DISCORD_CLIENT_ID,
 	DISCORD_CLIENT_SECRET,
 	GOOGLE_CLIENT_ID,
@@ -12,6 +13,7 @@ import {
 } from '$env/static/private';
 
 export const auth = betterAuth({
+	secret: BETTER_AUTH_SECRET,
 	plugins: [sveltekitCookies(getRequestEvent)],
 	database: drizzleAdapter(drizzle, {
 		provider: 'pg',
