@@ -8,11 +8,14 @@
 		LucideHouse,
 		LucideLogIn,
 		LucideLogOut,
-		LucideMedal
+		LucideMedal,
+		LucideMenu
 	} from '@lucide/svelte';
 	import '../app.css';
 
 	let { children, data } = $props();
+
+	let menuOpen = $state(true);
 </script>
 
 <svelte:head>
@@ -22,7 +25,7 @@
 
 <AppLayout areas="'header header' 'aside main'">
 	<svelte:fragment slot="nav">
-		<nav class=" bg-surface-200 flex h-full flex-col items-start gap-8 px-8 py-16">
+		<nav class="bg-surface-200 flex h-full flex-col items-start gap-8 px-8 py-16">
 			<div class="flex flex-row items-center justify-center gap-2">
 				<LucideHouse size={20} strokeWidth={3} />
 				<NavItem text="Home" currentUrl={page.url} path="/" />
@@ -39,6 +42,17 @@
 	</svelte:fragment>
 
 	<AppBar title="Luckball" class="bg-primary text-primary-content px-8">
+		<svelte:fragment slot="menuIcon" let:toggleMenu let:isMenuOpen>
+			<Button
+				on:click={() => {
+					toggleMenu();
+					menuOpen = isMenuOpen;
+				}}
+				class="p-1"
+			>
+				<LucideMenu size={20} strokeWidth={3} />
+			</Button>
+		</svelte:fragment>
 		<div slot="actions">
 			{#if data?.session}
 				<Button
@@ -60,7 +74,12 @@
 		</div>
 	</AppBar>
 
-	<main class="bg-surface-300 border-l-1 flex h-full flex-col border-l-gray-500 p-4 md:p-0">
+	<main
+		class={[
+			'bg-surface-300 flex h-full flex-col p-4 md:p-0',
+			menuOpen ? 'border-l-1 border-l-gray-500' : ''
+		]}
+	>
 		{@render children()}
 	</main>
 </AppLayout>
