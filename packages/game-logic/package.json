@@ -10,7 +10,9 @@
 	"dependencies": {
 		"@faker-js/faker": "^8.4.1",
 		"@luckball/valkey-client": "workspace:*",
+		"drizzle-orm": "^0.44.4",
 		"iovalkey": "^0.3.3",
+		"luckball-frontend": "workspace:*",
 		"p-limit": "^6.2.0"
 	},
 	"devDependencies": {

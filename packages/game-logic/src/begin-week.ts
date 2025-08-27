@@ -1,7 +1,7 @@
 import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 import { createEspnApiClient } from './api/espn-api';
 
-export const beginWeek = async (valkey: any, drizzle: any, prevWeek = false) => {
+export const beginWeek = async (valkey: any, prevWeek = false) => {
 	const espnApi = createEspnApiClient();
 	const activeWeek = await espnApi.getActiveWeek();
 	const currentWeek = prevWeek ? activeWeek.currentWeek - 1 : activeWeek.currentWeek;

@@ -38,7 +38,7 @@ const shuffleNflTeams = (teams: string[]): [string[], string[]] => {
 	return [team1Teams, team2Teams];
 };
 
-export const startActiveWeek = async (valkey: any, drizzle: any) => {
+export const startActiveWeek = async (valkey: any) => {
 	const espnApi = createEspnApiClient();
 	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
 
