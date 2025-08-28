@@ -1,0 +1,9 @@
+{
+	"out": "./drizzle",
+	"schema": "./src/lib/db/schema.ts",
+	"dialect": "postgresql",
+	"dbCredentials": {
+		"url": "${POSTGRES_URL}",
+		"database": "luckball"
+	}
+}
