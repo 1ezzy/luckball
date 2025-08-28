@@ -5,6 +5,7 @@ apps/cron-jobs/node_modules
 # Output
 apps/frontend/.wrangler
 apps/frontend/.svelte-kit
+apps/frontend/build
 
 # OS
 .DS_Store
