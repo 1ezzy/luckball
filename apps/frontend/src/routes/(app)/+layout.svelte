@@ -76,7 +76,7 @@
 
 	<main
 		class={[
-			'bg-surface-300 flex h-full flex-col p-4 md:p-0',
+			'bg-surface-300 flex h-full min-h-screen flex-col p-4 md:min-h-[calc(100vh-4rem)] md:p-0',
 			menuOpen ? 'border-l-1 border-l-gray-500' : ''
 		]}
 	>

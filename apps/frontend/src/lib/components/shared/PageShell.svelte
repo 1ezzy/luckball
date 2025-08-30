@@ -14,7 +14,7 @@
 		{@render children()}
 	</div>
 </div>
-<div class="block md:hidden">
+<div class="block h-full md:hidden">
 	<div class="flex w-full flex-1 flex-col gap-16 p-8">
 		{@render children()}
 	</div>
