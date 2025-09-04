@@ -1,4 +1,4 @@
-import { user_profile } from 'luckball-frontend/src/lib/db/schema';
+import { schema } from '@luckball/drizzle-client';
 import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 import { createEspnApiClient } from './api/espn-api';
 import { eq, sql } from 'drizzle-orm';
@@ -108,22 +108,22 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 		won: boolean
 	) => {
 		const [userProfile] = await drizzle
-			.select({ highestScoringTeamScore: user_profile.highestScoringTeamScore })
-			.from(user_profile)
-			.where(eq(user_profile.userId, userId));
+			.select({ highestScoringTeamScore: schema.user_profile.highestScoringTeamScore })
+			.from(schema.user_profile)
+			.where(eq(schema.user_profile.userId, userId));
 
 		const shouldUpdateHighScore = !userProfile || userProfile.highestScoringTeamScore < teamScore;
 
 		await drizzle
-			.update(user_profile)
+			.update(schema.user_profile)
 			.set({
-				totalWins: sql`${user_profile.totalWins} + ${won ? 1 : 0}`,
-				totalLosses: sql`${user_profile.totalLosses} + ${won ? 0 : 1}`,
+				totalWins: sql`${schema.user_profile.totalWins} + ${won ? 1 : 0}`,
+				totalLosses: sql`${schema.user_profile.totalLosses} + ${won ? 0 : 1}`,
 				highestScoringTeamName: shouldUpdateHighScore ? teamName : undefined,
 				highestScoringTeamScore: shouldUpdateHighScore ? teamScore : undefined,
 				updatedAt: new Date()
 			})
-			.where(eq(user_profile.userId, userId));
+			.where(eq(schema.user_profile.userId, userId));
 	};
 	for (const userId of Object.keys(users)) {
 		const parsedUserData = JSON.parse(users[userId]);

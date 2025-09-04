@@ -1,6 +1,6 @@
 {
 	"out": "./drizzle",
-	"schema": "./src/lib/db/schema.ts",
+	"schema": "../../packages/drizzle-client/src/schema.ts",
 	"dialect": "postgresql",
 	"dbCredentials": {
 		"url": "${POSTGRES_URL}",

@@ -3,7 +3,7 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { sveltekitCookies } from 'better-auth/svelte-kit';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { getRequestEvent } from '$app/server';
-import * as schema from '$lib/db/schema';
+import { schema } from '@luckball/drizzle-client';
 import {
 	BETTER_AUTH_SECRET,
 	DISCORD_CLIENT_ID,
