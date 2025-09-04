@@ -3,7 +3,8 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"start": "pnpm tsx src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js",
 		"begin-week": "pnpm tsx src/commands.ts begin-week",
 		"start-active-week": "pnpm tsx src/commands.ts start-active-week",
 		"end-week": "pnpm tsx src/commands.ts end-week",
