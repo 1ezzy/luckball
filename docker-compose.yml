@@ -4,7 +4,6 @@ services:
       context: .
       dockerfile: apps/frontend/Dockerfile
     container_name: luckball-frontend
-    mem_limit: 250m
     ports:
       - '3000:3000'
     environment:
@@ -29,7 +28,6 @@ services:
       context: .
       dockerfile: apps/cron-jobs/Dockerfile
     container_name: luckball-cron-jobs
-    mem_limit: 100m
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
