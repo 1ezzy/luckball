@@ -1,4 +1,3 @@
-import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 import { createEspnApiClient } from './api/espn-api';
 
 export const beginWeek = async (valkey: any, prevWeek = false) => {
@@ -27,7 +26,7 @@ export const beginWeek = async (valkey: any, prevWeek = false) => {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 
-	const updatedMatchups = matchups.map((matchup: MatchupData) => {
+	const updatedMatchups = matchups.map((matchup: any) => {
 		const scoresObjList = matchup.teams.map((team: string) => ({
 			[team]: 0
 		}));
