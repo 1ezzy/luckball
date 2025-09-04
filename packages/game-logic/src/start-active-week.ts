@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker';
 import { createEspnApiClient } from './api/espn-api';
-import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 
 const generateTeamName = (): string => {
 	const adj = faker.word.adjective({ length: { min: 5, max: 8 }, strategy: 'fail' });
@@ -59,7 +58,7 @@ export const startActiveWeek = async (valkey: any) => {
 	}
 	const matchups = JSON.parse(matchupsRaw);
 
-	const updatedMatchups = matchups.map((matchup: MatchupData) => {
+	const updatedMatchups = matchups.map((matchup: any) => {
 		const scoresObjList = matchup.teams.map((team: string) => ({
 			[team]: 0
 		}));
@@ -99,7 +98,7 @@ export const startActiveWeek = async (valkey: any) => {
 	}
 
 	// randomly select one team from each matchup to assign to both teams
-	const matchupEvents = matchups.map((matchup: MatchupData) => matchup.event);
+	const matchupEvents = matchups.map((matchup: any) => matchup.event);
 	const [team1NflTeams, team2NflTeams] = shuffleNflTeams(matchupEvents);
 
 	// create week data with new teams

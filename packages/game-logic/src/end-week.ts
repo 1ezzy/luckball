@@ -1,5 +1,4 @@
 import { schema } from '@luckball/drizzle-client';
-import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 import { createEspnApiClient } from './api/espn-api';
 import { eq, sql } from 'drizzle-orm';
 
@@ -62,15 +61,15 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	if (matchupsRaw.length === 0) {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
-	const matchups: MatchupData[] = JSON.parse(matchupsRaw);
+	const matchups: any[] = JSON.parse(matchupsRaw);
 
 	let bestNflTeamScore = 0;
 	let bestNflTeamName;
 	for (const matchup of matchups) {
 		for (const scoreObj of matchup.matchupScores) {
 			const [team, score] = Object.entries(scoreObj)[0];
-			if (score > bestNflTeamScore) {
-				bestNflTeamScore = score;
+			if ((score as number) > bestNflTeamScore) {
+				bestNflTeamScore = score as number;
 				bestNflTeamName = team;
 			}
 		}

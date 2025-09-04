@@ -1,4 +1,3 @@
-import { MatchupData } from '../../../apps/frontend/src/lib/types/valkey-types';
 import { createEspnApiClient } from './api/espn-api';
 
 export const updateScores = async (valkey: any) => {
@@ -26,11 +25,11 @@ export const updateScores = async (valkey: any) => {
 	}
 
 	const matchupScores = await Promise.all(
-		matchups.map((m: MatchupData, index: number) => espnApi.getMatchupScores(m.id, index))
+		matchups.map((m: any, index: number) => espnApi.getMatchupScores(m.id, index))
 	);
 	const reversedMatchupScores = matchupScores.map((scores) => [...scores].reverse());
 
-	const updatedMatchups = matchups.map((matchup: MatchupData, index: number) => ({
+	const updatedMatchups = matchups.map((matchup: any, index: number) => ({
 		...matchup,
 		matchupScores: matchup.teams.map((team: string, i: number) => ({
 			[team]: reversedMatchupScores[index][i]
