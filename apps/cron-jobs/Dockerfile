@@ -1,6 +1,7 @@
 # ---- Base ----
 FROM node:20-alpine AS base
 WORKDIR /app
+RUN npm install -g pnpm
 
 # ---- Builder ----
 FROM base AS builder
@@ -16,4 +17,4 @@ COPY --from=builder /app/apps/cron-jobs/package.json ./apps/cron-jobs/package.js
 COPY --from=builder /app/packages/game-logic/package.json ./packages/game-logic/package.json
 
 WORKDIR /app/apps/cron-jobs
-CMD ["pnpm", "start"]
+CMD ["pnpm","--filter", "luckball-cron-jobs", "start"]
