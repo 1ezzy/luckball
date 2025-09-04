@@ -6,7 +6,7 @@ import { getMatchupData, getWeekAndUserData } from '$lib/server/valkey';
 import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 import { auth } from '$lib/auth/auth';
 import type { PageServerLoad } from './$types';
-import { user_profile } from '@luckball/drizzle-client';
+import { schema } from '@luckball/drizzle-client';
 import { eq } from 'drizzle-orm';
 
 export const load: PageServerLoad = async ({ request }) => {
@@ -52,14 +52,14 @@ export const load: PageServerLoad = async ({ request }) => {
 
 	const userProfileResult = await drizzle
 		.select({
-			displayName: user_profile.displayName,
-			totalWins: user_profile.totalWins,
-			totalLosses: user_profile.totalLosses,
-			highestScoringTeamName: user_profile.highestScoringTeamName,
-			highestScoringTeamScore: user_profile.highestScoringTeamScore
+			displayName: schema.user_profile.displayName,
+			totalWins: schema.user_profile.totalWins,
+			totalLosses: schema.user_profile.totalLosses,
+			highestScoringTeamName: schema.user_profile.highestScoringTeamName,
+			highestScoringTeamScore: schema.user_profile.highestScoringTeamScore
 		})
-		.from(user_profile)
-		.where(eq(user_profile.userId, userId));
+		.from(schema.user_profile)
+		.where(eq(schema.user_profile.userId, userId));
 
 	const prevDisplayName = userProfileResult[0]?.displayName;
 	const totalWins = userProfileResult[0]?.totalWins;
