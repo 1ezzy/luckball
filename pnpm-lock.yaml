@@ -221,9 +221,6 @@ importers:
       iovalkey:
         specifier: ^0.3.3
         version: 0.3.3
-      luckball-frontend:
-        specifier: workspace:*
-        version: link:../../apps/frontend
       p-limit:
         specifier: ^6.2.0
         version: 6.2.0
