@@ -3,8 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"build": "tsc",
-		"start": "node dist/index.js",
+		"start": "tsx src/index.ts",
 		"begin-week": "pnpm tsx src/commands.ts begin-week",
 		"start-active-week": "pnpm tsx src/commands.ts start-active-week",
 		"end-week": "pnpm tsx src/commands.ts end-week",
@@ -18,7 +17,8 @@
 		"drizzle-orm": "^0.44.4",
 		"iovalkey": "^0.3.3",
 		"node-cron": "^4.2.1",
-		"postgres": "^3.4.7"
+		"postgres": "^3.4.7",
+		"tsx": "^4.16.2"
 	},
 	"devDependencies": {
 		"typescript": "^5.5.2"

@@ -2,8 +2,7 @@
 	"name": "@luckball/game-logic",
 	"version": "1.0.0",
 	"private": true,
-	"main": "./src/index.js",
-	"types": "./src/index.d.ts",
+	"main": "./src/index.ts",
 	"dependencies": {
 		"@faker-js/faker": "^8.4.1",
 		"@luckball/valkey-client": "workspace:*",
