@@ -86,7 +86,7 @@ export const load: PageServerLoad = async ({ request }) => {
 		currentWeekNum: currentWeek,
 		currentWeekText: currentWeekText,
 		weekEvents: weekEvents,
-		weekMatchups: matchupData,
+		weekMatchups: matchupData.matchupData,
 		weekStatus: weekData.status,
 		lastWinningTeam: weekData.lastWinningTeam,
 		winningTeamName: weekData.winningTeamName,
