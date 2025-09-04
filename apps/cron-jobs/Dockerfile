@@ -38,4 +38,4 @@ RUN pnpm install --prod --frozen-lockfile
 COPY --from=builder /app/apps/cron-jobs/dist ./apps/cron-jobs/dist
 
 # The 'start' script in package.json is 'node dist/index.js'
-CMD ["pnpm", "--filter", "luckball-cron-jobs", "start"]
+CMD ["pnpm", "start"]
