@@ -6,7 +6,7 @@ import { getMatchupData, getWeekAndUserData } from '$lib/server/valkey';
 import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
 import { auth } from '$lib/auth/auth';
 import type { PageServerLoad } from './$types';
-import { user_profile } from '$lib/db/schema';
+import { user_profile } from '@luckball/drizzle-client';
 import { eq } from 'drizzle-orm';
 
 export const load: PageServerLoad = async ({ request }) => {

@@ -1,5 +1,5 @@
 import { createEspnApiClient } from './api/espn-api';
-import { user_profile } from 'luckball-frontend/src/lib/db/schema';
+import { schema } from '@luckball/drizzle-client';
 import { eq } from 'drizzle-orm';
 
 export const addUserToWeek = async (
@@ -43,14 +43,14 @@ export const addUserToWeek = async (
 
 	// update user display name in Postgres
 	const updateResult = await drizzle
-		.update(user_profile)
+		.update(schema.user_profile)
 		.set({ displayName, updatedAt: new Date() })
-		.where(eq(user_profile.userId, userId))
-		.returning({ updatedDisplayName: user_profile.displayName });
+		.where(eq(schema.user_profile.userId, userId))
+		.returning({ updatedDisplayName: schema.user_profile.displayName });
 
 	// if user was not updated, create a new entry for the user
 	if (updateResult.length === 0) {
-		await drizzle.insert(user_profile).values({
+		await drizzle.insert(schema.user_profile).values({
 			userId,
 			displayName,
 			createdAt: new Date(),

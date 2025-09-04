@@ -209,6 +209,9 @@ importers:
       '@faker-js/faker':
         specifier: ^8.4.1
         version: 8.4.1
+      '@luckball/drizzle-client':
+        specifier: workspace:*
+        version: link:../drizzle-client
       '@luckball/valkey-client':
         specifier: workspace:*
         version: link:../valkey-client
