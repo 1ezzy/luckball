@@ -13,7 +13,4 @@ COPY packages/game-logic/package.json ./packages/game-logic/
 # Install all dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy the source code from the builder stage
-COPY --from=builder /app .
-
 CMD ["pnpm", "--filter", "luckball-cron-jobs", "start"]
