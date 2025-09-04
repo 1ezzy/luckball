@@ -9,18 +9,17 @@ export class CronJobRunner {
 
 	constructor(env: any) {
 		this.valkey = createValkeyClient(env.VALKEY_URL);
-		// this.drizzle = createDrizzleClient(env);
-		this.drizzle = undefined;
+		this.drizzle = createDrizzleClient(env);
 	}
 
 	async handleBeginWeek() {
-		const result = await beginWeek(this.valkey, this.drizzle);
+		const result = await beginWeek(this.valkey);
 		console.log('♣ Beginning Week..');
 		return result.success ? { success: true } : { success: false, error: result.message };
 	}
 
 	async handleStartActiveWeek() {
-		const result = await startActiveWeek(this.valkey, this.drizzle);
+		const result = await startActiveWeek(this.valkey);
 		console.log('♣ Starting Active Week...');
 		return result.success ? { success: true } : { success: false, error: result.message };
 	}

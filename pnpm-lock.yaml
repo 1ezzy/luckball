@@ -56,12 +56,18 @@ importers:
       commander:
         specifier: ^14.0.0
         version: 14.0.0
+      drizzle-orm:
+        specifier: ^0.44.4
+        version: 0.44.4(@cloudflare/workers-types@4.20250802.0)(@types/pg@8.15.5)(@upstash/redis@1.35.3)(kysely@0.28.5)(postgres@3.4.7)
       iovalkey:
         specifier: ^0.3.3
         version: 0.3.3
       node-cron:
         specifier: ^4.2.1
         version: 4.2.1
+      postgres:
+        specifier: ^3.4.7
+        version: 3.4.7
     devDependencies:
       typescript:
         specifier: ^5.5.2

@@ -15,8 +15,10 @@
 		"@luckball/game-logic": "workspace:*",
 		"@luckball/valkey-client": "workspace:*",
 		"commander": "^14.0.0",
+		"drizzle-orm": "^0.44.4",
 		"iovalkey": "^0.3.3",
-		"node-cron": "^4.2.1"
+		"node-cron": "^4.2.1",
+		"postgres": "^3.4.7"
 	},
 	"devDependencies": {
 		"typescript": "^5.5.2"
