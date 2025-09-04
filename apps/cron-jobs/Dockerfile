@@ -16,7 +16,6 @@ RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the source code and build the app
 COPY . .
-RUN pnpm --filter @luckball/game-logic build
 RUN pnpm --filter luckball-cron-jobs build
 
 # ---- Production ----

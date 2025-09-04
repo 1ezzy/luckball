@@ -2,15 +2,8 @@
 	"name": "@luckball/game-logic",
 	"version": "1.0.0",
 	"private": true,
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"files": [
-		"dist"
-	],
-	"scripts": {
-		"build": "tsc",
-		"lint": "eslint . --max-warnings 0"
-	},
+	"main": "./src/index.js",
+	"types": "./src/index.d.ts",
 	"dependencies": {
 		"@faker-js/faker": "^8.4.1",
 		"@luckball/valkey-client": "workspace:*",
