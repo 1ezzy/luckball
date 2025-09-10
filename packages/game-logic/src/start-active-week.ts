@@ -46,7 +46,7 @@ export const startActiveWeek = async (valkey: any) => {
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
 	const currentWeekData = await valkey.get(weekDataKey);
-	if (currentWeekData.status !== 'pending') {
+	if (JSON.parse(currentWeekData).status !== 'pending') {
 		return { success: false, message: 'Week not started - current week data status not "pending"' };
 	}
 

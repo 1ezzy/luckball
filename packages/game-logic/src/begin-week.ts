@@ -10,7 +10,7 @@ export const beginWeek = async (valkey: any) => {
 	const prevWeekDataKey = `${seasonType}:week:${currentWeek}:data`;
 
 	const prevWeekData = await valkey.get(prevWeekDataKey);
-	if (prevWeekData.status !== 'ended') {
+	if (JSON.parse(prevWeekData).status !== 'ended') {
 		return { success: false, message: 'Week not started - previous week data status not "ended"' };
 	}
 

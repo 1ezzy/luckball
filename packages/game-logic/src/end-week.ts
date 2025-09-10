@@ -11,7 +11,7 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
 	const currentWeekData = await valkey.get(weekDataKey);
-	if (currentWeekData.status !== 'in_progress') {
+	if (JSON.parse(currentWeekData).status !== 'in_progress') {
 		return {
 			success: false,
 			message: 'Week not started - current week data status not "in_progress"'
