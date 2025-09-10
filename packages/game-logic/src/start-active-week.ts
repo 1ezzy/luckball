@@ -45,6 +45,11 @@ export const startActiveWeek = async (valkey: any) => {
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
+	const currentWeekData = await valkey.get(weekDataKey);
+	if (currentWeekData.status !== 'pending') {
+		return { success: false, message: 'Week not started - current week data status not "pending"' };
+	}
+
 	// get a list of all the users
 	const users = await valkey.hkeys(usersKey);
 	if (!users || Object.keys(users).length === 0) {

@@ -1,13 +1,18 @@
 import { createEspnApiClient } from './api/espn-api';
 
-export const beginWeek = async (valkey: any, prevWeek = false) => {
+export const beginWeek = async (valkey: any) => {
 	const espnApi = createEspnApiClient();
 	const activeWeek = await espnApi.getActiveWeek();
-	const currentWeek = prevWeek ? activeWeek.currentWeek - 1 : activeWeek.currentWeek;
+	const currentWeek = activeWeek.currentWeek;
 	const seasonType = activeWeek.seasonType;
 
-	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
-	const prevWeekDataKey = `${seasonType}:week:${currentWeek - 1}:data`;
+	const weekDataKey = `${seasonType}:week:${currentWeek + 1}:data`;
+	const prevWeekDataKey = `${seasonType}:week:${currentWeek}:data`;
+
+	const prevWeekData = await valkey.get(prevWeekDataKey);
+	if (prevWeekData.status !== 'ended') {
+		return { success: false, message: 'Week not started - previous week data status not "ended"' };
+	}
 
 	// get all matchups for the week
 	const weekEvents = await espnApi.getWeekEvents(seasonType, currentWeek);
@@ -39,17 +44,14 @@ export const beginWeek = async (valkey: any, prevWeek = false) => {
 	// update valkey with new match data
 	await valkey.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
 
-	// get the previous week data
-	const prevWeekData = await valkey.get(prevWeekDataKey);
-
 	// create current week data
-	const weekData = {
+	const newWeekData = {
 		lastWinningTeam: prevWeekData?.winningTeam ?? '',
 		status: 'pending'
 	};
 
 	// save the results
-	await valkey.set(weekDataKey, JSON.stringify(weekData));
+	await valkey.set(weekDataKey, JSON.stringify(newWeekData));
 
 	return { success: true, message: `Week ${currentWeek} started.` };
 };

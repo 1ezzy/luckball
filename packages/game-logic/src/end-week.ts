@@ -10,15 +10,21 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
+	const currentWeekData = await valkey.get(weekDataKey);
+	if (currentWeekData.status !== 'in_progress') {
+		return {
+			success: false,
+			message: 'Week not started - current week data status not "in_progress"'
+		};
+	}
+
 	// get a list of all the users
 	const users = await valkey.hgetall(usersKey);
 	if (!users || Object.keys(users).length === 0) {
 		return { success: false, message: 'No users to start the week.' };
 	}
 
-	// get the week data
-	const weekDataRaw = await valkey.get(weekDataKey);
-	const weekData = JSON.parse(weekDataRaw);
+	const weekData = JSON.parse(currentWeekData);
 	if (weekData.length === 0) {
 		return { success: false, message: 'No game data found for the week.' };
 	}
