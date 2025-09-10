@@ -6,8 +6,8 @@ export const beginWeek = async (valkey: any) => {
 	const currentWeek = activeWeek.currentWeek;
 	const seasonType = activeWeek.seasonType;
 
-	const weekDataKey = `${seasonType}:week:${currentWeek + 1}:data`;
-	const prevWeekDataKey = `${seasonType}:week:${currentWeek}:data`;
+	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
+	const prevWeekDataKey = `${seasonType}:week:${currentWeek - 1}:data`;
 
 	const prevWeekData = await valkey.get(prevWeekDataKey);
 	if (JSON.parse(prevWeekData).status !== 'ended') {
