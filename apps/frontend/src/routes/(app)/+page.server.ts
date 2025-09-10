@@ -1,4 +1,4 @@
-import { fail, redirect, type Actions } from '@sveltejs/kit';
+import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 import { addUserToWeek } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 import { drizzle } from '$lib/clients/drizzle-client';
@@ -28,7 +28,7 @@ export const load: PageServerLoad = async ({ request }) => {
 
 	const userId = session?.user.id;
 	if (!userId) {
-		return fail(400, { userId, error: 'User ID is required' });
+		throw error(400, 'User ID is required');
 	}
 
 	const espnApi = createEspnApiClient();
@@ -39,7 +39,7 @@ export const load: PageServerLoad = async ({ request }) => {
 		espnApi.getWeekEvents(seasonType, currentWeek)
 	]);
 	if (!weekData || !allUserData || !weekEvents) {
-		return fail(500, { error: 'Could not load week data. Please try again later.' });
+		throw error(500, 'Could not load week data. Please try again later.');
 	}
 
 	const matchupData = await getMatchupData(seasonType, currentWeek);
