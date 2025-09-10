@@ -46,7 +46,7 @@ export const beginWeek = async (valkey: any) => {
 
 	// create current week data
 	const newWeekData = {
-		lastWinningTeam: prevWeekData?.winningTeam ?? '',
+		lastWinningTeam: prevWeekData?.winningTeamName ?? '',
 		status: 'pending'
 	};
 
