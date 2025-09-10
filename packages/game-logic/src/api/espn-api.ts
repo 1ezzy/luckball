@@ -14,7 +14,15 @@ export class EspnApiClient {
 		const response = await this.fetch(`${baseUrl}`);
 		const data = await response.json();
 
-		const currentWeek = data.type.week.number;
+		let incrementWeek = false;
+		const endDate = new Date(data.type.week.endDate);
+		endDate.setHours(endDate.getHours() - 25);
+
+		if (new Date() > endDate) {
+			incrementWeek = true;
+		}
+
+		const currentWeek = data.type.week.number + (incrementWeek ? 1 : 0);
 		const currentWeekText = data.type.week.text;
 		const seasonType = data.type.type;
 
