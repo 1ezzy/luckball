@@ -16,7 +16,7 @@
 
 {#snippet joinForm()}
 	<form
-		class="flex w-full flex-col gap-8"
+		class="flex w-full flex-col gap-8 md:w-[50%]"
 		method="post"
 		action="?/joinWeek"
 		use:enhance={() => {
@@ -43,13 +43,13 @@
 
 {#if !weekJoined}
 	<Card
-		class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8 p-16 text-center md:w-[50%]"
+		class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8 p-8 text-center md:w-[50%]"
 	>
 		{@render joinForm()}
 	</Card>
 {:else}
 	<Card
-		class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8 p-16 text-center md:w-[50%]"
+		class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8 p-8 text-center md:w-[50%]"
 	>
 		{@render joined()}
 	</Card>
