@@ -6,9 +6,9 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	const espnApi = createEspnApiClient();
 	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
 
-	const usersKey = `${seasonType}:week:${currentWeek}:users`;
-	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
-	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
+	const usersKey = `${seasonType}:week:${currentWeek - 1}:users`;
+	const weekDataKey = `${seasonType}:week:${currentWeek - 1}:data`;
+	const matchupsKey = `${seasonType}:week:${currentWeek - 1}:matchups`;
 
 	const currentWeekData = await valkey.get(weekDataKey);
 	if (JSON.parse(currentWeekData).status !== 'in_progress') {

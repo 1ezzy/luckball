@@ -16,7 +16,7 @@ export class EspnApiClient {
 
 		let incrementWeek = false;
 		const endDate = new Date(data.type.week.endDate);
-		endDate.setHours(endDate.getHours() - 25);
+		endDate.setHours(endDate.getHours() - 24);
 
 		if (new Date() > endDate) {
 			incrementWeek = true;
