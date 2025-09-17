@@ -14,12 +14,12 @@
 	</div>
 {/snippet}
 
-<div class="hidden lg:block">
+<div class="hidden w-full lg:block">
 	<div class="flex max-w-2xl flex-col gap-4 2xl:gap-8">
 		{@render textAndCopy(false)}
 	</div>
 </div>
-<div class="hidden md:block lg:hidden">
+<div class="hidden w-full md:block lg:hidden">
 	<div class="flex max-w-2xl flex-col gap-4">
 		{@render textAndCopy(false)}
 	</div>

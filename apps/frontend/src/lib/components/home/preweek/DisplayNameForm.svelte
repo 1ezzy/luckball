@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Button, TextField } from 'svelte-ux';
+	import { Button, Card, TextField } from 'svelte-ux';
 
 	let { weekJoined, currentWeekText, displayName, prevDisplayName } = $props();
 
@@ -8,7 +8,7 @@
 </script>
 
 {#snippet joined()}
-	<div class="my-auto flex w-full flex-col gap-8 text-center">
+	<div class="flex w-full flex-col gap-8 text-center">
 		<span>You've successfully joined {currentWeekText}!</span>
 		<span class="text-primary">Display Name: {displayName}</span>
 	</div>
@@ -16,7 +16,7 @@
 
 {#snippet joinForm()}
 	<form
-		class="my-auto flex w-full flex-col gap-8 text-center md:w-[50%]"
+		class="flex w-full flex-col gap-8"
 		method="post"
 		action="?/joinWeek"
 		use:enhance={() => {
@@ -42,7 +42,15 @@
 {/snippet}
 
 {#if !weekJoined}
-	{@render joinForm()}
+	<Card
+		class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8 p-16 text-center md:w-[50%]"
+	>
+		{@render joinForm()}
+	</Card>
 {:else}
-	{@render joined()}
+	<Card
+		class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8 p-16 text-center md:w-[50%]"
+	>
+		{@render joined()}
+	</Card>
 {/if}

@@ -24,7 +24,13 @@
 		currentWeekText: currentWeekData?.currentWeekText,
 		displayName: displayName,
 		prevDisplayName: prevDisplayName,
-		weekJoined: displayName
+		weekJoined: displayName,
+		recordsData: {
+			totalWins: currentUserData?.totalWins,
+			totalLosses: currentUserData?.totalLosses,
+			highestScoringTeamName: currentUserData?.highestScoringTeamName,
+			highestScoringTeamScore: currentUserData?.highestScoringTeamScore
+		}
 	});
 
 	const activeWeekLayoutProps = $derived({

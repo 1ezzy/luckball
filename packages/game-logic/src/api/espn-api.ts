@@ -23,13 +23,12 @@ export class EspnApiClient {
 		}
 
 		const currentWeekNumber = data.type.week.number + (incrementWeek ? 1 : 0);
-		const currentWeekString = data.type.week.text.replace(
+		const currentWeekText = data.type.week.text.replace(
 			data.type.week.number,
-			incrementWeek ? currentWeekNumber : currentWeekNumber - 1
+			incrementWeek ? currentWeekNumber + 1 : currentWeekNumber
 		);
 
 		const currentWeek = currentWeekNumber;
-		const currentWeekText = currentWeekString;
 		const seasonType = data.type.type;
 
 		return {
