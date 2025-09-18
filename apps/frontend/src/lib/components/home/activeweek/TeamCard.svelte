@@ -34,7 +34,6 @@
 					<span class="truncate" class:text-primary={player === displayName}>
 						{player}
 					</span>
-					<BallerBadge />
 				</div>
 			{/each}
 		</div>
