@@ -10,9 +10,9 @@ export const beginWeek = async (valkey: any) => {
 	const prevWeekDataKey = `${seasonType}:week:${currentWeek - 1}:data`;
 
 	const prevWeekData = await valkey.get(prevWeekDataKey);
-	if (JSON.parse(prevWeekData).status !== 'ended') {
-		return { success: false, message: 'Week not started - previous week data status not "ended"' };
-	}
+	// if (JSON.parse(prevWeekData).status !== 'ended') {
+	// 	return { success: false, message: 'Week not started - previous week data status not "ended"' };
+	// }
 
 	// get all matchups for the week
 	const weekEvents = await espnApi.getWeekEvents(seasonType, currentWeek);
