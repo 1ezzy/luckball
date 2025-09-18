@@ -62,9 +62,9 @@
 <div class="hidden w-full lg:block">
 	<div class="flex h-full w-full flex-col gap-4">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
-		<Card class="h-full">
+		<Card class="h-full max-h-96">
 			<div
-				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-8 p-4"
+				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-8 p-8"
 			>
 				{#each matchups as matchup}
 					<div class="flex w-full flex-row items-stretch justify-between gap-1">
@@ -80,9 +80,9 @@
 <div class="hidden w-full md:block lg:hidden">
 	<div class="flex h-full w-full flex-col gap-4">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
-		<Card class="h-full">
+		<Card class="h-full max-h-96">
 			<div
-				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] grid-rows-4 items-center justify-items-center gap-8 p-4"
+				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] grid-rows-4 items-center justify-items-center gap-8 p-8"
 			>
 				{#each matchups as matchup}
 					<div class="flex w-full flex-row items-stretch justify-between gap-1">

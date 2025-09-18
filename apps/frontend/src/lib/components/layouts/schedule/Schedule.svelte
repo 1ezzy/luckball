@@ -22,7 +22,7 @@
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
 			<TitleAndPreWeekCopy {currentWeekText} mainPage={false} />
-			<div class="my-auto flex max-h-96 w-full flex-1 flex-col md:flex-row">
+			<div class="my-auto flex w-full flex-col md:flex-row">
 				<ScheduleCard {matchups} {currentWeekText} />
 			</div>
 		</PageShell>
@@ -34,7 +34,7 @@
 				{userTeamAssignment}
 				mainPage={false}
 			/>
-			<div class="my-auto flex max-h-96 w-full flex-1 flex-col md:flex-row">
+			<div class="my-auto flex w-full flex-col md:flex-row">
 				<ScheduleCard {matchups} {currentWeekText} showScores />
 			</div>
 		</PageShell>
@@ -47,7 +47,7 @@
 				{userTeamName}
 				mainPage={false}
 			/>
-			<div class="my-auto flex w-full flex-1 flex-col md:flex-row">
+			<div class="my-auto flex w-full flex-col md:flex-row">
 				<ScheduleCard {matchups} {currentWeekText} showScores />
 			</div>
 		</PageShell>
