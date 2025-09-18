@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
+	import BallerBadge from '$lib/components/badges/BallerBadge.svelte';
+	import PrideBadge from '$lib/components/badges/PrideBadge.svelte';
 	import type { MatchupData } from '$lib/types/valkey-types';
 	import { Card } from 'svelte-ux';
 
@@ -26,12 +28,14 @@
 				: 'grid-cols-[repeat(auto-fit,minmax(120px,1fr))'}"
 		>
 			{#each data?.usernames as player}
-				<span
-					class="col-span-1 overflow-auto truncate p-2 text-center"
-					class:text-primary={player === displayName}
+				<div
+					class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate p-2"
 				>
-					{player}
-				</span>
+					<span class="truncate" class:text-primary={player === displayName}>
+						{player}
+					</span>
+					<BallerBadge />
+				</div>
 			{/each}
 		</div>
 	</div>

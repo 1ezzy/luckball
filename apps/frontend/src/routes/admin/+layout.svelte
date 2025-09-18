@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>Luckball</title>
+	<title>Luckball | Admin</title>
 	<meta name="luckball" content="Team-based football matchup scramble" />
 </svelte:head>
 
