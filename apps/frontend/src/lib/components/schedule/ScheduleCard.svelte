@@ -61,7 +61,7 @@
 
 <div class="hidden w-full lg:block">
 	<div class="flex h-full w-full flex-col gap-4">
-		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
+		<h2 class="text-accent mb-2 text-2xl">Schedule for {currentWeekText}</h2>
 		<Card class="h-full max-h-96">
 			<div
 				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-8 p-8"

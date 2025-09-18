@@ -4,7 +4,7 @@
 	let { totalWins, totalLosses, highestScoringTeamName, highestScoringTeamScore } = $props();
 </script>
 
-<Card class="flex h-full flex-1 items-center justify-center p-8">
+<Card class="flex h-full max-h-96 flex-auto items-center justify-center p-8">
 	<div class="hidden lg:block">
 		<div class="flex flex-col gap-8 text-center 2xl:gap-16">
 			<div class="flex flex-col gap-4">
