@@ -1,21 +1,3 @@
-# Tech Stack/Technologies
-
-This project is a pnpm monorepo that includes two packages and two applications.
-
-- The `cron-jobs` app is responsible for triggering cron events for the application
-- The `frontend` app is a SvelteKit frontend for my application and it uses some of the following technologies:
-  1. Svelte and SvelteKit (front-end and full stack framework)
-  2. svelte-ux (A collection of Svelte components, actions, stores, and utilities)
-  3. TypeScript
-  4. Drizzle ORM (via Postgres, long term data storage)
-
-- The `drizzle-client` package is responsible for creating a singleton instance of the Drizzle client to be used in my applications
-- the `valkey-client` package is responsible for creating a singleton instance of the Valkey client to be used in my applications
-
-Some other technologies used in this project include:
-
-1.DigitalOcean Droplet: This project is hosted in a Docker Container that runs the app and my two databases.
-
 # Project Description
 
 This project is a web application based off the NFL season schedule. Here are some details about the application:

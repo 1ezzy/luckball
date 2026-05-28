@@ -3,7 +3,7 @@ import { addUserToWeek } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { getMatchupData, getWeekAndUserData } from '$lib/server/valkey';
-import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
+import { createEspnApiClient } from '@luckball/game-logic';
 import { auth } from '$lib/auth/auth';
 import type { PageServerLoad } from './$types';
 import { schema } from '@luckball/drizzle-client';

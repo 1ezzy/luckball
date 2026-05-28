@@ -12,11 +12,6 @@ declare global {
 		}
 		// interface PageData {}
 		// interface PageState {}
-		interface Platform {
-			env: {
-				HYPERDRIVE: Hyperdrive;
-			};
-		}
 	}
 }
 
