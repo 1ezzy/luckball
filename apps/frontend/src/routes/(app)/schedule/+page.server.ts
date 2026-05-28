@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { getMatchupData, getWeekAndUserData } from '$lib/server/valkey';
-import { createEspnApiClient } from '@luckball/game-logic/src/api/espn-api';
+import { createEspnApiClient } from '@luckball/game-logic';
 import { auth } from '$lib/auth/auth';
 import type { PageServerLoad } from './$types';
 
