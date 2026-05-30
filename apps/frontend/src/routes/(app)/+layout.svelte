@@ -5,11 +5,12 @@
 	import { AppBar, AppLayout, NavItem, Button } from 'svelte-ux';
 	import {
 		LucideArrowRightFromLine,
+		LucideAward,
 		LucideCalendar,
 		LucideHouse,
 		LucideLogIn,
 		LucideLogOut,
-		LucideTrophy
+		LucideSettings
 	} from '@lucide/svelte';
 	import type { Component } from 'svelte';
 	import '../app.css';
@@ -42,7 +43,10 @@
 				<Icon
 					size={24}
 					strokeWidth={2}
-					class={['shrink-0 transition-[width,height] duration-500', navExpanded ? 'h-4 w-4' : 'h-6 w-6']}
+					class={[
+						'shrink-0 transition-[width,height] duration-500',
+						navExpanded ? 'h-4 w-4' : 'h-6 w-6'
+					]}
 				/>
 				<span
 					class={[
@@ -56,17 +60,25 @@
 		{/snippet}
 		<div
 			class={[
-				'bg-surface-300 text-primary-content border-r-primary-content flex h-full flex-col items-start gap-8 border-r-2 py-12 transition-[padding] duration-500',
+				'bg-surface-300 text-primary-content border-r-primary-content items-between flex h-full flex-col border-r-2 py-12 transition-[padding] duration-500',
 				navExpanded ? 'px-8' : 'px-4'
 			]}
 		>
-			{@render navLink(LucideHouse, 'Home', '/')}
-			{@render navLink(LucideCalendar, 'Schedule', '/schedule')}
-			{@render navLink(LucideTrophy, 'Records', '/records')}
+			<div class="flex h-full flex-col gap-8">
+				{@render navLink(LucideHouse, 'Home', '/')}
+				{@render navLink(LucideCalendar, 'Schedule', '/schedule')}
+				{@render navLink(LucideAward, 'Records', '/records')}
+			</div>
+			<div>
+				{@render navLink(LucideSettings, 'Settings', '/settings')}
+			</div>
 		</div>
 	</svelte:fragment>
 
-	<AppBar title="Luckball" class="bg-primary text-primary-content gap-1 px-8">
+	<AppBar title="Luckball" class="bg-primary text-primary-content gap-1 px-4 md:px-8">
+		<svelte:fragment slot="title">
+			<span class="text-fluid-lg ml-2 md:ml-4">Luckball</span>
+		</svelte:fragment>
 		<svelte:fragment slot="menuIcon">
 			<Button
 				on:click={() => {
@@ -77,7 +89,11 @@
 				<LucideArrowRightFromLine
 					size={20}
 					strokeWidth={2}
-					class={['transition-transform duration-500', navExpanded ? 'scale-x-[-1]' : '']}
+					class={[
+						'transition-transform duration-500',
+						navExpanded ? 'scale-x-[-1]' : '',
+						'h-4 w-4 md:h-5 md:w-5'
+					]}
 				/>
 			</Button>
 		</svelte:fragment>
