@@ -24,9 +24,7 @@ export const updateScores = async (valkey: any) => {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 
-	const matchupScores = await Promise.all(
-		matchups.map((m: any, index: number) => espnApi.getMatchupScores(m.id, index))
-	);
+	const matchupScores = await Promise.all(matchups.map((m: any) => espnApi.getMatchupScores(m.id)));
 	const reversedMatchupScores = matchupScores.map((scores) => [...scores].reverse());
 
 	const updatedMatchups = matchups.map((matchup: any, index: number) => ({

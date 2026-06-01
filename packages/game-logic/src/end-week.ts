@@ -4,7 +4,7 @@ import { eq, sql } from 'drizzle-orm';
 
 export const endWeek = async (valkey: any, drizzle: any) => {
 	const espnApi = createEspnApiClient();
-	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
+	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
@@ -139,5 +139,5 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 		}
 	}
 
-	return { success: true, message: `Week ${currentWeek} started ended.` };
+	return { success: true, message: `Week ${currentWeek} ended.` };
 };

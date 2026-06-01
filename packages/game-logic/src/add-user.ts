@@ -13,7 +13,7 @@ export const addUserToWeek = async (
 	}
 
 	const espnApi = createEspnApiClient();
-	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
+	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	// check if there is an active round for the week
 	const roundData = await valkey.get(`${seasonType}:week:${currentWeek}:data`);

@@ -2,6 +2,8 @@ import PLimit from 'p-limit';
 
 const limit = PLimit(5);
 
+// TODO: update this API to use the v3 ESPN API
+// https://github.com/pseudo-r/Public-ESPN-API
 export class EspnApiClient {
 	private fetch: typeof fetch;
 
@@ -12,7 +14,7 @@ export class EspnApiClient {
 	async getActiveWeek(): Promise<any> {
 		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/season';
 		const response = await this.fetch(`${baseUrl}`);
-		const data = await response.json();
+		const data = (await response.json()) as any;
 
 		let incrementWeek = false;
 		const endDate = new Date(data.type.week.endDate);
@@ -43,7 +45,7 @@ export class EspnApiClient {
 		const response = await this.fetch(
 			`${baseUrl}/seasons/2025/types/${seasonType}/weeks/${weekNumber}/events`
 		);
-		const data = await response.json();
+		const data = (await response.json()) as any;
 
 		const events = await Promise.all(
 			data.items.map((event: { $ref: string }) =>
@@ -54,13 +56,13 @@ export class EspnApiClient {
 						console.error(`Failed to fetch ${secureUrl}: ${res.statusText}`);
 						return null;
 					}
-					return res.json();
+					return res.json() as Promise<any>;
 				})
 			)
 		);
 
 		const validEvents = events.filter((event) => event !== null);
-		const teams = validEvents.flatMap((event) => {
+		const teams = validEvents.flatMap((event: any) => {
 			const nameParts = event.shortName.split(' ');
 			return [nameParts[0], nameParts[2]];
 		});
@@ -71,18 +73,18 @@ export class EspnApiClient {
 		};
 	}
 
-	async getMatchupScores(matchupId: number, teamIndex: number): Promise<number[]> {
+	async getMatchupScores(matchupId: number): Promise<number[]> {
 		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events';
 		const response = await this.fetch(
 			`${baseUrl}/${matchupId}/competitions/${matchupId}/competitors`
 		);
 
-		const competitors = await response.json();
+		const competitors = (await response.json()) as any;
 		const scores = await Promise.all(
 			competitors.items.map(async (competitor: any) => {
 				const scoreUrl = competitor.score.$ref.replace('http://', 'https://');
 				const scoreRes = await fetch(scoreUrl);
-				const scoreData = await scoreRes.json();
+				const scoreData = (await scoreRes.json()) as any;
 				return scoreData.value;
 			})
 		);
