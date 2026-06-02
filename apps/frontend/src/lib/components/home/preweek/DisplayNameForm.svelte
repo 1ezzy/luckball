@@ -5,6 +5,9 @@
 	let { weekJoined, currentWeekText, displayName, prevDisplayName } = $props();
 
 	let loading = $state(false);
+
+	const cardClasses =
+		'bg-surface-200 flex h-full w-full flex-auto flex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%]';
 </script>
 
 {#snippet joined()}
@@ -47,15 +50,11 @@
 {/snippet}
 
 {#if !weekJoined}
-	<Card
-		class="bg-surface-200 flex h-full w-full flex-auto flex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%]"
-	>
+	<Card class={cardClasses}>
 		{@render joinForm()}
 	</Card>
 {:else}
-	<Card
-		class="bg-surface-200 flex h-full w-full flex-auto flex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%]"
-	>
+	<Card class={cardClasses}>
 		{@render joined()}
 	</Card>
 {/if}

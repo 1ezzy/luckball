@@ -21,21 +21,20 @@
 	} = $props();
 </script>
 
+{#snippet records()}
+	<div class="my-auto flex flex-col gap-8 md:flex-row">
+		<div class="flex h-full w-full flex-col gap-4">
+			<h2 class="text-secondary mb-2 text-2xl">Personal Records</h2>
+			<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
+		</div>
+	</div>
+{/snippet}
+
 <div class="md:h-[calc(100vh-4rem)]">
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
 			<TitleAndPreWeekCopy {currentWeekText} mainPage={false} />
-			<div class="my-auto flex flex-col gap-8 md:flex-row">
-				<div class="flex h-full w-full flex-col gap-4">
-					<h2 class="text-secondary mb-2 text-2xl">Personal Records</h2>
-					<RecordsCard
-						{totalWins}
-						{totalLosses}
-						{highestScoringTeamName}
-						{highestScoringTeamScore}
-					/>
-				</div>
-			</div>
+			{@render records()}
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
 		<PageShell>
@@ -45,17 +44,7 @@
 				{userTeamAssignment}
 				mainPage={false}
 			/>
-			<div class="my-auto flex flex-col gap-8 md:flex-row">
-				<div class="flex h-full w-full flex-col gap-4">
-					<h2 class="text-secondary mb-2 text-2xl">Personal Records</h2>
-					<RecordsCard
-						{totalWins}
-						{totalLosses}
-						{highestScoringTeamName}
-						{highestScoringTeamScore}
-					/>
-				</div>
-			</div>
+			{@render records()}
 		</PageShell>
 	{:else}
 		<PageShell>
@@ -66,17 +55,7 @@
 				{userTeamName}
 				mainPage={false}
 			/>
-			<div class="my-auto flex flex-col gap-8 md:flex-row">
-				<div class="flex h-full w-full flex-col gap-4">
-					<h2 class="text-secondary mb-2 text-2xl">Personal Records</h2>
-					<RecordsCard
-						{totalWins}
-						{totalLosses}
-						{highestScoringTeamName}
-						{highestScoringTeamScore}
-					/>
-				</div>
-			</div>
+			{@render records()}
 		</PageShell>
 	{/if}
 </div>
