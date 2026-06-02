@@ -75,7 +75,7 @@
 		</div>
 	</svelte:fragment>
 
-	<AppBar title="Luckball" class="bg-primary text-primary-content gap-1 px-4 md:px-8">
+	<AppBar title="Luckball" class="bg-primary-500 gap-1 px-4 text-white md:px-8">
 		<svelte:fragment slot="title">
 			<span class="text-fluid-lg ml-2 md:ml-4">Luckball</span>
 		</svelte:fragment>
@@ -98,7 +98,7 @@
 			</Button>
 		</svelte:fragment>
 		<div slot="actions">
-			{#if data?.session}
+			{#if data?.userId}
 				<Button
 					class="flex flex-row items-center gap-2 rounded-xl"
 					on:click={async () => {

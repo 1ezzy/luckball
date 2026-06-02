@@ -7,7 +7,6 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const {
-		espnApi,
 		currentWeek,
 		currentWeekText,
 		seasonType,
@@ -15,10 +14,10 @@ export const load: PageServerLoad = async ({ parent }) => {
 		weekData,
 		allUserData,
 		currentUserDataFromId,
-		userId
+		userId,
+		weekEvents
 	} = await parent();
 	const currentUserData = userId ? { ...currentUserDataFromId, userId } : null;
-	const weekEvents = espnApi.getWeekEvents(seasonType, currentWeek);
 
 	const getTeamWithUsernames = (team: { players: string[] }, allUsers: Record<string, string>) => {
 		if (!team || !allUsers || !team.players) return { ...team, usernames: [] };

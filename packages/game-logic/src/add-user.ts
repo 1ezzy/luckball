@@ -1,4 +1,4 @@
-import { createEspnApiClient } from './api/espn-api';
+import { createEspnClient } from './api/espn-client';
 import { schema } from '@luckball/drizzle-client';
 import { eq } from 'drizzle-orm';
 
@@ -12,7 +12,7 @@ export const addUserToWeek = async (
 		return { success: false, message: 'displayName and userId are required' };
 	}
 
-	const espnApi = createEspnApiClient();
+	const espnApi = createEspnClient();
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	// check if there is an active round for the week

@@ -11,8 +11,8 @@
 	</div>
 	<div class="flex w-full flex-col gap-2 leading-8">
 		{#if displayName}
-			<span class="text-accent text-2xl">
-				<span class="text-white">{displayName},</span>
+			<span class="text-2xl">
+				<span class="text-secondary">{displayName},</span>
 				{won ? 'You Won This Week!' : 'You Lost This Week'}
 			</span>
 		{/if}

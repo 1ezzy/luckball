@@ -1,11 +1,12 @@
 import { error } from '@sveltejs/kit';
-import { createEspnApiClient } from '@luckball/game-logic';
+import { NODE_ENV } from '$env/static/private';
+import { createEspnClient, createMockEspnClient } from '@luckball/game-logic';
 import { getMatchupData, getWeekAndUserData } from '$lib/server/valkey';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ parent }) => {
 	const { userId } = await parent();
-	const espnApi = createEspnApiClient();
+	const espnApi = NODE_ENV === 'development' ? createMockEspnClient() : createEspnClient();
 
 	let activeWeek;
 	try {
@@ -15,9 +16,10 @@ export const load: LayoutServerLoad = async ({ parent }) => {
 	}
 
 	const { currentWeek, currentWeekText, seasonType } = activeWeek;
-	const [{ weekData, allUserData }, matchupData] = await Promise.all([
+	const [{ weekData, allUserData }, matchupData, weekEvents] = await Promise.all([
 		getWeekAndUserData(seasonType, currentWeek),
-		getMatchupData(seasonType, currentWeek)
+		getMatchupData(seasonType, currentWeek),
+		espnApi.getWeekEvents(seasonType, currentWeek)
 	]);
 
 	if (!weekData || !allUserData || !matchupData) {
@@ -30,13 +32,13 @@ export const load: LayoutServerLoad = async ({ parent }) => {
 
 	return {
 		userId,
-		espnApi,
 		currentWeek,
 		currentWeekText,
 		seasonType,
 		weekData,
 		matchupData,
 		allUserData,
-		currentUserDataFromId
+		currentUserDataFromId,
+		weekEvents
 	};
 };

@@ -8,4 +8,5 @@ export * from './add-user';
 export * from './update-scores';
 
 // espn client
-export { createEspnApiClient } from './api/espn-api';
+export { createEspnClient } from './api/espn-client';
+export { createMockEspnClient } from './api/espn-client.mock';

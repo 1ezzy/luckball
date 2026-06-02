@@ -1,10 +1,11 @@
 import PLimit from 'p-limit';
+import type { IEspnClient } from './espn-client.interface';
 
 const limit = PLimit(5);
 
 // TODO: update this API to use the v3 ESPN API
 // https://github.com/pseudo-r/Public-ESPN-API
-export class EspnApiClient {
+export class EspnClient implements IEspnClient {
 	private fetch: typeof fetch;
 
 	constructor(customFetch?: typeof fetch) {
@@ -83,7 +84,7 @@ export class EspnApiClient {
 		const scores = await Promise.all(
 			competitors.items.map(async (competitor: any) => {
 				const scoreUrl = competitor.score.$ref.replace('http://', 'https://');
-				const scoreRes = await fetch(scoreUrl);
+				const scoreRes = await this.fetch(scoreUrl);
 				const scoreData = (await scoreRes.json()) as any;
 				return scoreData.value;
 			})
@@ -93,6 +94,6 @@ export class EspnApiClient {
 	}
 }
 
-export const createEspnApiClient = (customFetch?: typeof fetch) => {
-	return new EspnApiClient(customFetch);
+export const createEspnClient = (customFetch?: typeof fetch) => {
+	return new EspnClient(customFetch);
 };

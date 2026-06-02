@@ -1,9 +1,9 @@
 import { schema } from '@luckball/drizzle-client';
-import { createEspnApiClient } from './api/espn-api';
+import { createEspnClient } from './api/espn-client';
 import { eq, sql } from 'drizzle-orm';
 
 export const endWeek = async (valkey: any, drizzle: any) => {
-	const espnApi = createEspnApiClient();
+	const espnApi = createEspnClient();
 	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;

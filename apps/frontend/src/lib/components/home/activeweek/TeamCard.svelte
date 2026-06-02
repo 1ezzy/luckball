@@ -63,7 +63,7 @@
 {#snippet titleAndCard(data: any, mobileGrid = false)}
 	<div class="flex h-full flex-col gap-4">
 		<h2 class="text-primary mb-2 text-2xl">
-			{data?.name}<span class="ml-2 text-white"> - {data.totalScore} points</span>
+			{data?.name}<span class="ml-2"> - {data.totalScore} points</span>
 		</h2>
 		<Card class="flex h-full flex-row justify-start gap-4 p-4">
 			{@render teamsText(data, mobileGrid)}

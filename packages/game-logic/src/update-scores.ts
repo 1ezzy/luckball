@@ -1,7 +1,7 @@
-import { createEspnApiClient } from './api/espn-api';
+import { createEspnClient } from './api/espn-client';
 
 export const updateScores = async (valkey: any) => {
-	const espnApi = createEspnApiClient();
+	const espnApi = createEspnClient();
 	const activeWeek = await espnApi.getActiveWeek();
 	const currentWeek = activeWeek.currentWeek;
 	const seasonType = activeWeek.seasonType;

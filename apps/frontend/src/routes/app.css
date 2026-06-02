@@ -40,33 +40,39 @@
 	--color-primary-700: hsl(268 75% 38%);
 	--color-primary-800: hsl(268 75% 27%);
 	--color-primary-900: hsl(268 75% 17%);
-	--color-primary: var(--color-primary-500);
+	--color-primary: var(--color-primary-600);
 
 	/* secondary */
-	--color-secondary-content: hsl(172 52% 10%);
+	/* secondary-500 is the vibrant background shade; secondary-700 is the     */
+	/* default token because it passes WCAG AA as text on surface-200 (-300).  */
+	/* Teal carries more green luminance than orange, so 700 sits at 25% L     */
+	/* (vs 32% for accent) to clear the 4.5:1 threshold on surface-300.       */
+	--color-secondary-content: hsl(172 52% 96%);
 	--color-secondary-100: hsl(172 52% 94%);
 	--color-secondary-200: hsl(172 52% 86%);
 	--color-secondary-300: hsl(172 52% 77%);
 	--color-secondary-400: hsl(172 52% 66%);
 	--color-secondary-500: hsl(172 52% 55%);
-	--color-secondary-600: hsl(172 52% 44%);
-	--color-secondary-700: hsl(172 52% 34%);
-	--color-secondary-800: hsl(172 52% 24%);
-	--color-secondary-900: hsl(172 52% 15%);
-	--color-secondary: var(--color-secondary-500);
+	--color-secondary-600: hsl(172 52% 40%);
+	--color-secondary-700: hsl(172 52% 25%);
+	--color-secondary-800: hsl(172 52% 16%);
+	--color-secondary-900: hsl(172 52% 9%);
+	--color-secondary: var(--color-secondary-700);
 
-	/* accent */
-	--color-accent-content: hsl(74 85% 12%);
-	--color-accent-100: hsl(74 85% 94%);
-	--color-accent-200: hsl(74 85% 86%);
-	--color-accent-300: hsl(74 85% 76%);
-	--color-accent-400: hsl(74 85% 67%);
-	--color-accent-500: hsl(74 85% 57%);
-	--color-accent-600: hsl(74 85% 46%);
-	--color-accent-700: hsl(74 85% 36%);
-	--color-accent-800: hsl(74 85% 26%);
-	--color-accent-900: hsl(74 85% 17%);
-	--color-accent: var(--color-accent-500);
+	/* accent — coral orange (hue 16) */
+	/* accent-500 is the vibrant background shade; accent-700 is the default  */
+	/* token because it passes WCAG AA as text on surface-200 and surface-300 */
+	--color-accent-content: hsl(16 80% 96%);
+	--color-accent-100: hsl(16 80% 95%);
+	--color-accent-200: hsl(16 80% 88%);
+	--color-accent-300: hsl(16 80% 80%);
+	--color-accent-400: hsl(16 80% 68%);
+	--color-accent-500: hsl(16 80% 55%);
+	--color-accent-600: hsl(16 80% 44%);
+	--color-accent-700: hsl(16 80% 32%);
+	--color-accent-800: hsl(16 80% 22%);
+	--color-accent-900: hsl(16 80% 14%);
+	--color-accent: var(--color-accent-700);
 
 	/* surface */
 	--color-surface-content: hsl(31 20% 18%);
