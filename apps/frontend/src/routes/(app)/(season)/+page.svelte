@@ -7,14 +7,15 @@
 	let { data } = $props();
 
 	// declaring objects passed through the page
-	const currentUserData = $derived(data.currentUserData);
+	const currentUserGameData = $derived(data.currentUserGameData);
 	const currentWeekData = $derived(data.currentWeekData);
 	const teamData = $derived(data.teamData);
+	const userProfileData = $derived(data.userProfileData);
 
 	const matchups = $derived(currentWeekData?.weekMatchups);
 
-	const displayName = $derived(currentUserData?.displayName);
-	const prevDisplayName = $derived(currentUserData?.prevDisplayName);
+	const currentDisplayName = $derived(currentUserGameData?.displayName);
+	const prevDisplayName = $derived(currentUserGameData?.prevDisplayName);
 
 	// declaring prop objects for each layout
 	const preWeekLayoutProps = $derived({
@@ -22,14 +23,14 @@
 		matchupTeams: matchups?.map((matchup) => matchup.teams),
 		teamData: teamData,
 		currentWeekText: currentWeekData?.currentWeekText,
-		displayName: displayName,
+		displayName: currentDisplayName,
 		prevDisplayName: prevDisplayName,
-		weekJoined: displayName,
+		weekJoined: currentDisplayName,
 		recordsData: {
-			totalWins: currentUserData?.totalWins,
-			totalLosses: currentUserData?.totalLosses,
-			highestScoringTeamName: currentUserData?.highestScoringTeamName,
-			highestScoringTeamScore: currentUserData?.highestScoringTeamScore
+			totalWins: userProfileData?.totalWins,
+			totalLosses: userProfileData?.totalLosses,
+			highestScoringTeamName: userProfileData?.highestScoringTeamName,
+			highestScoringTeamScore: userProfileData?.highestScoringTeamScore
 		}
 	});
 
@@ -37,24 +38,26 @@
 		matchups: matchups,
 		matchupTeams: matchups?.map((matchup) => matchup.teams),
 		teamData: teamData,
-		userTeamAssignment: currentUserData?.teamAssignment,
+		userTeamAssignment: currentUserGameData?.teamAssignment,
 		currentWeekText: currentWeekData?.currentWeekText,
-		displayName: displayName,
-		weekJoined: displayName
+		displayName: currentDisplayName,
+		weekJoined: currentDisplayName
 	});
 
 	const postWeekLayoutProps = $derived({
 		currentWeekText: currentWeekData?.currentWeekText,
-		displayName: displayName,
+		displayName: currentDisplayName,
 		winningTeamName: currentWeekData?.winningTeamName,
 		winningTeamScore: currentWeekData?.winningTeamScore,
 		bestNflTeamName: currentWeekData?.bestNflTeamName,
 		bestNflTeamScore: currentWeekData?.bestNflTeamScore,
-		userTeamName: currentUserData?.teamAssignment,
-		totalWins: currentUserData?.totalWins,
-		totalLosses: currentUserData?.totalLosses,
-		highestScoringTeamName: currentUserData?.highestScoringTeamName,
-		highestScoringTeamScore: currentUserData?.highestScoringTeamScore
+		userTeamName: currentUserGameData?.teamAssignment,
+		recordsData: {
+			totalWins: userProfileData?.totalWins,
+			totalLosses: userProfileData?.totalLosses,
+			highestScoringTeamName: userProfileData?.highestScoringTeamName,
+			highestScoringTeamScore: userProfileData?.highestScoringTeamScore
+		}
 	});
 </script>
 

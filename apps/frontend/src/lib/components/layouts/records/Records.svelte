@@ -38,23 +38,12 @@
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
 		<PageShell>
-			<TitleAndActiveWeekCopy
-				{currentWeekText}
-				{weekJoined}
-				{userTeamAssignment}
-				mainPage={false}
-			/>
+			<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
 			{@render records()}
 		</PageShell>
 	{:else}
 		<PageShell>
-			<TitleAndPostWeekCopy
-				{currentWeekText}
-				{displayName}
-				{winningTeamName}
-				{userTeamName}
-				mainPage={false}
-			/>
+			<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
 			{@render records()}
 		</PageShell>
 	{/if}

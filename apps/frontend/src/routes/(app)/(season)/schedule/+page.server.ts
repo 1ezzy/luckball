@@ -1,17 +1,18 @@
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent }) => {
-	const { currentWeekText, weekData, matchupData, currentUserDataFromId, userId } = await parent();
-	const currentUserData = userId ? { ...currentUserDataFromId, userId } : null;
+	const { currentWeekText, weekData, matchupData, currentUserGameDataFromId, userId } =
+		await parent();
+	const currentUserGameData = userId ? { ...currentUserGameDataFromId, userId } : null;
 
 	return {
 		currentWeekText: currentWeekText,
 		weekMatchups: matchupData,
 		weekStatus: weekData?.status,
-		weekJoined: currentUserData?.displayName,
-		displayName: currentUserData?.displayName,
-		userTeamAssignment: currentUserData?.teamAssignment,
+		weekJoined: currentUserGameData?.displayName,
+		currentDisplayName: currentUserGameData?.displayName,
+		userTeamAssignment: currentUserGameData?.teamAssignment,
 		winningTeamName: weekData?.winningTeamName,
-		userTeamName: currentUserData?.teamAssignment
+		userTeamName: currentUserGameData?.teamAssignment
 	};
 };

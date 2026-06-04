@@ -59,49 +59,23 @@
 	</div>
 {/snippet}
 
-<div class="hidden w-full lg:block">
-	<div class="flex h-full w-full flex-col gap-4">
+<div class="w-full">
+	<div class="flex h-full w-full flex-col gap-4 text-center md:text-left">
 		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
-		<Card class="h-full max-h-96">
+		<Card class="h-full gap-4 border-2 p-4 md:max-h-96">
 			<div
-				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-center justify-items-center gap-8 p-8"
+				class={[
+					'flex w-full flex-col items-center justify-center gap-4',
+					'md:grid md:grid-cols-[repeat(auto-fit,minmax(150px,1fr))] md:justify-items-center md:gap-8 md:p-8'
+				]}
 			>
 				{#each matchups as matchup}
-					<div class="flex w-full flex-row items-stretch justify-between gap-1">
-						{@render team1LogoScore(matchup)}
-						{@render matchupAndDate(matchup)}
-						{@render team2LogoScore(matchup)}
-					</div>
-				{/each}
-			</div>
-		</Card>
-	</div>
-</div>
-<div class="hidden w-full md:block lg:hidden">
-	<div class="flex h-full w-full flex-col gap-4">
-		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
-		<Card class="h-full max-h-96">
-			<div
-				class="grid h-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] grid-rows-4 items-center justify-items-center gap-8 p-8"
-			>
-				{#each matchups as matchup}
-					<div class="flex w-full flex-row items-stretch justify-between gap-1">
-						{@render team1LogoScore(matchup)}
-						{@render matchupAndDate(matchup)}
-						{@render team2LogoScore(matchup)}
-					</div>
-				{/each}
-			</div>
-		</Card>
-	</div>
-</div>
-<div class="block w-full md:hidden">
-	<div class="flex flex-col gap-4 text-center">
-		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
-		<Card class="h-full gap-4 p-4">
-			<div class="flex w-full flex-col items-center justify-center gap-4">
-				{#each matchups as matchup}
-					<div class="flex w-full flex-row items-center justify-center gap-4">
+					<div
+						class={[
+							'flex w-full flex-row items-center justify-center gap-4',
+							'md:items-stretch md:justify-between md:gap-1'
+						]}
+					>
 						{@render team1LogoScore(matchup)}
 						{@render matchupAndDate(matchup)}
 						{@render team2LogoScore(matchup)}

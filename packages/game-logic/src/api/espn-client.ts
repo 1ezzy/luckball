@@ -1,7 +1,7 @@
 import PLimit from 'p-limit';
 import type { IEspnClient } from './espn-client.interface';
 
-const limit = PLimit(5);
+const limit = PLimit(15);
 
 // TODO: update this API to use the v3 ESPN API
 // https://github.com/pseudo-r/Public-ESPN-API

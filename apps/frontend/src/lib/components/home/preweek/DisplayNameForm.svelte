@@ -19,7 +19,7 @@
 
 {#snippet joinForm()}
 	<form
-		class="flex w-full flex-col gap-8 md:w-[50%]"
+		class="flex w-full flex-col gap-16 md:w-[67%]"
 		method="post"
 		action="?/joinWeek"
 		use:enhance={() => {
@@ -30,22 +30,24 @@
 			};
 		}}
 	>
-		<h3 class="text-secondary text-2xl">Join {currentWeekText} now!</h3>
-		<TextField
-			classes={{ container: 'border-2' }}
-			name="displayName"
-			placeholder="Enter Display Name"
-			bind:value={prevDisplayName}
-		/>
-		<Button
-			type="submit"
-			color="primary"
-			variant="outline"
-			classes={{ root: '!text-wrap border-2' }}
-			{loading}
-		>
-			Join Week
-		</Button>
+		<h3 class="text-secondary text-fluid-xl">Join {currentWeekText} now!</h3>
+		<div class="flex flex-col gap-8">
+			<TextField
+				classes={{ container: 'border-2' }}
+				name="displayName"
+				placeholder="Enter Display Name"
+				bind:value={prevDisplayName}
+			/>
+			<Button
+				type="submit"
+				color="primary"
+				variant="outline"
+				classes={{ root: '!text-wrap border-2' }}
+				{loading}
+			>
+				Join Week
+			</Button>
+		</div>
 	</form>
 {/snippet}
 

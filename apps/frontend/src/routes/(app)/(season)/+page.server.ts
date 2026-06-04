@@ -12,12 +12,12 @@ export const load: PageServerLoad = async ({ parent }) => {
 		seasonType,
 		matchupData,
 		weekData,
-		allUserData,
-		currentUserDataFromId,
+		allUserGameData,
+		currentUserGameDataFromId,
 		userId,
 		weekEvents
 	} = await parent();
-	const currentUserData = userId ? { ...currentUserDataFromId, userId } : null;
+	const currentUserGameData = userId ? { ...currentUserGameDataFromId, userId } : null;
 
 	const getTeamWithUsernames = (team: { players: string[] }, allUsers: Record<string, string>) => {
 		if (!team || !allUsers || !team.players) return { ...team, usernames: [] };
@@ -28,8 +28,8 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return { ...team, usernames };
 	};
 
-	const team1Data = getTeamWithUsernames(weekData?.team1, allUserData);
-	const team2Data = getTeamWithUsernames(weekData?.team2, allUserData);
+	const team1Data = getTeamWithUsernames(weekData?.team1, allUserGameData);
+	const team2Data = getTeamWithUsernames(weekData?.team2, allUserGameData);
 
 	const currentWeekData = {
 		seasonType: seasonType,
@@ -52,7 +52,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 
 	return {
 		currentWeekData,
-		currentUserData,
+		currentUserGameData,
 		teamData
 	};
 };

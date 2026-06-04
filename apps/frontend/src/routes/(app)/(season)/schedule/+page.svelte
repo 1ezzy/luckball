@@ -9,7 +9,7 @@
 	const weekStatus = $derived(data?.weekStatus);
 	const weekJoined = $derived(data?.weekJoined);
 	const userTeamAssignment = $derived(data?.userTeamAssignment);
-	const displayName = $derived(data?.displayName);
+	const displayName = $derived(data?.currentDisplayName);
 	const winningTeamName = $derived(data?.winningTeamName);
 	const userTeamName = $derived(data?.userTeamName);
 </script>
