@@ -22,7 +22,9 @@
 		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
 		<div class="grid grid-cols-1 gap-2 md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
 			{#each data?.usernames as player}
-				<div class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate p-2">
+				<div
+					class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate p-2"
+				>
 					<span class="truncate" class:text-primary={player === displayName}>
 						{player}
 					</span>

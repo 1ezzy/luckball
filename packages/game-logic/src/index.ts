@@ -1,12 +1,12 @@
 // week-specific logic
-export * from './start-active-week';
-export * from './begin-week';
-export * from './end-week';
+export { startActiveWeek } from './start-active-week';
+export { beginWeek } from './begin-week';
+export { endWeek } from './end-week';
 
 // generic game logic
-export * from './add-user';
-export * from './update-scores';
+export { addUserToWeek } from './add-user';
+export { updateScores } from './update-scores';
 
 // espn client
-export { createEspnClient } from './api/espn-client';
+export { createEspnClient, createEspnClientForEnv } from './api/espn-client';
 export { createMockEspnClient } from './api/espn-client.mock';

@@ -15,7 +15,7 @@
 	const matchups = $derived(currentWeekData?.weekMatchups);
 
 	const currentDisplayName = $derived(currentUserGameData?.displayName);
-	const prevDisplayName = $derived(currentUserGameData?.prevDisplayName);
+	const prevDisplayName = $derived(userProfileData?.prevDisplayName);
 
 	// declaring prop objects for each layout
 	const preWeekLayoutProps = $derived({

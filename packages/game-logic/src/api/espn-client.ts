@@ -1,5 +1,6 @@
 import PLimit from 'p-limit';
 import type { IEspnClient } from './espn-client.interface';
+import { MockEspnClient } from './espn-client.mock';
 
 const limit = PLimit(15);
 
@@ -41,7 +42,7 @@ export class EspnClient implements IEspnClient {
 		};
 	}
 
-	async getWeekEvents(seasonType: string, weekNumber: number): Promise<any> {
+	async getWeekEvents(seasonType: number, weekNumber: number): Promise<any> {
 		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl';
 		const response = await this.fetch(
 			`${baseUrl}/seasons/2025/types/${seasonType}/weeks/${weekNumber}/events`
@@ -96,4 +97,8 @@ export class EspnClient implements IEspnClient {
 
 export const createEspnClient = (customFetch?: typeof fetch) => {
 	return new EspnClient(customFetch);
+};
+
+export const createEspnClientForEnv = (): IEspnClient => {
+	return process.env.NODE_ENV === 'development' ? new MockEspnClient() : new EspnClient();
 };

@@ -1,7 +1,8 @@
-import { createEspnClient } from './api/espn-client';
+import type { ValkeyClient } from '@luckball/valkey-client';
+import { createEspnClientForEnv } from './api/espn-client';
 
-export const beginWeek = async (valkey: any) => {
-	const espnApi = createEspnClient();
+export const beginWeek = async (valkey: ValkeyClient) => {
+	const espnApi = createEspnClientForEnv();
 	const activeWeek = await espnApi.getActiveWeek();
 	const currentWeek = activeWeek.currentWeek;
 	const seasonType = activeWeek.seasonType;
@@ -9,10 +10,10 @@ export const beginWeek = async (valkey: any) => {
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
 	const prevWeekDataKey = `${seasonType}:week:${currentWeek - 1}:data`;
 
-	const prevWeekData = await valkey.get(prevWeekDataKey);
-	// if (JSON.parse(prevWeekData).status !== 'ended') {
-	// 	return { success: false, message: 'Week not started - previous week data status not "ended"' };
-	// }
+	let prevWeekData: string = '';
+	if (valkey && currentWeek && currentWeek > 1) {
+		prevWeekData = (await valkey?.get(prevWeekDataKey)) ?? '';
+	}
 
 	// get all matchups for the week
 	const weekEvents = await espnApi.getWeekEvents(seasonType, currentWeek);
@@ -42,16 +43,17 @@ export const beginWeek = async (valkey: any) => {
 	});
 
 	// update valkey with new match data
-	await valkey.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
+	await valkey?.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
 
 	// create current week data
+	const lastWinningTeam = prevWeekData ? JSON.parse(prevWeekData).winningTeamName : '';
 	const newWeekData = {
-		lastWinningTeam: prevWeekData?.winningTeamName ?? '',
+		lastWinningTeam: lastWinningTeam,
 		status: 'pending'
 	};
 
 	// save the results
-	await valkey.set(weekDataKey, JSON.stringify(newWeekData));
+	await valkey?.set(weekDataKey, JSON.stringify(newWeekData));
 
 	return { success: true, message: `Week ${currentWeek} started.` };
 };

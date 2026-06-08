@@ -1,6 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { NODE_ENV } from '$env/static/private';
-import { createEspnClient, createMockEspnClient } from '@luckball/game-logic';
+import { createEspnClientForEnv } from '@luckball/game-logic';
 import { schema } from '@luckball/drizzle-client';
 import { eq } from 'drizzle-orm';
 import { drizzle } from '$lib/clients/drizzle-client';
@@ -10,7 +9,7 @@ import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ parent }) => {
 	const { userId } = await parent();
-	const espnApi = NODE_ENV === 'development' ? createMockEspnClient() : createEspnClient();
+	const espnApi = createEspnClientForEnv();
 
 	// get data for the active NFL week from ESPN
 	let activeWeek;

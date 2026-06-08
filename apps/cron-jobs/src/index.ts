@@ -37,7 +37,7 @@ export class CronJobRunner {
 	}
 }
 
-const runner = new CronJobRunner(process.env);
+const runner = new CronJobRunner(process.env); // what to put here?;
 
 // cron jobs for game state
 cron.schedule('0 6 * * 3', () => runner.handleBeginWeek()); // Wednesday 06:00 UTC

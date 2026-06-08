@@ -1,5 +1,7 @@
 import Valkey from 'iovalkey';
 
+export type ValkeyClient = ReturnType<typeof createValkeyClient>;
+
 export function createValkeyClient(url: string) {
 	if (process.env.NODE_ENV === 'build' || process.env.SKIP_VALKEY === 'true') {
 		return null;

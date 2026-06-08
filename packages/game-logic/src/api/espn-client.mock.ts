@@ -3,13 +3,13 @@ import type { IEspnClient } from './espn-client.interface';
 export class MockEspnClient implements IEspnClient {
 	async getActiveWeek() {
 		return {
-			currentWeek: 4,
-			currentWeekText: 'Week 4',
-			seasonType: 2
+			currentWeek: 1,
+			currentWeekText: 'Week 1',
+			seasonType: 4
 		};
 	}
 
-	async getWeekEvents(seasonType: string, weekNumber: number) {
+	async getWeekEvents(seasonType: number, weekNumber: number) {
 		return {
 			events: [
 				{ id: 401547417, shortName: 'KC @ BUF', status: { type: { completed: true } } },
