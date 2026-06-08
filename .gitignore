@@ -1,11 +1,13 @@
 node_modules
-apps/frontend/node_modules
+apps/admin-dashboard/node_modules
 apps/cron-jobs/node_modules
+apps/frontend/node_modules
 
 # Output
-apps/frontend/.wrangler
 apps/frontend/.svelte-kit
 apps/frontend/build
+apps/admin-dashboard/.svelte-kit
+apps/admin-dashboard/build
 
 # OS
 .DS_Store
@@ -18,3 +20,5 @@ Thumbs.db
 # Vite
 apps/frontend/vite.config.js.timestamp-*
 apps/frontend/vite.config.ts.timestamp-*
+apps/admin-dashboard/vite.config.js.timestamp-*
+apps/admin-dashboard/vite.config.ts.timestamp-*

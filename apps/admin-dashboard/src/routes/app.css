@@ -1,13 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 @import 'tailwindcss';
-
-@import '@layerstack/tailwind/core.css';
-@import '@layerstack/tailwind/utils.css';
-@import '@layerstack/tailwind/themes/all.css';
-
-@source '../../node_modules/svelte-ux/dist';
-@source '../../node_modules/layerchart/dist';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
 
 @theme {
 	/* breakpoints */
@@ -24,10 +19,6 @@
 	--text-fluid-2xl: clamp(1.953rem, 1.736rem + 1.085vw, 3.906rem);
 	--text-fluid-3xl: clamp(2.441rem, 2.17rem + 1.356vw, 4.883rem);
 	--text-fluid-4xl: clamp(3.052rem, 2.713rem + 1.695vw, 6.104rem);
-}
-
-:root {
-	font-family: 'Rubik';
 
 	/* primary */
 	--color-primary-content: hsl(268 75% 10%);
@@ -90,4 +81,8 @@
 	--color-warning-content: hsl(48 70% 10%);
 	--color-danger: hsl(0 65% 64%);
 	--color-danger-content: hsl(0 65% 10%);
+}
+
+:root {
+	font-family: 'Rubik';
 }
