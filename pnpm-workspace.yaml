@@ -6,3 +6,10 @@ packages:
   - 'packages/valkey-client'
   - 'packages/drizzle-client'
   - 'packages/game-logic'
+allowBuilds:
+  '@tailwindcss/oxide': true
+  esbuild: true
+  svelte-preprocess: true
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - esbuild

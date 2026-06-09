@@ -1,22 +1,24 @@
-import { createEspnApiClient } from './api/espn-api';
-import { schema } from '@luckball/drizzle-client';
+import { createEspnClient } from './api/espn-client';
+import { schema, type DrizzleClient } from '@luckball/drizzle-client';
+import type { ValkeyClient } from '@luckball/valkey-client';
 import { eq } from 'drizzle-orm';
 
 export const addUserToWeek = async (
 	displayName: string,
 	userId: string,
-	valkey: any,
-	drizzle: any
+	valkey: ValkeyClient,
+	drizzle: DrizzleClient
 ) => {
 	if (!displayName || !userId) {
 		return { success: false, message: 'displayName and userId are required' };
 	}
 
-	const espnApi = createEspnApiClient();
-	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
+	const espnApi = createEspnClient();
+	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	// check if there is an active round for the week
-	const roundData = await valkey.get(`${seasonType}:week:${currentWeek}:data`);
+	const roundDataString = await valkey?.get(`${seasonType}:week:${currentWeek}:data`);
+	const roundData = JSON.parse(roundDataString ?? '');
 	if (roundData) {
 		if (roundData.status === 'in_progress' || roundData.status === 'ended') {
 			return { success: false, message: 'Round has already started' };
@@ -24,7 +26,7 @@ export const addUserToWeek = async (
 	}
 
 	// check if this user has already joined for the week
-	const existingUser = await valkey.hget(`${seasonType}:week:${currentWeek}:users`, userId);
+	const existingUser = await valkey?.hget(`${seasonType}:week:${currentWeek}:users`, userId);
 	if (existingUser) {
 		return { success: false, message: 'User already joined this week' };
 	}
@@ -37,7 +39,7 @@ export const addUserToWeek = async (
 	};
 
 	// add user to Valkey hash for this week
-	await valkey.hset(`${seasonType}:week:${currentWeek}:users`, {
+	await valkey?.hset(`${seasonType}:week:${currentWeek}:users`, {
 		[userId]: JSON.stringify(userData)
 	});
 

@@ -3,7 +3,7 @@
 	import RecordsCard from '$lib/components/records/RecordsCard.svelte';
 	import TitleAndPostWeekCopy from '$lib/components/home/postweek/TitleAndPostWeekCopy.svelte';
 	import WinningTeamCard from '$lib/components/home/postweek/WinningTeamCard.svelte';
-	import PageShell from '$lib/components/shared/PageShell.svelte';
+	import WeekShell from '$lib/components/layouts/home/WeekShell.svelte';
 
 	let {
 		currentWeekText,
@@ -13,51 +13,28 @@
 		userTeamName,
 		bestNflTeamName,
 		bestNflTeamScore,
-		totalWins,
-		totalLosses,
-		highestScoringTeamName,
-		highestScoringTeamScore
+		recordsData
 	} = $props();
 </script>
 
-<div class="hidden h-[calc(100vh-4rem)] lg:block">
-	<PageShell>
+<WeekShell>
+	{#snippet copy()}
 		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
-		<div class="my-auto flex flex-col gap-8 md:flex-row">
-			<div class="flex flex-1 items-center justify-center">
-				<WinningTeamCard {winningTeamName} {winningTeamScore} />
-			</div>
-			<div class="flex flex-1 items-center justify-center">
-				<BestTeamCard {bestNflTeamName} {bestNflTeamScore} />
-			</div>
-			<div class="justify-centerr flex flex-1 items-center">
-				<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
-			</div>
+	{/snippet}
+	<div class="flex flex-col gap-8 md:flex-row">
+		<div class="flex items-center justify-center md:flex-1">
+			<WinningTeamCard {winningTeamName} {winningTeamScore} />
 		</div>
-	</PageShell>
-</div>
-<div class="hidden h-[calc(100vh-4rem)] md:block lg:hidden">
-	<PageShell>
-		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
-		<div class="my-auto flex flex-col gap-8 md:flex-row">
-			<div class="flex flex-1 items-center justify-center">
-				<WinningTeamCard {winningTeamName} {winningTeamScore} />
-			</div>
-			<div class="flex flex-1 items-center justify-center">
-				<BestTeamCard {bestNflTeamName} {bestNflTeamScore} />
-			</div>
-			<div class="flex flex-1 items-center justify-center">
-				<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
-			</div>
+		<div class="flex items-center justify-center md:flex-1">
+			<BestTeamCard {bestNflTeamName} {bestNflTeamScore} />
 		</div>
-	</PageShell>
-</div>
-<div class="block md:hidden">
-	<PageShell>
-		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<WinningTeamCard {winningTeamName} {winningTeamScore} />
-		<BestTeamCard {bestNflTeamName} {bestNflTeamScore} />
-		<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
-	</PageShell>
-</div>
+		<div class="flex items-center justify-center md:flex-1">
+			<RecordsCard
+				totalWins={recordsData.totalWins}
+				totalLosses={recordsData.totalLosses}
+				highestScoringTeamName={recordsData.highestScoringTeamName}
+				highestScoringTeamScore={recordsData.highestScoringTeamScore}
+			/>
+		</div>
+	</div>
+</WeekShell>

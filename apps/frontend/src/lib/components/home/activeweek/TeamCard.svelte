@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
-	import BallerBadge from '$lib/components/badges/BallerBadge.svelte';
-	import PrideBadge from '$lib/components/badges/PrideBadge.svelte';
 	import type { MatchupData } from '$lib/types/valkey-types';
 	import { Card } from 'svelte-ux';
 
@@ -18,15 +16,11 @@
 	}
 </script>
 
-{#snippet playersText(data: any, mobileGrid: boolean)}
+{#snippet playersText(data: any)}
 	<div class="flex w-full flex-col gap-1">
 		<h3 class="text-accent">Players</h3>
 		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div
-			class="grid gap-2 {mobileGrid
-				? 'grid-cols-1'
-				: 'grid-cols-[repeat(auto-fit,minmax(120px,1fr))'}"
-		>
+		<div class="grid grid-cols-1 gap-2 md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
 			{#each data?.usernames as player}
 				<div
 					class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate p-2"
@@ -40,16 +34,12 @@
 	</div>
 {/snippet}
 
-{#snippet teamsText(data: any, mobileGrid: boolean)}
+{#snippet teamsText(data: any)}
 	<div class="flex w-full flex-col gap-1">
 		<h3 class="text-accent">Teams</h3>
 		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div
-			class="grid gap-2 {mobileGrid
-				? 'grid-cols-1'
-				: 'grid-cols-[repeat(auto-fit,minmax(120px,1fr))]'}"
-		>
-			{#each data?.nflTeams as team, i}
+		<div class="grid grid-cols-1 gap-2 md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
+			{#each data?.nflTeams as team}
 				<div class="w-30 flex flex-row items-center justify-between p-2">
 					<img class="h-6" height="32" src="{PUBLIC_TEAM_LOGO_URL}/{team}.png" alt="{team} logo" />
 					<span>{team}</span>
@@ -60,24 +50,18 @@
 	</div>
 {/snippet}
 
-{#snippet titleAndCard(data: any, mobileGrid = false)}
+{#snippet titleAndCard(data: any)}
 	<div class="flex h-full flex-col gap-4">
 		<h2 class="text-primary mb-2 text-2xl">
-			{data?.name}<span class="ml-2 text-white"> - {data.totalScore} points</span>
+			{data?.name}<span class="ml-2"> - {data.totalScore} points</span>
 		</h2>
 		<Card class="flex h-full flex-row justify-start gap-4 p-4">
-			{@render teamsText(data, mobileGrid)}
-			{@render playersText(data, mobileGrid)}
+			{@render teamsText(data)}
+			{@render playersText(data)}
 		</Card>
 	</div>
 {/snippet}
 
-<div class="hidden w-full flex-1 lg:block">
-	{@render titleAndCard(teamPlayerData, false)}
-</div>
-<div class="hidden w-full flex-1 md:block lg:hidden">
-	{@render titleAndCard(teamPlayerData, false)}
-</div>
-<div class="block md:hidden">
-	{@render titleAndCard(teamPlayerData, true)}
+<div class="w-full md:flex-1">
+	{@render titleAndCard(teamPlayerData)}
 </div>

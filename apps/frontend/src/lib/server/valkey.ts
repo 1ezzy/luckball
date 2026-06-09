@@ -4,24 +4,24 @@ import type { AllUsersData, MatchupData, User, WeekData } from '$lib/types/valke
 export async function getWeekAndUserData(
 	seasonType: string,
 	week: number
-): Promise<{ weekData: WeekData | null; allUserData: AllUsersData | null }> {
+): Promise<{ weekData: WeekData | null; allUserGameData: AllUsersData | null }> {
 	const weekDataKey = `${seasonType}:week:${week}:data`;
 	const allUsersDataKey = `${seasonType}:week:${week}:users`;
 
 	const results = await valkey?.multi().get(weekDataKey).hgetall(allUsersDataKey).exec();
 	if (!results) {
-		return { weekData: null, allUserData: null };
+		return { weekData: null, allUserGameData: null };
 	}
 
 	const weekDataRes = results[0][1] as string;
 	const weekData = weekDataRes ? (JSON.parse(weekDataRes) as WeekData) : null;
 
-	const allUserData = results[1][1] as Record<string, string> | null;
-	if (!allUserData) {
-		return { weekData, allUserData: null };
+	const allUserGameData = results[1][1] as Record<string, string> | null;
+	if (!allUserGameData) {
+		return { weekData, allUserGameData: null };
 	}
 
-	return { weekData, allUserData };
+	return { weekData, allUserGameData };
 }
 
 export async function getWeekData(

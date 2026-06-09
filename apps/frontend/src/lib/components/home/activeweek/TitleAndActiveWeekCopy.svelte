@@ -1,8 +1,11 @@
 <script lang="ts">
-	let { currentWeekText, weekJoined, userTeamAssignment, mainPage = true } = $props();
+	import PageTitle from '$lib/components/shared/PageTitle.svelte';
+
+	let { currentWeekText, weekJoined, userTeamAssignment } = $props();
 </script>
 
-{#snippet copyText()}
+<div class="flex w-full flex-col gap-4 text-center md:text-left 2xl:gap-8">
+	<PageTitle />
 	<div class="flex w-full flex-col gap-2 leading-8">
 		{#if weekJoined}
 			<span>
@@ -15,31 +18,5 @@
 				below and join again next week.
 			</span>
 		{/if}
-	</div>
-{/snippet}
-
-{#snippet titleCopy()}
-	<div class="flex w-full flex-col items-center gap-12 md:flex-row">
-		<h1 class="text-primary text-6xl font-bold">Luckball</h1>
-		<h1 class="text-2xl">It's all about the Luck Of The Ball</h1>
-	</div>
-{/snippet}
-
-<div class="hidden w-full lg:block">
-	<div class="flex w-full flex-col gap-4 2xl:gap-8">
-		{@render titleCopy()}
-		{@render copyText()}
-	</div>
-</div>
-<div class="hidden w-full md:block lg:hidden">
-	<div class="flex w-full flex-col gap-4">
-		{@render titleCopy()}
-		{@render copyText()}
-	</div>
-</div>
-<div class="block md:hidden">
-	<div class="flex flex-col gap-4 text-center">
-		{@render titleCopy()}
-		{@render copyText()}
 	</div>
 </div>

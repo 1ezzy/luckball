@@ -9,13 +9,10 @@
 		"lint": "eslint . --max-warnings 0",
 		"lint:fix": "eslint . --fix --max-warnings 0",
 		"format:check": "prettier --check .",
-		"fix:all": "prettier --write . && eslint . --fix --max-warnings 0",
-		"docker:begin-week": "docker exec -it luckball-cron-jobs pnpm --filter luckball-cron-jobs begin-week",
-		"docker:start-active-week": "docker exec -it luckball-cron-jobs pnpm --filter luckball-cron-jobs start-active-week",
-		"docker:end-week": "docker exec -it luckball-cron-jobs pnpm --filter luckball-cron-jobs end-week",
-		"docker:update-scores": "docker exec -it luckball-cron-jobs pnpm --filter luckball-cron-jobs update-scores"
+		"fix:all": "prettier --write . && eslint . --fix --max-warnings 0"
 	},
 	"devDependencies": {
+		"@types/node": "^22.0.0",
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
 		"eslint": "^9.29.0",
@@ -27,10 +24,5 @@
 		"prettier-plugin-tailwindcss": "^0.6.11",
 		"tsx": "^4.20.3",
 		"typescript-eslint": "^8.35.0"
-	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild"
-		]
 	}
 }

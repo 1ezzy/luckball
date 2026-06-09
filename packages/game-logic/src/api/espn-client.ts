@@ -1,0 +1,104 @@
+import PLimit from 'p-limit';
+import type { IEspnClient } from './espn-client.interface';
+import { MockEspnClient } from './espn-client.mock';
+
+const limit = PLimit(15);
+
+// TODO: update this API to use the v3 ESPN API
+// https://github.com/pseudo-r/Public-ESPN-API
+export class EspnClient implements IEspnClient {
+	private fetch: typeof fetch;
+
+	constructor(customFetch?: typeof fetch) {
+		this.fetch = customFetch || fetch.bind(globalThis);
+	}
+
+	async getActiveWeek(): Promise<any> {
+		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/season';
+		const response = await this.fetch(`${baseUrl}`);
+		const data = (await response.json()) as any;
+
+		let incrementWeek = false;
+		const endDate = new Date(data.type.week.endDate);
+		endDate.setHours(endDate.getHours() - 24);
+
+		if (new Date() > endDate) {
+			incrementWeek = true;
+		}
+
+		const currentWeekNumber = data.type.week.number + (incrementWeek ? 1 : 0);
+		const currentWeekText = data.type.week.text.replace(
+			data.type.week.number,
+			incrementWeek ? currentWeekNumber + 1 : currentWeekNumber
+		);
+
+		const currentWeek = currentWeekNumber;
+		const seasonType = data.type.type;
+
+		return {
+			currentWeek,
+			currentWeekText,
+			seasonType
+		};
+	}
+
+	async getWeekEvents(seasonType: number, weekNumber: number): Promise<any> {
+		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl';
+		const response = await this.fetch(
+			`${baseUrl}/seasons/2025/types/${seasonType}/weeks/${weekNumber}/events`
+		);
+		const data = (await response.json()) as any;
+
+		const events = await Promise.all(
+			data.items.map((event: { $ref: string }) =>
+				limit(async () => {
+					const secureUrl = event.$ref.replace('http://', 'https://');
+					const res = await this.fetch(secureUrl);
+					if (!res.ok) {
+						console.error(`Failed to fetch ${secureUrl}: ${res.statusText}`);
+						return null;
+					}
+					return res.json() as Promise<any>;
+				})
+			)
+		);
+
+		const validEvents = events.filter((event) => event !== null);
+		const teams = validEvents.flatMap((event: any) => {
+			const nameParts = event.shortName.split(' ');
+			return [nameParts[0], nameParts[2]];
+		});
+
+		return {
+			events: events || [],
+			teams: teams
+		};
+	}
+
+	async getMatchupScores(matchupId: number): Promise<number[]> {
+		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events';
+		const response = await this.fetch(
+			`${baseUrl}/${matchupId}/competitions/${matchupId}/competitors`
+		);
+
+		const competitors = (await response.json()) as any;
+		const scores = await Promise.all(
+			competitors.items.map(async (competitor: any) => {
+				const scoreUrl = competitor.score.$ref.replace('http://', 'https://');
+				const scoreRes = await this.fetch(scoreUrl);
+				const scoreData = (await scoreRes.json()) as any;
+				return scoreData.value;
+			})
+		);
+
+		return scores;
+	}
+}
+
+export const createEspnClient = (customFetch?: typeof fetch) => {
+	return new EspnClient(customFetch);
+};
+
+export const createEspnClientForEnv = (): IEspnClient => {
+	return process.env.NODE_ENV === 'development' ? new MockEspnClient() : new EspnClient();
+};

@@ -1,16 +1,17 @@
-import { schema } from '@luckball/drizzle-client';
-import { createEspnApiClient } from './api/espn-api';
+import { schema, type DrizzleClient } from '@luckball/drizzle-client';
+import { createEspnClientForEnv } from './api/espn-client';
 import { eq, sql } from 'drizzle-orm';
+import type { ValkeyClient } from '@luckball/valkey-client';
 
-export const endWeek = async (valkey: any, drizzle: any) => {
-	const espnApi = createEspnApiClient();
-	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
+export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
+	const espnApi = createEspnClientForEnv();
+	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
-	const currentWeekData = await valkey.get(weekDataKey);
+	const currentWeekData = (await valkey?.get(weekDataKey)) ?? '';
 	if (JSON.parse(currentWeekData).status !== 'in_progress') {
 		return {
 			success: false,
@@ -19,7 +20,7 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	}
 
 	// get a list of all the users
-	const users = await valkey.hgetall(usersKey);
+	const users = await valkey?.hgetall(usersKey);
 	if (!users || Object.keys(users).length === 0) {
 		return { success: false, message: 'No users to start the week.' };
 	}
@@ -63,7 +64,7 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	}
 
 	// find the best nfl team for the week
-	const matchupsRaw = await valkey.get(matchupsKey);
+	const matchupsRaw = (await valkey?.get(matchupsKey)) ?? '';
 	if (matchupsRaw.length === 0) {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
@@ -103,7 +104,7 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 	};
 
 	// save the results
-	await valkey.set(weekDataKey, JSON.stringify(updatedWeekData));
+	await valkey?.set(weekDataKey, JSON.stringify(updatedWeekData));
 
 	// update user data for all users in postgres database
 	const updateUserProfileStats = async (
@@ -117,7 +118,9 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 			.from(schema.user_profile)
 			.where(eq(schema.user_profile.userId, userId));
 
-		const shouldUpdateHighScore = !userProfile || userProfile.highestScoringTeamScore < teamScore;
+		const shouldUpdateHighScore =
+			!userProfile ||
+			(userProfile.highestScoringTeamScore && userProfile.highestScoringTeamScore < teamScore);
 
 		await drizzle
 			.update(schema.user_profile)
@@ -139,5 +142,5 @@ export const endWeek = async (valkey: any, drizzle: any) => {
 		}
 	}
 
-	return { success: true, message: `Week ${currentWeek} started ended.` };
+	return { success: true, message: `Week ${currentWeek} ended.` };
 };

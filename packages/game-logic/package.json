@@ -2,16 +2,18 @@
 	"name": "@luckball/game-logic",
 	"version": "1.0.0",
 	"private": true,
+	"type": "module",
 	"main": "./src/index.ts",
 	"dependencies": {
 		"@faker-js/faker": "^8.4.1",
-		"@luckball/valkey-client": "workspace:*",
 		"@luckball/drizzle-client": "workspace:*",
+		"@luckball/valkey-client": "workspace:*",
 		"drizzle-orm": "^0.44.4",
 		"iovalkey": "^0.3.3",
 		"p-limit": "^6.2.0"
 	},
 	"devDependencies": {
+		"@types/node": "^22.19.19",
 		"typescript": "^5.5.4"
 	}
 }

@@ -5,6 +5,9 @@
 	let { weekJoined, currentWeekText, displayName, prevDisplayName } = $props();
 
 	let loading = $state(false);
+
+	const cardClasses =
+		'bg-surface-200 flex w-fullflex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%]';
 </script>
 
 {#snippet joined()}
@@ -16,7 +19,7 @@
 
 {#snippet joinForm()}
 	<form
-		class="flex w-full flex-col gap-8 md:w-[50%]"
+		class="flex w-full flex-col gap-16 md:w-[67%]"
 		method="post"
 		action="?/joinWeek"
 		use:enhance={() => {
@@ -27,30 +30,33 @@
 			};
 		}}
 	>
-		<h3 class="text-secondary text-2xl">Join {currentWeekText} now!</h3>
-		<TextField name="displayName" placeholder="Enter Display Name" bind:value={prevDisplayName} />
-		<Button
-			type="submit"
-			color="primary"
-			variant="fill-outline"
-			classes={{ root: '!text-wrap' }}
-			{loading}
-		>
-			Join Week
-		</Button>
+		<h3 class="text-secondary text-fluid-xl">Join {currentWeekText} now!</h3>
+		<div class="flex flex-col gap-8">
+			<TextField
+				classes={{ container: 'border-2' }}
+				name="displayName"
+				placeholder="Enter Display Name"
+				bind:value={prevDisplayName}
+			/>
+			<Button
+				type="submit"
+				color="primary"
+				variant="outline"
+				classes={{ root: '!text-wrap border-2' }}
+				{loading}
+			>
+				Join Week
+			</Button>
+		</div>
 	</form>
 {/snippet}
 
 {#if !weekJoined}
-	<Card
-		class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8 p-8 text-center md:w-[50%]"
-	>
+	<Card class={cardClasses}>
 		{@render joinForm()}
 	</Card>
 {:else}
-	<Card
-		class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8 p-8 text-center md:w-[50%]"
-	>
+	<Card class={cardClasses}>
 		{@render joined()}
 	</Card>
 {/if}

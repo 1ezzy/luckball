@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { createEspnApiClient } from './api/espn-api';
+import { createEspnClient } from './api/espn-client';
 
 const generateTeamName = (): string => {
 	const adj = faker.word.adjective({ length: { min: 5, max: 8 }, strategy: 'fail' });
@@ -38,8 +38,8 @@ const shuffleNflTeams = (teams: string[]): [string[], string[]] => {
 };
 
 export const startActiveWeek = async (valkey: any) => {
-	const espnApi = createEspnApiClient();
-	const { currentWeek, currentWeekText, seasonType } = await espnApi.getActiveWeek();
+	const espnApi = createEspnClient();
+	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;

@@ -18,38 +18,27 @@
 	} = $props();
 </script>
 
+{#snippet schedule()}
+	<div class="my-auto flex w-full flex-col md:flex-row">
+		<ScheduleCard {matchups} {currentWeekText} />
+	</div>
+{/snippet}
+
 <div class="md:h-[calc(100vh-4rem)]">
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
 			<TitleAndPreWeekCopy {currentWeekText} mainPage={false} />
-			<div class="my-auto flex w-full flex-col md:flex-row">
-				<ScheduleCard {matchups} {currentWeekText} />
-			</div>
+			{@render schedule()}
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
 		<PageShell>
-			<TitleAndActiveWeekCopy
-				{currentWeekText}
-				{weekJoined}
-				{userTeamAssignment}
-				mainPage={false}
-			/>
-			<div class="my-auto flex w-full flex-col md:flex-row">
-				<ScheduleCard {matchups} {currentWeekText} showScores />
-			</div>
+			<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
+			{@render schedule()}
 		</PageShell>
 	{:else}
 		<PageShell>
-			<TitleAndPostWeekCopy
-				{currentWeekText}
-				{displayName}
-				{winningTeamName}
-				{userTeamName}
-				mainPage={false}
-			/>
-			<div class="my-auto flex w-full flex-col md:flex-row">
-				<ScheduleCard {matchups} {currentWeekText} showScores />
-			</div>
+			<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
+			{@render schedule()}
 		</PageShell>
 	{/if}
 </div>
