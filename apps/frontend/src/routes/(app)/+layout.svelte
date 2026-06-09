@@ -18,6 +18,14 @@
 	let { children, data } = $props();
 
 	let navExpanded = $state(true);
+
+	function toggleNav() {
+		if (navExpanded) {
+			navExpanded = false;
+		} else {
+			navExpanded = true;
+		}
+	}
 </script>
 
 <svelte:head>
@@ -28,13 +36,13 @@
 <AppLayout
 	areas="'header header' 'aside main'"
 	classes={{ nav: 'transition-[width] duration-500' }}
-	navWidth={navExpanded ? 240 : 82}
+	navWidth={navExpanded ? 240 : 74}
 >
 	<svelte:fragment slot="nav">
 		{#snippet navLink(Icon: Component, text: string, path: string)}
 			<NavItem
 				class={[
-					'bg-surface-200 border-primary-content flex h-12 w-full flex-row items-center justify-start gap-2 rounded-lg border-2 p-2',
+					'bg-surface-200 border-primary-content flex h-10 w-full flex-row items-center justify-start gap-2 rounded-lg border-2 p-2',
 					'hover:bg-surface-100 overflow-hidden transition-colors duration-300'
 				]}
 				currentUrl={page.url}
@@ -45,7 +53,7 @@
 					strokeWidth={2}
 					class={[
 						'shrink-0 transition-[width,height] duration-500',
-						navExpanded ? 'h-4 w-4' : 'h-6 w-6'
+						navExpanded ? 'h-4 w-4' : 'h-5 w-5'
 					]}
 				/>
 				<span
@@ -80,12 +88,7 @@
 			<span class="text-fluid-lg ml-2 md:ml-4">Luckball</span>
 		</svelte:fragment>
 		<svelte:fragment slot="menuIcon">
-			<Button
-				on:click={() => {
-					navExpanded = !navExpanded;
-				}}
-				class="rounded-lg p-2"
-			>
+			<Button on:click={toggleNav} class="rounded-lg p-2">
 				<LucideArrowRightFromLine
 					size={20}
 					strokeWidth={2}

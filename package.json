@@ -5,6 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev:frontend": "pnpm --filter luckball-frontend dev",
+		"dev:admin": "pnpm --filter luckball-admin-dashboard dev",
 		"format": "prettier --write .",
 		"lint": "eslint . --max-warnings 0",
 		"lint:fix": "eslint . --fix --max-warnings 0",

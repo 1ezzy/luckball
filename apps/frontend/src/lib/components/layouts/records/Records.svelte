@@ -33,7 +33,7 @@
 <div class="md:h-[calc(100vh-4rem)]">
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
-			<TitleAndPreWeekCopy {currentWeekText} mainPage={false} />
+			<TitleAndPreWeekCopy {currentWeekText} {weekJoined} mainPage={false} />
 			{@render records()}
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}

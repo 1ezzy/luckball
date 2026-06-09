@@ -9,7 +9,7 @@
 
 <WeekShell>
 	{#snippet copy()}
-		<TitleAndPreWeekCopy {currentWeekText} />
+		<TitleAndPreWeekCopy {currentWeekText} {weekJoined} />
 	{/snippet}
 	<div class="flex w-full flex-col gap-16 md:flex-row">
 		<DisplayNameForm {weekJoined} {currentWeekText} {displayName} {prevDisplayName} />

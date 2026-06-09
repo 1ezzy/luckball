@@ -3,7 +3,7 @@
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
 	import type { MatchupData } from '$lib/types/valkey-types';
 
-	let { matchups, currentWeekText, showScores = false } = $props();
+	let { matchups, showScores = false } = $props();
 
 	const getTeamScoreFromMatchup = (matchup: MatchupData, index: number) => {
 		if (!matchup.matchupScores) return undefined;
@@ -59,29 +59,24 @@
 	</div>
 {/snippet}
 
-<div class="w-full">
-	<div class="flex h-full w-full flex-col gap-4 text-center md:text-left">
-		<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
-		<Card class="h-full gap-4 border-2 p-4 md:max-h-96">
+<Card class="bg-surface-200 h-full gap-4 border-2 p-4 md:max-h-96">
+	<div
+		class={[
+			'flex w-full flex-col items-center justify-center gap-4',
+			'md:grid md:grid-cols-[repeat(auto-fit,minmax(150px,1fr))] md:justify-items-center md:gap-8 md:p-8'
+		]}
+	>
+		{#each matchups as matchup}
 			<div
 				class={[
-					'flex w-full flex-col items-center justify-center gap-4',
-					'md:grid md:grid-cols-[repeat(auto-fit,minmax(150px,1fr))] md:justify-items-center md:gap-8 md:p-8'
+					'flex w-full flex-row items-center justify-center gap-2',
+					'md:items-stretch md:justify-between md:gap-1'
 				]}
 			>
-				{#each matchups as matchup}
-					<div
-						class={[
-							'flex w-full flex-row items-center justify-center gap-4',
-							'md:items-stretch md:justify-between md:gap-1'
-						]}
-					>
-						{@render team1LogoScore(matchup)}
-						{@render matchupAndDate(matchup)}
-						{@render team2LogoScore(matchup)}
-					</div>
-				{/each}
+				{@render team1LogoScore(matchup)}
+				{@render matchupAndDate(matchup)}
+				{@render team2LogoScore(matchup)}
 			</div>
-		</Card>
+		{/each}
 	</div>
-</div>
+</Card>

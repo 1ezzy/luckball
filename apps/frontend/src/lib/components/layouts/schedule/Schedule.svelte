@@ -20,14 +20,17 @@
 
 {#snippet schedule()}
 	<div class="my-auto flex w-full flex-col md:flex-row">
-		<ScheduleCard {matchups} {currentWeekText} />
+		<div class="flex h-full w-full flex-col gap-4 text-center md:text-left">
+			<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
+			<ScheduleCard {matchups} />
+		</div>
 	</div>
 {/snippet}
 
 <div class="md:h-[calc(100vh-4rem)]">
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
-			<TitleAndPreWeekCopy {currentWeekText} mainPage={false} />
+			<TitleAndPreWeekCopy {currentWeekText} {weekJoined} mainPage={false} />
 			{@render schedule()}
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
