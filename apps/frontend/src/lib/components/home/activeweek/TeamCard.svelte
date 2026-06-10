@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
-	import type { MatchupData } from '$lib/types/valkey-types';
 	import { Card } from 'svelte-ux';
+	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
+	import TeamCardColumn from '$lib/components/home/activeweek/TeamCardColumn.svelte';
+	import type { MatchupData } from '$lib/types/valkey-types';
 
 	let { teamPlayerData, displayName, matchups } = $props();
 
@@ -16,52 +17,42 @@
 	}
 </script>
 
-{#snippet playersText(data: any)}
-	<div class="flex w-full flex-col gap-1">
-		<h3 class="text-accent">Players</h3>
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div class="grid grid-cols-1 gap-2 md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
-			{#each data?.usernames as player}
-				<div
-					class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate p-2"
-				>
-					<span class="truncate" class:text-primary={player === displayName}>
-						{player}
-					</span>
-				</div>
-			{/each}
+{#snippet playersColumn(data: any)}
+	{#each data?.usernames as player}
+		<div
+			class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate p-2"
+		>
+			<span class="truncate" class:text-primary={player === displayName}>
+				{player}
+			</span>
 		</div>
-	</div>
+	{/each}
 {/snippet}
 
-{#snippet teamsText(data: any)}
-	<div class="flex w-full flex-col gap-1">
-		<h3 class="text-accent">Teams</h3>
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div class="grid grid-cols-1 gap-2 md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
-			{#each data?.nflTeams as team}
-				<div class="w-30 flex flex-row items-center justify-between p-2">
-					<img class="h-6" height="32" src="{PUBLIC_TEAM_LOGO_URL}/{team}.png" alt="{team} logo" />
-					<span>{team}</span>
-					<span class="text-primary text-xs">({getTeamScoreFromMatchups(matchups, team)})</span>
-				</div>
-			{/each}
+{#snippet teamsColumn(data: any)}
+	{#each data?.nflTeams as team}
+		<div class="w-30 flex flex-row items-center justify-between p-2">
+			<img class="h-6" height="32" src="{PUBLIC_TEAM_LOGO_URL}/{team}.png" alt="{team} logo" />
+			<span>{team}</span>
+			<span class="text-primary text-xs">({getTeamScoreFromMatchups(matchups, team)})</span>
 		</div>
-	</div>
-{/snippet}
-
-{#snippet titleAndCard(data: any)}
-	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-primary mb-2 text-2xl">
-			{data?.name}<span class="ml-2"> - {data.totalScore} points</span>
-		</h2>
-		<Card class="flex h-full flex-row justify-start gap-4 p-4">
-			{@render teamsText(data)}
-			{@render playersText(data)}
-		</Card>
-	</div>
+	{/each}
 {/snippet}
 
 <div class="w-full md:flex-1">
-	{@render titleAndCard(teamPlayerData)}
+	<div class="flex h-full flex-col gap-4">
+		<h2 class="text-primary mb-2 flex flex-row gap-4 text-2xl">
+			<span>{teamPlayerData?.name}</span>
+			<span>|</span>
+			<span>{teamPlayerData.totalScore} points</span>
+		</h2>
+		<Card class="bg-surface-200 flex h-full flex-row justify-start gap-8 rounded-lg border-2 p-4">
+			<TeamCardColumn header="Teams">
+				{@render teamsColumn(teamPlayerData)}
+			</TeamCardColumn>
+			<TeamCardColumn header="Players">
+				{@render playersColumn(teamPlayerData)}
+			</TeamCardColumn>
+		</Card>
+	</div>
 </div>

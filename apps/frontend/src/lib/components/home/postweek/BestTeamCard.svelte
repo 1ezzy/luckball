@@ -6,22 +6,24 @@
 </script>
 
 <Card
-	class="bg-surface-200  flex h-full flex-1  flex-col items-center justify-center gap-16 p-8 text-center"
+	class="bg-surface-200 h-9/10 flex flex-1 flex-col items-center justify-start gap-16 border-2 p-8 text-center"
 >
-	<div class="flex flex-col gap-4">
-		<h2 class="text-primary mb-2 text-2xl">Highest Scoring NFL Team</h2>
-		<div class="flex flex-row items-center justify-center gap-2">
-			<img
-				class="h-8"
-				height="32"
-				src="{PUBLIC_TEAM_LOGO_URL}/{bestNflTeamName}.png"
-				alt="{bestNflTeamName} logo"
-			/>
-			<h2 class="text-secondary text-2xl">{bestNflTeamName}</h2>
+	<div class="flex h-full flex-col gap-4">
+		<h2 class="text-primary text-fluid-lg mb-2">Highest Scoring NFL Team</h2>
+		<div class="my-auto flex flex-col gap-2">
+			<div class="flex flex-row items-center justify-center gap-2">
+				<img
+					class="h-6"
+					height="32"
+					src="{PUBLIC_TEAM_LOGO_URL}/{bestNflTeamName}.png"
+					alt="{bestNflTeamName} logo"
+				/>
+				<h2 class="text-secondary text-fluid-base">{bestNflTeamName}</h2>
+			</div>
+			<span class="text-fluid-base">
+				Team Score:
+				<span class="text-accent">{bestNflTeamScore}</span>
+			</span>
 		</div>
-		<span class="text-sm">
-			Total Points This Week:
-			<span class="text-accent">{bestNflTeamScore}</span>
-		</span>
 	</div>
 </Card>
