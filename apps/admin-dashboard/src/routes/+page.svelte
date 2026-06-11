@@ -10,11 +10,11 @@
 	<span class="text-primary-content text-center">{description}</span>
 {/snippet}
 
-{#snippet actionCard(btnLabel: string, description: string)}
+{#snippet actionCard(action: string, btnLabel: string, description: string)}
 	<form
 		class="bg-surface-300 flex w-full flex-col items-center justify-center gap-4 rounded-xl border-2 p-8"
 		method="post"
-		action="?/beginWeek"
+		action="?/{action}"
 		use:enhance
 	>
 		{@render actionBtn(btnLabel)}
@@ -26,16 +26,19 @@
 	class="flex h-full w-full flex-1 items-center justify-center bg-[url('src/lib/assets/dash-bg.png')] bg-cover"
 >
 	<div class="flex h-full w-1/5 flex-col items-center justify-center gap-8">
-		{@render actionCard('Begin Week', 'Moves the game to the "pending" status')}
+		{@render actionCard('beginWeek', 'Begin Week', 'Moves the game to the "pending" status')}
 		{@render actionCard(
+			'startActiveWeek',
 			'Start Active Week',
 			'Moves the game to the "in_progress" status and seeds the Valkey database with matchups'
 		)}
 		{@render actionCard(
+			'updateScores',
 			'Update Matchup Scores',
 			'Updates the match scores with mocked data for the "in_progress" game phase'
 		)}
 		{@render actionCard(
+			'endWeek',
 			'End Week',
 			'Moves the game to the "ended" status, calculates winners, updates user records'
 		)}
