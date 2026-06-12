@@ -34,14 +34,14 @@
 		<div class="w-30 flex flex-row items-center justify-between p-2">
 			<img class="h-6" height="32" src="{PUBLIC_TEAM_LOGO_URL}/{team}.png" alt="{team} logo" />
 			<span>{team}</span>
-			<span class="text-primary text-xs">({getTeamScoreFromMatchups(matchups, team)})</span>
+			<span class="text-primary text-fluid-xs">({getTeamScoreFromMatchups(matchups, team)})</span>
 		</div>
 	{/each}
 {/snippet}
 
 <div class="w-full md:flex-1">
 	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-primary mb-2 flex flex-row gap-4 text-2xl">
+		<h2 class="text-primary text-fluid-lg mb-2 flex flex-row gap-4">
 			<span>{teamPlayerData?.name}</span>
 			<span>|</span>
 			<span>{teamPlayerData.totalScore} points</span>

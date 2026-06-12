@@ -21,7 +21,7 @@
 {#snippet schedule()}
 	<div class="my-auto flex w-full flex-col md:flex-row">
 		<div class="flex h-full w-full flex-col gap-4 text-center md:text-left">
-			<h2 class="text-secondary mb-2 text-2xl">Schedule for {currentWeekText}</h2>
+			<h2 class="text-secondary text-fluid-xl mb-2">Schedule for {currentWeekText}</h2>
 			<ScheduleCard {matchups} />
 		</div>
 	</div>

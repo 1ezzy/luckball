@@ -7,13 +7,13 @@
 	let loading = $state(false);
 
 	const cardClasses =
-		'bg-surface-200 flex w-fullflex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%]';
+		'bg-surface-200 flex w-fullflex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%] rounded-xl';
 </script>
 
 {#snippet joined()}
 	<div class="flex w-full flex-col gap-8 text-center">
-		<span>You've successfully joined {currentWeekText}!</span>
-		<span class="text-primary">Display Name: {displayName}</span>
+		<span class="text-fluid-base">You've successfully joined {currentWeekText}!</span>
+		<span class="text-primary text-fluid-base">Display Name: {displayName}</span>
 	</div>
 {/snippet}
 
