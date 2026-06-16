@@ -27,7 +27,7 @@
 	</div>
 {/snippet}
 
-<div class="md:h-[calc(100vh-4rem)]">
+<div class="md:h-screen">
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
 			<TitleAndPreWeekCopy {currentWeekText} {weekJoined} mainPage={false} />

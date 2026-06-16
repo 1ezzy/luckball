@@ -5,7 +5,7 @@
 	let { copy, children }: { copy: Snippet; children: Snippet } = $props();
 </script>
 
-<div class="md:h-[calc(100vh-4rem)]">
+<div class="md:h-screen">
 	<PageShell>
 		{@render copy()}
 		<hr class="h-[1px] w-full border-0 border-t-2 border-t-black md:hidden" />

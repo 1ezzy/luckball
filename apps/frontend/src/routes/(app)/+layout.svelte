@@ -1,31 +1,11 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import { invalidateAll } from '$app/navigation';
-	import { authClient } from '$lib/clients/auth-client';
-	import { AppBar, AppLayout, NavItem, Button } from 'svelte-ux';
-	import {
-		LucideArrowRightFromLine,
-		LucideAward,
-		LucideCalendar,
-		LucideHouse,
-		LucideLogIn,
-		LucideLogOut,
-		LucideSettings
-	} from '@lucide/svelte';
-	import type { Component } from 'svelte';
+	import Navigation from '$lib/components/shared/Navigation.svelte';
+
 	import '../app.css';
 
 	let { children, data } = $props();
 
-	let navExpanded = $state(true);
-
-	function toggleNav() {
-		if (navExpanded) {
-			navExpanded = false;
-		} else {
-			navExpanded = true;
-		}
-	}
+	let navExpanded = $state(false);
 </script>
 
 <svelte:head>
@@ -33,72 +13,32 @@
 	<meta name="luckball" content="Team-based football matchup scramble" />
 </svelte:head>
 
-<AppLayout
-	areas="'header header' 'aside main'"
-	classes={{ nav: 'transition-[width] duration-500' }}
-	navWidth={navExpanded ? 240 : 74}
->
-	<svelte:fragment slot="nav">
-		{#snippet navLink(Icon: Component, text: string, path: string)}
-			<NavItem
-				class={[
-					'bg-surface-200 border-primary-content flex h-10 w-full flex-row items-center justify-start gap-2 rounded-lg border-2 p-2',
-					'hover:bg-surface-100 overflow-hidden transition-colors duration-300'
-				]}
-				currentUrl={page.url}
-				{path}
-			>
-				<Icon
-					size={24}
-					strokeWidth={2}
-					class={[
-						'shrink-0 transition-[width,height] duration-500',
-						navExpanded ? 'h-4 w-4' : 'h-5 w-5'
-					]}
-				/>
-				<span
-					class={[
-						'w-full transition-opacity duration-500',
-						navExpanded ? 'opacity-100' : 'opacity-0'
-					]}
-				>
-					{text}
-				</span>
-			</NavItem>
-		{/snippet}
-		<div
-			class={[
-				'bg-surface-300 text-primary-content border-r-primary-content items-between flex h-full flex-col border-r-2 py-12 transition-[padding] duration-500',
-				navExpanded ? 'px-8' : 'px-4'
-			]}
-		>
-			<div class="flex h-full flex-col gap-8">
-				{@render navLink(LucideHouse, 'Home', '/')}
-				{@render navLink(LucideCalendar, 'Schedule', '/schedule')}
-				{@render navLink(LucideAward, 'Records', '/records')}
-			</div>
-			<div>
-				{@render navLink(LucideSettings, 'Settings', '/settings')}
-			</div>
-		</div>
-	</svelte:fragment>
+<div class={['flex flex-col', 'md:flex-row']}>
+	<section
+		class={[
+			'absolute w-full',
+			'transition-[height] duration-300 md:h-full md:transition-[width]',
+			navExpanded ? 'h-64 md:w-[240px]' : 'h-16 md:w-[74px]'
+		]}
+	>
+		<Navigation userId={data?.userId} bind:navExpanded></Navigation>
+	</section>
 
-	<AppBar title="Luckball" class="bg-primary-500 gap-1 px-4 text-white md:px-8">
+	<main
+		class={[
+			'bg-surface-300 text-primary-content mt-16 flex h-full min-h-screen w-full flex-col p-4',
+			'md:ml-[74px] md:mt-0 md:p-0',
+			'transition-[filter] duration-300',
+			navExpanded ? 'blur-xs brightness-80' : ''
+		]}
+		ontouchstart={() => (navExpanded = false)}
+	>
+		{@render children()}
+	</main>
+
+	<!-- <AppBar title="Luckball" class="bg-primary-500 gap-1 px-4 text-white md:px-8" menuIcon={null}>
 		<svelte:fragment slot="title">
 			<span class="text-fluid-lg ml-2 md:ml-4">Luckball</span>
-		</svelte:fragment>
-		<svelte:fragment slot="menuIcon">
-			<Button on:click={toggleNav} class="rounded-lg p-2">
-				<LucideArrowRightFromLine
-					size={20}
-					strokeWidth={2}
-					class={[
-						'transition-transform duration-500',
-						navExpanded ? 'scale-x-[-1]' : '',
-						'h-4 w-4 md:h-5 md:w-5'
-					]}
-				/>
-			</Button>
 		</svelte:fragment>
 		<div slot="actions">
 			{#if data?.userId}
@@ -119,11 +59,5 @@
 				</Button>
 			{/if}
 		</div>
-	</AppBar>
-
-	<main
-		class="bg-surface-300 text-primary-content flex h-full min-h-screen flex-col p-4 md:min-h-[calc(100vh-4rem)] md:p-0"
-	>
-		{@render children()}
-	</main>
-</AppLayout>
+	</AppBar> -->
+</div>

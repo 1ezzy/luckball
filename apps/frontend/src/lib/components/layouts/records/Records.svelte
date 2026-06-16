@@ -24,13 +24,13 @@
 {#snippet records()}
 	<div class="my-auto flex flex-col gap-8 md:flex-row">
 		<div class="flex h-full w-full flex-col gap-4">
-			<h2 class="text-secondary text--fluid-xl mb-2">Personal Records</h2>
+			<h2 class="text-secondary text-fluid-xl mb-2">Personal Records</h2>
 			<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
 		</div>
 	</div>
 {/snippet}
 
-<div class="md:h-[calc(100vh-4rem)]">
+<div class="md:h-screen">
 	{#if weekStatus === WeekStatus.Pending}
 		<PageShell>
 			<TitleAndPreWeekCopy {currentWeekText} {weekJoined} mainPage={false} />
