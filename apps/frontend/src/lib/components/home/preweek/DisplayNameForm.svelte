@@ -7,7 +7,7 @@
 	let loading = $state(false);
 
 	const cardClasses =
-		'bg-surface-200 flex w-fullflex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%] rounded-xl';
+		'bg-surface-200 flex w-fullflex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%] rounded-lg';
 </script>
 
 {#snippet joined()}

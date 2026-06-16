@@ -6,7 +6,7 @@
 </script>
 
 <Card
-	class="bg-surface-200 h-9/10 flex flex-1 flex-col items-center justify-start gap-16 border-2 p-8 text-center"
+	class="bg-surface-200 h-9/10 flex flex-1 flex-col items-center justify-start gap-16 rounded-lg border-2 p-8 text-center"
 >
 	<div class="flex h-full flex-col gap-4">
 		<h2 class="text-primary text-fluid-lg mb-2">Highest Scoring NFL Team</h2>

@@ -59,7 +59,7 @@
 	</div>
 {/snippet}
 
-<Card class="bg-surface-200 h-full gap-4 border-2 p-4 md:max-h-96">
+<Card class="bg-surface-200 h-full gap-4 rounded-lg border-2 p-4 md:max-h-96">
 	<div
 		class={[
 			'flex w-full flex-col items-center justify-center gap-4',
