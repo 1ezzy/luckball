@@ -128,7 +128,7 @@
 	</div>
 	<div class="hidden h-full flex-col justify-end gap-8 md:flex">
 		{@render navLink(LucideSettings, 'Settings', '/settings')}
-		{@render loginLogoutNavButton(userId)}
+		{@render loginLogoutNavButton()}
 	</div>
 	<header class="flex flex-col gap-1 md:hidden">
 		{#if !navExpanded}

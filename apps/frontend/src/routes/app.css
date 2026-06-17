@@ -29,44 +29,44 @@
 :root {
 	font-family: 'Rubik';
 
-	/* primary */
-	--color-primary-content: hsl(268 75% 10%);
-	--color-primary-100: hsl(268 75% 95%);
-	--color-primary-200: hsl(268 75% 88%);
-	--color-primary-300: hsl(268 75% 80%);
-	--color-primary-400: hsl(268 75% 70%);
-	--color-primary-500: hsl(268 75% 58%);
-	--color-primary-600: hsl(268 75% 48%);
-	--color-primary-700: hsl(268 75% 38%);
-	--color-primary-800: hsl(268 75% 27%);
-	--color-primary-900: hsl(268 75% 17%);
-	--color-primary: var(--color-primary-600);
+	/* primary — purple, shifted ~5% lighter at each shade */
+	--color-primary-content: hsl(268 75% 15%);
+	--color-primary-100: hsl(268 75% 97%);
+	--color-primary-200: hsl(268 75% 92%);
+	--color-primary-300: hsl(268 75% 85%);
+	--color-primary-400: hsl(268 75% 75%);
+	--color-primary-500: hsl(268 75% 63%);
+	--color-primary-600: hsl(268 75% 53%);
+	--color-primary-700: hsl(268 75% 43%);
+	--color-primary-800: hsl(268 75% 32%);
+	--color-primary-900: hsl(268 75% 22%);
+	--color-primary: var(--color-primary-500);
 
-	/* secondary */
-	--color-secondary-content: hsl(172 52% 96%);
-	--color-secondary-100: hsl(172 52% 94%);
-	--color-secondary-200: hsl(172 52% 86%);
-	--color-secondary-300: hsl(172 52% 77%);
-	--color-secondary-400: hsl(172 52% 66%);
-	--color-secondary-500: hsl(172 52% 55%);
-	--color-secondary-600: hsl(172 52% 40%);
-	--color-secondary-700: hsl(172 52% 25%);
-	--color-secondary-800: hsl(172 52% 16%);
-	--color-secondary-900: hsl(172 52% 9%);
-	--color-secondary: var(--color-secondary-700);
+	/* secondary — sky blue */
+	--color-secondary-content: hsl(205 80% 12%);
+	--color-secondary-100: hsl(205 80% 95%);
+	--color-secondary-200: hsl(205 80% 87%);
+	--color-secondary-300: hsl(205 80% 76%);
+	--color-secondary-400: hsl(205 80% 63%);
+	--color-secondary-500: hsl(205 80% 50%);
+	--color-secondary-600: hsl(205 80% 38%);
+	--color-secondary-700: hsl(205 80% 27%);
+	--color-secondary-800: hsl(205 80% 17%);
+	--color-secondary-900: hsl(205 80% 9%);
+	--color-secondary: var(--color-secondary-500);
 
-	/* accent — coral orange (hue 16) */
-	--color-accent-content: hsl(16 80% 96%);
-	--color-accent-100: hsl(16 80% 95%);
-	--color-accent-200: hsl(16 80% 88%);
-	--color-accent-300: hsl(16 80% 80%);
-	--color-accent-400: hsl(16 80% 68%);
-	--color-accent-500: hsl(16 80% 55%);
-	--color-accent-600: hsl(16 80% 44%);
-	--color-accent-700: hsl(16 80% 32%);
-	--color-accent-800: hsl(16 80% 22%);
-	--color-accent-900: hsl(16 80% 14%);
-	--color-accent: var(--color-accent-700);
+	/* accent — sea foam green */
+	--color-accent-content: hsl(158 45% 12%);
+	--color-accent-100: hsl(158 45% 95%);
+	--color-accent-200: hsl(158 45% 86%);
+	--color-accent-300: hsl(158 45% 74%);
+	--color-accent-400: hsl(158 45% 60%);
+	--color-accent-500: hsl(158 45% 47%);
+	--color-accent-600: hsl(158 45% 36%);
+	--color-accent-700: hsl(158 45% 26%);
+	--color-accent-800: hsl(158 45% 17%);
+	--color-accent-900: hsl(158 45% 10%);
+	--color-accent: var(--color-accent-500);
 
 	/* surface */
 	--color-surface-content: hsl(31 20% 18%);

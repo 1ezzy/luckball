@@ -11,15 +11,21 @@
 </script>
 
 {#snippet joined()}
-	<div class="flex w-full flex-col gap-8 text-center">
+	<div class="flex h-full w-full flex-col justify-between text-center">
 		<span class="text-fluid-base">You've successfully joined {currentWeekText}!</span>
 		<span class="text-primary text-fluid-base">Display Name: {displayName}</span>
+		<div class="flex w-full flex-col gap-4 text-center">
+			<Button variant="fill" color="info">Update Name</Button>
+			<form class="w-full" method="post" action="?/leaveWeek" use:enhance>
+				<Button class="w-full" type="submit" variant="fill" color="danger">Leave Week</Button>
+			</form>
+		</div>
 	</div>
 {/snippet}
 
 {#snippet joinForm()}
 	<form
-		class="flex w-full flex-col gap-16 md:w-[67%]"
+		class="flex h-full w-full flex-col justify-between md:w-[67%]"
 		method="post"
 		action="?/joinWeek"
 		use:enhance={() => {
@@ -38,15 +44,7 @@
 				placeholder="Enter Display Name"
 				bind:value={prevDisplayName}
 			/>
-			<Button
-				type="submit"
-				color="primary"
-				variant="outline"
-				classes={{ root: '!text-wrap border-2' }}
-				{loading}
-			>
-				Join Week
-			</Button>
+			<Button type="submit" color="success" variant="fill" {loading}>Join Week</Button>
 		</div>
 	</form>
 {/snippet}
