@@ -1,9 +1,6 @@
 <script lang="ts">
 	import PageShell from '$lib/components/shared/PageShell.svelte';
-	import { WeekStatus } from '$lib/types/valkey-types';
-	import TitleAndPreWeekCopy from '$lib/components/home/preweek/TitleAndPreWeekCopy.svelte';
-	import TitleAndActiveWeekCopy from '$lib/components/home/activeweek/TitleAndActiveWeekCopy.svelte';
-	import TitleAndPostWeekCopy from '$lib/components/home/postweek/TitleAndPostWeekCopy.svelte';
+	import RouteCopy from '$lib/components/shared/title/RouteTitle.svelte';
 	import RecordsCard from '$lib/components/records/RecordsCard.svelte';
 
 	let {
@@ -21,39 +18,18 @@
 	} = $props();
 </script>
 
-{#snippet records()}
-	<div class="flex h-full flex-col gap-8 text-center md:my-auto">
-		<h2 class="text-secondary text-fluid-xl mb-2">Personal Records</h2>
-		<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
-	</div>
-{/snippet}
-
 <div class="md:h-screen">
-	{#if weekStatus === WeekStatus.Pending}
-		<PageShell>
-			<TitleAndPreWeekCopy {currentWeekText} {weekJoined} mainPage={false} />
-			{@render records()}
-		</PageShell>
-	{:else if weekStatus === WeekStatus.InProgress}
-		<PageShell>
-			<TitleAndActiveWeekCopy
-				{currentWeekText}
-				{weekJoined}
-				{userTeamAssignment}
-				mainPage={false}
-			/>
-			{@render records()}
-		</PageShell>
-	{:else}
-		<PageShell>
-			<TitleAndPostWeekCopy
-				{currentWeekText}
-				{displayName}
-				{winningTeamName}
-				{userTeamName}
-				mainPage={false}
-			/>
-			{@render records()}
-		</PageShell>
-	{/if}
+	<PageShell>
+		<RouteCopy
+			routeName="Records"
+			{weekStatus}
+			{weekJoined}
+			{currentWeekText}
+			{userTeamAssignment}
+			{displayName}
+			{userTeamName}
+			{winningTeamName}
+		/>
+		<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
+	</PageShell>
 </div>

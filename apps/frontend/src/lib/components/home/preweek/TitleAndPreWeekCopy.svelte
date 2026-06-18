@@ -1,27 +1,11 @@
 <script lang="ts">
-	import PageTitle from '$lib/components/shared/PageTitle.svelte';
+	import HomepageTitle from '$lib/components/home/HomepageTitle.svelte';
+	import PreWeekCopy from '$lib/components/shared/copy/PreWeekCopy.svelte';
 
-	let { currentWeekText, weekJoined, mainPage = true } = $props();
-
-	let subtextCopy = $derived.by(() => {
-		switch (`${!!weekJoined}:${mainPage}`) {
-			case 'true:true':
-				return 'You have already joined this week.';
-			case 'true:false':
-				return 'You have already joined this week, check out the home page for additional information.';
-			case 'false:true':
-				return 'You can join the week by entering a display name and clicking the "Join" button.';
-			case 'false:false':
-				return 'You can join on the home page.';
-			default:
-				return '';
-		}
-	});
+	let { currentWeekText, weekJoined } = $props();
 </script>
 
 <div class="flex w-full flex-col gap-4 text-center md:text-left 2xl:gap-8">
-	<PageTitle />
-	<div class="flex w-full flex-col gap-8 leading-8">
-		{currentWeekText} has not started yet. {subtextCopy}
-	</div>
+	<HomepageTitle />
+	<PreWeekCopy {currentWeekText} {weekJoined} />
 </div>

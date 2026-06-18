@@ -3,6 +3,7 @@
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
 	import TeamCardColumn from '$lib/components/home/activeweek/TeamCardColumn.svelte';
 	import type { MatchupData } from '$lib/types/valkey-types';
+	import { LucideChevronDown } from '@lucide/svelte';
 
 	let { teamPlayerData, displayName, matchups } = $props();
 
@@ -15,6 +16,14 @@
 		if (!matchup?.matchupScores) return undefined;
 		return matchup.matchupScores.find((obj) => obj[team] !== undefined)?.[team];
 	}
+
+	let expandedTeams = $state(new Set<string>());
+	let toggleTeam = (team: string) => {
+		const next = new Set(expandedTeams);
+		if (next.has(team)) next.delete(team);
+		else next.add(team);
+		expandedTeams = next;
+	};
 </script>
 
 {#snippet playersColumn(data: any)}
@@ -30,25 +39,48 @@
 {/snippet}
 
 {#snippet teamsColumn(data: any)}
-	{#each data?.nflTeams as team}
-		{@const matchup = matchups?.find((m: any) => m.teams.includes(team))}
-		{@const opponent = matchup?.teams.find((t: any) => t !== team)}
-		<div class="flex flex-row items-center p-2">
-			<div class="w-5/10 flex flex-row gap-2">
-				<img class="h-6" height="32" src="{PUBLIC_TEAM_LOGO_URL}/{team}.png" alt="{team} logo" />
-				<div class="flex h-fit flex-row items-end gap-1">
-					<span class="text-fluid-sm">{team}</span>
-					<span class="text-fluid-xs text-primary-content/40 mb-0.5">vs {opponent}</span>
+	<div class="grid grid-cols-[16px_24px_fit-content(50%)_auto_fit-content(25%)] items-center gap-2">
+		{#each data?.nflTeams as team}
+			{@const matchup = matchups?.find((m: any) => m.teams.includes(team))}
+			{@const opponent = matchup?.teams.find((t: any) => t !== team)}
+			{@const score = getTeamScoreFromMatchups(matchups, team)}
+
+			<div class="contents cursor-pointer" onclick={() => toggleTeam(team)} role="presentation">
+				<LucideChevronDown
+					class={[
+						'w-fit transition-transform duration-300',
+						expandedTeams.has(team) ? '-rotate-90' : ''
+					]}
+					size={16}
+				/>
+				<img
+					class="h-6 w-fit"
+					height="32"
+					src="{PUBLIC_TEAM_LOGO_URL}/{team}.png"
+					alt="{team} logo"
+				/>
+				<span class="text-fluid-sm justify-self-center">{team}</span>
+				<span class="text-fluid-xs text-primary-content/40 self-end">vs {opponent}</span>
+				<span class="text-accent text-fluid-sm grid w-full grid-cols-2 items-end">
+					<span>{score}</span>
+					<span class="text-primary-content text-fluid-xs mb-0.5 justify-self-end">pts</span>
+				</span>
+			</div>
+
+			<div
+				class={[
+					'col-span-full grid transition-[grid-template-rows] duration-300',
+					expandedTeams.has(team) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+				]}
+			>
+				<div
+					class="text-fluid-xs text-primary-content/60 ml-8 flex flex-row items-center overflow-hidden"
+				>
+					<span class="p-2">More details coming soon...</span>
 				</div>
 			</div>
-			<span
-				class="text-accent text-fluid-sm w-4/10 my-auto grid grid-cols-[24px_auto] items-end justify-end"
-			>
-				<span>{getTeamScoreFromMatchups(matchups, team)}</span>
-				<span class="text-primary-content text-fluid-xs mb-0.5 justify-self-start">points</span>
-			</span>
-		</div>
-	{/each}
+		{/each}
+	</div>
 {/snippet}
 
 <div class="flex w-full flex-col gap-4 overflow-y-scroll md:flex-1">

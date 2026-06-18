@@ -11,7 +11,6 @@
 	{#snippet copy()}
 		<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
 	{/snippet}
-	<h2 class="text-secondary text-fluid-xl">Teams for {currentWeekText}</h2>
 	<div class="flex h-full flex-col gap-8 overflow-y-scroll md:flex-row">
 		<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />
 		<TeamCard teamPlayerData={teamData?.team2} {displayName} {matchups} />
