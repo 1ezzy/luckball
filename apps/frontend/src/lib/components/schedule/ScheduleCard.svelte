@@ -43,6 +43,7 @@
 	</div>
 {/snippet}
 
+<!--TODO: split up matchup.event so the opposing team name can be made lighter -->
 {#snippet matchupAndDate(matchup: MatchupData)}
 	<div class="flex h-10 flex-col justify-between">
 		<span class="text-center text-sm">{matchup.event}</span>

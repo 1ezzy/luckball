@@ -19,11 +19,9 @@
 </script>
 
 {#snippet schedule()}
-	<div class="my-auto flex w-full flex-col md:flex-row">
-		<div class="flex h-full w-full flex-col gap-4 text-center md:text-left">
-			<h2 class="text-secondary text-fluid-xl mb-2">Schedule for {currentWeekText}</h2>
-			<ScheduleCard {matchups} />
-		</div>
+	<div class="flex h-full w-full flex-col gap-8 md:my-auto">
+		<h2 class="text-secondary text-fluid-xl mb-2">Schedule for {currentWeekText}</h2>
+		<ScheduleCard {matchups} />
 	</div>
 {/snippet}
 
@@ -35,12 +33,23 @@
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
 		<PageShell>
-			<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
+			<TitleAndActiveWeekCopy
+				{currentWeekText}
+				{weekJoined}
+				{userTeamAssignment}
+				mainPage={false}
+			/>
 			{@render schedule()}
 		</PageShell>
 	{:else}
 		<PageShell>
-			<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
+			<TitleAndPostWeekCopy
+				{currentWeekText}
+				{displayName}
+				{winningTeamName}
+				{userTeamName}
+				mainPage={false}
+			/>
 			{@render schedule()}
 		</PageShell>
 	{/if}

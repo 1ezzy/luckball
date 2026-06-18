@@ -31,22 +31,37 @@
 
 {#snippet teamsColumn(data: any)}
 	{#each data?.nflTeams as team}
-		<div class="w-30 flex flex-row items-center justify-between p-2">
-			<img class="h-6" height="32" src="{PUBLIC_TEAM_LOGO_URL}/{team}.png" alt="{team} logo" />
-			<span>{team}</span>
-			<span class="text-primary text-fluid-xs">({getTeamScoreFromMatchups(matchups, team)})</span>
+		{@const matchup = matchups?.find((m: any) => m.teams.includes(team))}
+		{@const opponent = matchup?.teams.find((t: any) => t !== team)}
+		<div class="flex flex-row items-center p-2">
+			<div class="w-5/10 flex flex-row gap-2">
+				<img class="h-6" height="32" src="{PUBLIC_TEAM_LOGO_URL}/{team}.png" alt="{team} logo" />
+				<div class="flex h-fit flex-row items-end gap-1">
+					<span class="text-fluid-sm">{team}</span>
+					<span class="text-fluid-xs text-primary-content/40 mb-0.5">vs {opponent}</span>
+				</div>
+			</div>
+			<span
+				class="text-accent text-fluid-sm w-4/10 my-auto grid grid-cols-[24px_auto] items-end justify-end"
+			>
+				<span>{getTeamScoreFromMatchups(matchups, team)}</span>
+				<span class="text-primary-content text-fluid-xs mb-0.5 justify-self-start">points</span>
+			</span>
 		</div>
 	{/each}
 {/snippet}
 
-<div class="w-full md:flex-1">
-	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-primary text-fluid-lg mb-2 flex flex-row gap-4">
-			<span>{teamPlayerData?.name}</span>
-			<span>|</span>
-			<span>{teamPlayerData.totalScore} points</span>
-		</h2>
-		<Card class="bg-surface-200 flex h-full flex-row justify-start gap-8 rounded-lg border-2 p-4">
+<div class="flex w-full flex-col gap-4 overflow-y-scroll md:flex-1">
+	<h2 class="text-primary text-fluid-lg mb-2 flex flex-row gap-4">
+		<span>{teamPlayerData?.name}</span>
+		<span class="text-primary-content">|</span>
+		<div>
+			<span class="text-accent">{teamPlayerData.totalScore}</span>
+			<span class="text-primary-content"> points</span>
+		</div>
+	</h2>
+	<span class="overflow-y-scroll pr-4">
+		<Card class="bg-surface-200 flex h-fit flex-row justify-start gap-8 rounded-lg border-2 p-4">
 			<TeamCardColumn header="Teams">
 				{@render teamsColumn(teamPlayerData)}
 			</TeamCardColumn>
@@ -54,5 +69,5 @@
 				{@render playersColumn(teamPlayerData)}
 			</TeamCardColumn>
 		</Card>
-	</div>
+	</span>
 </div>

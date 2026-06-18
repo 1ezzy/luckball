@@ -45,6 +45,8 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 		losingTeamScore;
 	const team1Score = weekData.team1.totalScore;
 	const team2Score = weekData.team2.totalScore;
+
+	// TODO: update this logic to account for ties
 	if (team1Score > team2Score) {
 		team1WinStatus = true;
 		team2WinStatus = false;

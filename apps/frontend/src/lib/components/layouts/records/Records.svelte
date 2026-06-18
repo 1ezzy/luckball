@@ -22,11 +22,9 @@
 </script>
 
 {#snippet records()}
-	<div class="my-auto flex flex-col gap-8 md:flex-row">
-		<div class="flex h-full w-full flex-col gap-4">
-			<h2 class="text-secondary text-fluid-xl mb-2">Personal Records</h2>
-			<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
-		</div>
+	<div class="flex h-full flex-col gap-8 text-center md:my-auto">
+		<h2 class="text-secondary text-fluid-xl mb-2">Personal Records</h2>
+		<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
 	</div>
 {/snippet}
 
@@ -38,12 +36,23 @@
 		</PageShell>
 	{:else if weekStatus === WeekStatus.InProgress}
 		<PageShell>
-			<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
+			<TitleAndActiveWeekCopy
+				{currentWeekText}
+				{weekJoined}
+				{userTeamAssignment}
+				mainPage={false}
+			/>
 			{@render records()}
 		</PageShell>
 	{:else}
 		<PageShell>
-			<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
+			<TitleAndPostWeekCopy
+				{currentWeekText}
+				{displayName}
+				{winningTeamName}
+				{userTeamName}
+				mainPage={false}
+			/>
 			{@render records()}
 		</PageShell>
 	{/if}

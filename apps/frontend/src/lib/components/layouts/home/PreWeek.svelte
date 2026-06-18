@@ -11,7 +11,7 @@
 	{#snippet copy()}
 		<TitleAndPreWeekCopy {currentWeekText} {weekJoined} />
 	{/snippet}
-	<div class="flex w-full flex-col gap-16 md:flex-row">
+	<div class="flex h-full w-full flex-col gap-8 md:flex-row">
 		<DisplayNameForm {weekJoined} {currentWeekText} {displayName} {prevDisplayName} />
 		<RecordsCard
 			totalWins={recordsData.totalWins}

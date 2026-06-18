@@ -7,13 +7,15 @@
 	let loading = $state(false);
 
 	const cardClasses =
-		'bg-surface-200 flex w-fullflex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%] rounded-lg';
+		'bg-surface-200 flex w-full h-9/10 flex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%] rounded-lg 2xl:max-h-[40vh]';
 </script>
 
 {#snippet joined()}
-	<div class="flex h-full w-full flex-col justify-between text-center">
-		<span class="text-fluid-base">You've successfully joined {currentWeekText}!</span>
-		<span class="text-primary text-fluid-base">Display Name: {displayName}</span>
+	<div class="grid h-full w-full grid-rows-3 items-center justify-center text-center">
+		<span class="text-secondary text-fluid-xl">You've successfully joined {currentWeekText}!</span>
+		<span class="text-primary-content text-fluid-base">
+			Display Name: <span class="text-primary font-bold">{displayName}</span>
+		</span>
 		<div class="flex w-full flex-col gap-4 text-center">
 			<Button variant="fill" color="info">Update Name</Button>
 			<form class="w-full" method="post" action="?/leaveWeek" use:enhance>
@@ -37,7 +39,7 @@
 		}}
 	>
 		<h3 class="text-secondary text-fluid-xl">Join {currentWeekText} now!</h3>
-		<div class="flex flex-col gap-8">
+		<div class="my-auto flex flex-col gap-8">
 			<TextField
 				classes={{ container: 'border-2' }}
 				name="displayName"

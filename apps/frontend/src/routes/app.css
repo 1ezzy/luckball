@@ -16,7 +16,7 @@
 	--breakpoint-5xl: 200rem;
 
 	/* utopia fluid type scale */
-	--text-fluid-xs: clamp(0.64rem, 0.569rem + 0.356vw, 1.28rem);
+	--text-fluid-xs: clamp(0.512rem, 0.455rem + 0.284vw, 1.024rem);
 	--text-fluid-sm: clamp(0.8rem, 0.711rem + 0.444vw, 1.6rem);
 	--text-fluid-base: clamp(1rem, 0.889rem + 0.556vw, 2rem);
 	--text-fluid-lg: clamp(1.25rem, 1.111rem + 0.694vw, 2.5rem);
@@ -29,17 +29,17 @@
 :root {
 	font-family: 'Rubik';
 
-	/* primary — purple, shifted ~5% lighter at each shade */
-	--color-primary-content: hsl(268 75% 15%);
-	--color-primary-100: hsl(268 75% 97%);
-	--color-primary-200: hsl(268 75% 92%);
-	--color-primary-300: hsl(268 75% 85%);
-	--color-primary-400: hsl(268 75% 75%);
-	--color-primary-500: hsl(268 75% 63%);
-	--color-primary-600: hsl(268 75% 53%);
-	--color-primary-700: hsl(268 75% 43%);
-	--color-primary-800: hsl(268 75% 32%);
-	--color-primary-900: hsl(268 75% 22%);
+	/* primary — purple */
+	--color-primary-content: hsl(268 60% 12%);
+	--color-primary-100: hsl(268 60% 94%);
+	--color-primary-200: hsl(268 60% 89%);
+	--color-primary-300: hsl(268 60% 82%);
+	--color-primary-400: hsl(268 60% 69%);
+	--color-primary-500: hsl(268 60% 54%);
+	--color-primary-600: hsl(268 60% 44%);
+	--color-primary-700: hsl(268 60% 35%);
+	--color-primary-800: hsl(268 60% 25%);
+	--color-primary-900: hsl(268 60% 15%);
 	--color-primary: var(--color-primary-500);
 
 	/* secondary — sky blue */

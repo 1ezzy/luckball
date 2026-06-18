@@ -3,8 +3,8 @@
 </script>
 
 <div class="flex w-full flex-col gap-1">
-	<h3 class="text-accent text-fluid-sm">{header}</h3>
-	<hr class="block h-[1px] w-full border-0 border-t-2 border-t-black" />
+	<h3 class="text-secondary text-fluid-sm">{header}</h3>
+	<hr class="border-t-primary-content block h-[1px] w-full border-0 border-t-2" />
 	<div class="grid grid-cols-1 gap-2 md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
 		{@render children()}
 	</div>

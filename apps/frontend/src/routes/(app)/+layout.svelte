@@ -35,29 +35,4 @@
 	>
 		{@render children()}
 	</main>
-
-	<!-- <AppBar title="Luckball" class="bg-primary-500 gap-1 px-4 text-white md:px-8" menuIcon={null}>
-		<svelte:fragment slot="title">
-			<span class="text-fluid-lg ml-2 md:ml-4">Luckball</span>
-		</svelte:fragment>
-		<div slot="actions">
-			{#if data?.userId}
-				<Button
-					class="flex flex-row items-center gap-2 rounded-xl"
-					on:click={async () => {
-						await authClient.signOut();
-						await invalidateAll();
-					}}
-				>
-					<span>Logout</span>
-					<LucideLogOut size={16} strokeWidth={2} />
-				</Button>
-			{:else}
-				<Button class="flex flex-row items-center gap-2 rounded-xl" href="/login">
-					<span>Login</span>
-					<LucideLogIn size={16} strokeWidth={2} />
-				</Button>
-			{/if}
-		</div>
-	</AppBar> -->
 </div>
