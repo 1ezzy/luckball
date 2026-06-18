@@ -3,16 +3,16 @@
 </script>
 
 {#snippet actionBtn(label: string)}
-	<button class="btn" type="submit">{label}</button>
+	<button class="btn self-end" type="submit">{label}</button>
 {/snippet}
 
 {#snippet actionDescription(description: string)}
-	<span class="text-primary-content text-center">{description}</span>
+	<span class="text-primary-content self-start text-center">{description}</span>
 {/snippet}
 
 {#snippet actionCard(action: string, btnLabel: string, description: string)}
 	<form
-		class="bg-surface-300 flex h-1/3 w-full max-w-80 flex-col items-center justify-start gap-8 rounded-xl border-2 p-8"
+		class="bg-surface-300 grid h-full w-full max-w-80 grid-rows-2 items-center justify-items-center gap-8 rounded-xl border-2 p-8"
 		method="post"
 		action="?/{action}"
 		use:enhance
@@ -23,7 +23,9 @@
 {/snippet}
 
 <div
-	class="flex h-full w-full flex-1 flex-wrap items-center justify-center gap-16 bg-[url('src/lib/assets/dash-bg.png')] bg-cover p-16"
+	class={[
+		'grid h-full w-fit grid-cols-2 grid-rows-2 items-center justify-items-center gap-16 p-16'
+	]}
 >
 	{@render actionCard('beginWeek', 'Begin Week', 'Moves the game to the "pending" status')}
 	{@render actionCard(
