@@ -6,7 +6,7 @@
 {#snippet titleCopy()}
 	<div class="flex w-full flex-col items-center justify-center gap-4">
 		<h1 class="text-primary text-6xl font-bold">Luckball</h1>
-		<h1 class="text-center text-2xl">It's all about the Luck Of The Ball</h1>
+		<h1 class="text-secondary text-center text-2xl">It's all about the Luck Of The Ball</h1>
 	</div>
 {/snippet}
 

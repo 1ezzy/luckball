@@ -9,6 +9,6 @@
 	<meta name="luckball" content="Team-based football matchup scramble" />
 </svelte:head>
 
-<main class="bg-surface-200 flex h-screen w-full flex-col">
+<main class="bg-surface-300 flex h-screen w-full flex-col">
 	{@render children()}
 </main>
