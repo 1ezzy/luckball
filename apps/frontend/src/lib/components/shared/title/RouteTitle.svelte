@@ -3,7 +3,7 @@
 	import PostWeekCopy from '$lib/components/shared/copy/PostWeekCopy.svelte';
 	import PreWeekCopy from '$lib/components/shared/copy/PreWeekCopy.svelte';
 	import ActiveWeekCopy from '$lib/components/shared/copy/ActiveWeekCopy.svelte';
-	import { WeekStatus } from '$lib/types/valkey-types';
+	import { WeekStatus } from '@luckball/game-logic';
 
 	let { routeName, weekStatus, currentWeekText, weekJoined, ...others } = $props();
 </script>

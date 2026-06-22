@@ -8,7 +8,7 @@
 		"@faker-js/faker": "^8.4.1",
 		"@luckball/drizzle-client": "workspace:*",
 		"@luckball/valkey-client": "workspace:*",
-		"drizzle-orm": "^0.44.4",
+		"drizzle-orm": "^0.45.2",
 		"iovalkey": "^0.3.3",
 		"p-limit": "^6.2.0"
 	},

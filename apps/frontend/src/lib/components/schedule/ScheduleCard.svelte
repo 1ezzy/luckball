@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Card } from 'svelte-ux';
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
-	import type { MatchupData } from '$lib/types/valkey-types';
+	import type { MatchupData } from '@luckball/game-logic';
 
 	let { matchups, showScores = true } = $props();
 

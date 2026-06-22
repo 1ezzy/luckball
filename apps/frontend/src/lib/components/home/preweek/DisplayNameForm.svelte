@@ -8,7 +8,7 @@
 </script>
 
 {#snippet joined()}
-	<span class="text-success text-fluid-lg">You've successfully joined {currentWeekText}!</span>
+	<span class="text-secondary text-fluid-lg">You've successfully joined {currentWeekText}!</span>
 	<span class="text-primary-content text-fluid-base">
 		Display Name: <span class="text-primary font-bold">{displayName}</span>
 	</span>

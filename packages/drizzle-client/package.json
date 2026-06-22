@@ -6,8 +6,8 @@
 	"main": "./src/index.ts",
 	"types": "./src/index.ts",
 	"dependencies": {
-		"drizzle-orm": "^0.44.4",
-		"postgres": "^3.4.7"
+		"drizzle-orm": "^0.45.2",
+		"postgres": "^3.4.9"
 	},
 	"devDependencies": {
 		"drizzle-kit": "^0.31.4"

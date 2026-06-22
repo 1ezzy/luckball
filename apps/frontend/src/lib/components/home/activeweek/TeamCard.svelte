@@ -2,7 +2,7 @@
 	import { Card } from 'svelte-ux';
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
 	import TeamCardColumn from '$lib/components/home/activeweek/TeamCardColumn.svelte';
-	import type { MatchupData } from '$lib/types/valkey-types';
+	import type { MatchupData } from '@luckball/game-logic';
 	import { LucideChevronDown } from '@lucide/svelte';
 
 	let { teamPlayerData, displayName, matchups } = $props();

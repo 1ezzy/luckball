@@ -36,10 +36,13 @@ export interface WeekData {
 	lastWinningTeam?: string;
 }
 
+export interface BoostSelection {}
+
 export interface User {
 	displayName: string;
 	joinedAt: string;
 	teamAssignment: string | null;
+	boostsSelected: BoostSelection[] | null;
 }
 
 export type AllUsersData = Record<string, string>;

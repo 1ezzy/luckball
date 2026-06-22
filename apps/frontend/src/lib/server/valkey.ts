@@ -1,5 +1,5 @@
 import { valkey } from '$lib/clients/valkey-client';
-import type { AllUsersData, MatchupData, User, WeekData } from '$lib/types/valkey-types';
+import type { AllUsersData, MatchupData, User, WeekData } from '@luckball/game-logic';
 
 export async function getWeekAndUserData(
 	seasonType: string,
