@@ -21,7 +21,7 @@
 	{#snippet copy()}
 		<TitleAndPostWeekCopy {currentWeekText} {displayName} {winningTeamName} {userTeamName} />
 	{/snippet}
-	<div class="flex h-full flex-col gap-8 md:flex-row">
+	<div class="flex h-full w-full flex-col gap-8 md:flex-row">
 		<div class="flex items-center justify-center md:flex-1">
 			<WinningTeamCard {winningTeamName} {winningTeamScore} />
 		</div>

@@ -29,7 +29,7 @@
 {#snippet playersColumn(data: any)}
 	{#each data?.usernames as player}
 		<div
-			class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate p-2"
+			class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate px-2"
 		>
 			<span class="truncate" class:text-primary={player === displayName}>
 				{player}
