@@ -16,6 +16,28 @@ Luckball is a weekly NFL pick-em game built around luck rather than skill.
 
 **Player stats** (stored in Postgres `user_profile`): total wins, total losses, highest-scoring team name and score of all time.
 
+## Individual Scoring (Baller Boosts)
+
+On top of the team-based win/loss outcome, each player selects personal boosts at the start of the week that produce an individual score. Boosts are selected once per week via a modal shown on first login after the week begins. The selected boosts are stored on the per-user Valkey hash (`boostsSelected` field on the `User` object).
+
+### Baller Boosts — score multipliers applied to one of your luckball team's NFL teams
+
+| Boost | Effect |
+|---|---|
+| Single Team 2x | The chosen NFL team's score is doubled for your individual total |
+| Single Team 3x | The chosen NFL team's score is tripled for your individual total |
+| Single Team 4x | The chosen NFL team's score is quadrupled for your individual total |
+
+### Lucky Picks — prediction-based bonuses
+
+| Boost | Effect |
+|---|---|
+| **Score Steal** | Pick one NFL team from the opposing luckball team — their score is added to your individual total |
+| **Low-baller** | Predict which NFL team on your luckball team will score the lowest. If correct, that team's score is replaced with the score of your luckball team's best NFL team for your individual total |
+| **Hype Man** | Predict which NFL team on your luckball team will score the highest. If correct, that team's score is combined with the best NFL team score on the opposing luckball team for your individual total |
+
+Individual scores are calculated at week end using the same final NFL scores that determine the team outcome. Players have a team result (win/loss) and a separate individual score for the week.
+
 ## Commands
 
 ```bash
