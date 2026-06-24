@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Card } from 'svelte-ux';
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
-	import type { MatchupData } from '@luckball/game-logic';
+	import type { Matchup } from '@luckball/game-logic';
 
 	let { matchups, showScores = true } = $props();
 
-	const getTeamScoreFromMatchup = (matchup: MatchupData, index: number) => {
+	const getTeamScoreFromMatchup = (matchup: Matchup, index: number) => {
 		if (!matchup.matchupScores) return undefined;
 		return matchup.matchupScores?.find((obj) => obj[matchup.teams[index]] !== undefined)?.[
 			matchup.teams[index]
@@ -13,7 +13,7 @@
 	};
 </script>
 
-{#snippet team1LogoScore(matchup: MatchupData)}
+{#snippet team1LogoScore(matchup: Matchup)}
 	<div class="grid grid-rows-2 items-center justify-items-center">
 		<img
 			class="h-8"
@@ -29,7 +29,7 @@
 	</div>
 {/snippet}
 
-{#snippet team2LogoScore(matchup: MatchupData)}
+{#snippet team2LogoScore(matchup: Matchup)}
 	<div class="grid grid-rows-2 items-center justify-items-center">
 		<img
 			class="h-8"
@@ -44,7 +44,7 @@
 {/snippet}
 
 <!--TODO: split up matchup.event so the opposing team name can be made lighter -->
-{#snippet matchupAndDate(matchup: MatchupData)}
+{#snippet matchupAndDate(matchup: Matchup)}
 	{@const matchupSplit = matchup.event.split('@')}
 	<div class="grid grid-rows-2 items-center justify-items-center">
 		<div class="text-fluid-sm flex h-8 flex-row items-center gap-2">

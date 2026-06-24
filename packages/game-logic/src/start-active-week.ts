@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { createEspnClient } from './api/espn-client';
+import { createEspnClientForEnv } from './api/espn-client';
+import { WeekStatus } from './types';
+import { getActiveWeek } from './active-week';
 
 const generateTeamName = (): string => {
 	const adj = faker.word.adjective({ length: { min: 5, max: 8 }, strategy: 'fail' });
@@ -38,15 +40,15 @@ const shuffleNflTeams = (teams: string[]): [string[], string[]] => {
 };
 
 export const startActiveWeek = async (valkey: any) => {
-	const espnApi = createEspnClient();
-	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+	const espnApi = createEspnClientForEnv();
+	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
 	const currentWeekData = await valkey.get(weekDataKey);
-	if (JSON.parse(currentWeekData).status !== 'pending') {
+	if (JSON.parse(currentWeekData).status !== WeekStatus.Pending) {
 		return { success: false, message: 'Week not started - current week data status not "pending"' };
 	}
 
@@ -122,7 +124,7 @@ export const startActiveWeek = async (valkey: any) => {
 			totalScore: 0,
 			wins: 0
 		},
-		status: 'in_progress'
+		status: WeekStatus.InProgress
 	};
 
 	// save the week data to valkey

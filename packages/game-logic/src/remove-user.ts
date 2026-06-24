@@ -1,19 +1,19 @@
-import { createEspnClient } from './api/espn-client';
 import type { ValkeyClient } from '@luckball/valkey-client';
+import { WeekStatus } from './types';
+import { getActiveWeek } from './active-week';
 
 export const removeUserFromWeek = async (userId: string, valkey: ValkeyClient) => {
 	if (!userId) {
 		return { success: false, message: 'userId is required' };
 	}
 
-	const espnApi = createEspnClient();
-	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+	const { currentWeek, seasonType } = await getActiveWeek(valkey);
 
 	// check if there is an active round for the week
 	const roundDataString = await valkey?.get(`${seasonType}:week:${currentWeek}:data`);
 	const roundData = JSON.parse(roundDataString ?? '');
 	if (roundData) {
-		if (roundData.status === 'in_progress' || roundData.status === 'ended') {
+		if (roundData.status === WeekStatus.InProgress || roundData.status === WeekStatus.Ended) {
 			return { success: false, message: 'Round has already started' };
 		}
 	}

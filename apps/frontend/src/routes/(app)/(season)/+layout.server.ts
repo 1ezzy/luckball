@@ -4,7 +4,7 @@ import { schema } from '@luckball/drizzle-client';
 import { eq } from 'drizzle-orm';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { valkey } from '$lib/clients/valkey-client';
-import { getMatchupData, getWeekAndUserData } from '$lib/server/valkey';
+import { getMatchup, getWeekAndUserData } from '$lib/server/valkey';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ parent }) => {
@@ -31,7 +31,7 @@ export const load: LayoutServerLoad = async ({ parent }) => {
 	const weekEventsCacheKey = `espn:week-events:${seasonType}:${currentWeek}`;
 	const [{ weekData, allUserGameData }, matchupData, weekEvents] = await Promise.all([
 		getWeekAndUserData(seasonType, currentWeek),
-		getMatchupData(seasonType, currentWeek),
+		getMatchup(seasonType, currentWeek),
 		(async () => {
 			const cached = await valkey?.get(weekEventsCacheKey);
 			if (cached) return JSON.parse(cached);

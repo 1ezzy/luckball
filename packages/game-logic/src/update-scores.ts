@@ -1,10 +1,12 @@
+import type { ValkeyClient } from '@luckball/valkey-client';
 import { createEspnClientForEnv } from './api/espn-client';
+import { WeekStatus } from './types';
+import type { WeekData } from './types';
+import { getActiveWeek } from './active-week';
 
-export const updateScores = async (valkey: any) => {
+export const updateScores = async (valkey: ValkeyClient) => {
 	const espnApi = createEspnClientForEnv();
-	const activeWeek = await espnApi.getActiveWeek();
-	const currentWeek = activeWeek.currentWeek;
-	const seasonType = activeWeek.seasonType;
+	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
 	// step 1: update matchups
 	// get all matchups for the week
@@ -35,11 +37,11 @@ export const updateScores = async (valkey: any) => {
 	}));
 
 	// update valkey with new match data
-	await valkey.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
+	await valkey?.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
 
 	// step 2: update week data
-	const weekDataRaw = await valkey.get(`${seasonType}:week:${currentWeek}:data`);
-	const weekData = JSON.parse(weekDataRaw);
+	const weekDataRaw = await valkey?.get(`${seasonType}:week:${currentWeek}:data`);
+	const weekData: WeekData = JSON.parse(weekDataRaw ?? 'null');
 	const nflTeamScores: Record<string, number> = {};
 
 	// build a lookup of NFL team scores from matchups
@@ -70,16 +72,15 @@ export const updateScores = async (valkey: any) => {
 		}
 	}
 
-	const updatedWeekData = {
-		team1: {
-			...weekData.team1,
-			totalScore: teamScores.team1
-		},
+	const updatedWeekData: WeekData = {
+		...weekData,
+		team1: { ...weekData.team1, totalScore: teamScores.team1 },
 		team2: { ...weekData.team2, totalScore: teamScores.team2 },
-		status: weekData.status,
-		bestNflTeam: { teamName: bestNflTeamName, teamScore: bestNflTeamScore }
+		status: WeekStatus.InProgress,
+		bestNflTeamName,
+		bestNflTeamScore
 	};
-	await valkey.set(`${seasonType}:week:${currentWeek}:data`, JSON.stringify(updatedWeekData));
+	await valkey?.set(`${seasonType}:week:${currentWeek}:data`, JSON.stringify(updatedWeekData));
 
 	return {
 		success: true,

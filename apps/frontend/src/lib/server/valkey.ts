@@ -1,5 +1,5 @@
 import { valkey } from '$lib/clients/valkey-client';
-import type { AllUsersData, MatchupData, User, WeekData } from '@luckball/game-logic';
+import type { AllUsersData, Matchup, User, WeekData } from '@luckball/game-logic';
 
 export async function getWeekAndUserData(
 	seasonType: string,
@@ -64,16 +64,16 @@ export async function getUserDataById(
 	return { userData };
 }
 
-export async function getMatchupData(
+export async function getMatchup(
 	seasonType: string,
 	week: number
-): Promise<{ matchupData: MatchupData[] | null }> {
+): Promise<{ matchupData: Matchup[] | null }> {
 	const matchupDataKey = `${seasonType}:week:${week}:matchups`;
 	const matchupDataRaw = await valkey?.get(matchupDataKey);
 	if (!matchupDataRaw) {
 		return { matchupData: null };
 	}
 
-	const matchupData = JSON.parse(matchupDataRaw)?.map((item: MatchupData) => item);
+	const matchupData = JSON.parse(matchupDataRaw)?.map((item: Matchup) => item);
 	return { matchupData };
 }

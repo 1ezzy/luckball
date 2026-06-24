@@ -16,10 +16,10 @@ export interface MatchupScore {
 	[teamName: string]: number;
 }
 
-export interface MatchupData {
+export interface Matchup {
 	event: string;
 	id: number;
-	date: Date;
+	date: string;
 	teams: string[];
 	matchupScores: MatchupScore[];
 }
@@ -28,21 +28,27 @@ export interface WeekData {
 	team1: Team;
 	team2: Team;
 	status: WeekStatus;
-	score?: string[];
 	winningTeamName?: string;
-	winningTeamScore?: string;
+	winningTeamScore?: number;
 	bestNflTeamName?: string;
-	bestNflTeamScore?: string;
+	bestNflTeamScore?: number;
 	lastWinningTeam?: string;
 }
 
-export interface BoostSelection {}
+export interface BoostSelection {
+	multiplier1Team: string;
+	multiplier2Team: string;
+	multiplier3Team: string;
+	scoreStealTeam: string;
+	bestTeamSelection: string;
+	worstTeamSelection: string;
+}
 
 export interface User {
 	displayName: string;
 	joinedAt: string;
 	teamAssignment: string | null;
-	boostsSelected: BoostSelection[] | null;
+	boosts: BoostSelection[] | null;
 }
 
 export type AllUsersData = Record<string, string>;

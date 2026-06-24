@@ -2,17 +2,19 @@ import { schema, type DrizzleClient } from '@luckball/drizzle-client';
 import { createEspnClientForEnv } from './api/espn-client';
 import { eq, sql } from 'drizzle-orm';
 import type { ValkeyClient } from '@luckball/valkey-client';
+import { WeekStatus } from './types';
+import { getActiveWeek } from './active-week';
 
 export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 	const espnApi = createEspnClientForEnv();
-	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
 	const currentWeekData = (await valkey?.get(weekDataKey)) ?? '';
-	if (JSON.parse(currentWeekData).status !== 'in_progress') {
+	if (JSON.parse(currentWeekData).status !== WeekStatus.InProgress) {
 		return {
 			success: false,
 			message: 'Week not started - current week data status not "in_progress"'
@@ -108,7 +110,7 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 			players: team2Players,
 			winStatus: team2WinStatus
 		},
-		status: 'ended',
+		status: WeekStatus.Ended,
 		winningTeamName: winningTeamName,
 		winningTeamScore: winningTeamScore,
 		bestNflTeamName: bestNflTeamName,

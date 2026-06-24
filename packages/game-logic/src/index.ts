@@ -12,6 +12,10 @@ export { updateScores } from './update-scores';
 export { createEspnClient, createEspnClientForEnv } from './api/espn-client';
 export { createMockEspnClient } from './api/espn-client.mock';
 
+// active week
+export { getActiveWeek, ACTIVE_WEEK_KEY } from './active-week';
+export type { ActiveWeek } from './active-week';
+
 // types
-export type { Team, MatchupScore, MatchupData, WeekData, User, AllUsersData, BoostSelection } from './types';
+export type { Team, MatchupScore, Matchup, WeekData, User, AllUsersData } from './types';
 export { WeekStatus } from './types';

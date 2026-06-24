@@ -1,7 +1,8 @@
-import { createEspnClient } from './api/espn-client';
 import { schema, type DrizzleClient } from '@luckball/drizzle-client';
 import type { ValkeyClient } from '@luckball/valkey-client';
 import { eq } from 'drizzle-orm';
+import { WeekStatus } from './types';
+import { getActiveWeek } from './active-week';
 
 export const addUserToWeek = async (
 	displayName: string,
@@ -13,14 +14,13 @@ export const addUserToWeek = async (
 		return { success: false, message: 'displayName and userId are required' };
 	}
 
-	const espnApi = createEspnClient();
-	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+	const { currentWeek, seasonType } = await getActiveWeek(valkey);
 
 	// check if there is an active round for the week
 	const roundDataString = await valkey?.get(`${seasonType}:week:${currentWeek}:data`);
 	const roundData = JSON.parse(roundDataString ?? '');
 	if (roundData) {
-		if (roundData.status === 'in_progress' || roundData.status === 'ended') {
+		if (roundData.status === WeekStatus.InProgress || roundData.status === WeekStatus.Ended) {
 			return { success: false, message: 'Round has already started' };
 		}
 	}

@@ -1,0 +1,134 @@
+{
+	"events": [
+		{
+			"id": 401547417,
+			"shortName": "KC @ BUF",
+			"date": "2024-09-05T00:20:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547418,
+			"shortName": "PHI @ DAL",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547419,
+			"shortName": "SF @ LAR",
+			"date": "2024-09-08T20:25:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547420,
+			"shortName": "GB @ CHI",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547421,
+			"shortName": "MIA @ NE",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547422,
+			"shortName": "NYJ @ NYG",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547423,
+			"shortName": "PIT @ BAL",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547424,
+			"shortName": "CLE @ CIN",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547425,
+			"shortName": "DEN @ LV",
+			"date": "2024-09-08T20:05:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547426,
+			"shortName": "SEA @ ARI",
+			"date": "2024-09-08T20:05:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547427,
+			"shortName": "MIN @ DET",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547428,
+			"shortName": "ATL @ NO",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": true } }
+		},
+		{
+			"id": 401547429,
+			"shortName": "CAR @ TB",
+			"date": "2024-09-08T20:25:00Z",
+			"status": { "type": { "completed": false } }
+		},
+		{
+			"id": 401547430,
+			"shortName": "IND @ TEN",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": false } }
+		},
+		{
+			"id": 401547431,
+			"shortName": "JAX @ HOU",
+			"date": "2024-09-08T17:00:00Z",
+			"status": { "type": { "completed": false } }
+		},
+		{
+			"id": 401547432,
+			"shortName": "WAS @ LAC",
+			"date": "2024-09-09T02:15:00Z",
+			"status": { "type": { "completed": false } }
+		}
+	],
+	"teams": [
+		"KC",
+		"BUF",
+		"PHI",
+		"DAL",
+		"SF",
+		"LAR",
+		"GB",
+		"CHI",
+		"MIA",
+		"NE",
+		"NYJ",
+		"NYG",
+		"PIT",
+		"BAL",
+		"CLE",
+		"CIN",
+		"DEN",
+		"LV",
+		"SEA",
+		"ARI",
+		"MIN",
+		"DET",
+		"ATL",
+		"NO",
+		"CAR",
+		"TB",
+		"IND",
+		"TEN",
+		"JAX",
+		"HOU",
+		"WAS",
+		"LAC"
+	]
+}
