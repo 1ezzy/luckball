@@ -5,21 +5,25 @@
 	let { weekJoined, currentWeekText, displayName, prevDisplayName } = $props();
 
 	let loading = $state(false);
-
-	const cardClasses =
-		'bg-surface-200 flex w-fullflex-col items-center justify-center gap-8 border-2 p-8 text-center md:w-[50%]';
 </script>
 
 {#snippet joined()}
-	<div class="flex w-full flex-col gap-8 text-center">
-		<span>You've successfully joined {currentWeekText}!</span>
-		<span class="text-primary">Display Name: {displayName}</span>
+	<span class="text-secondary text-fluid-lg">You've successfully joined {currentWeekText}!</span>
+	<span class="text-primary-content text-fluid-base">
+		Display Name: <span class="text-primary font-bold">{displayName}</span>
+	</span>
+	<div class="flex w-4/5 flex-col gap-4 text-center">
+		<Button variant="fill" color="info">Update Name</Button>
+		<form class="w-full" method="post" action="?/leaveWeek" use:enhance>
+			<Button class="w-full" type="submit" variant="fill" color="danger">Leave Week</Button>
+		</form>
 	</div>
 {/snippet}
 
 {#snippet joinForm()}
+	<h3 class="text-secondary text-fluid-lg">Join {currentWeekText} now!</h3>
 	<form
-		class="flex w-full flex-col gap-16 md:w-[67%]"
+		class="flex w-4/5 flex-col items-center justify-center gap-8"
 		method="post"
 		action="?/joinWeek"
 		use:enhance={() => {
@@ -30,33 +34,22 @@
 			};
 		}}
 	>
-		<h3 class="text-secondary text-fluid-xl">Join {currentWeekText} now!</h3>
-		<div class="flex flex-col gap-8">
-			<TextField
-				classes={{ container: 'border-2' }}
-				name="displayName"
-				placeholder="Enter Display Name"
-				bind:value={prevDisplayName}
-			/>
-			<Button
-				type="submit"
-				color="primary"
-				variant="outline"
-				classes={{ root: '!text-wrap border-2' }}
-				{loading}
-			>
-				Join Week
-			</Button>
-		</div>
+		<TextField
+			classes={{ container: 'border-2', root: 'w-full' }}
+			name="displayName"
+			placeholder="Enter Display Name"
+			bind:value={prevDisplayName}
+		/>
+		<Button type="submit" color="success" variant="fill" class="w-full" {loading}>Join Week</Button>
 	</form>
 {/snippet}
 
 {#if !weekJoined}
-	<Card class={cardClasses}>
+	<Card class="!page-card grid-rows-3">
 		{@render joinForm()}
 	</Card>
 {:else}
-	<Card class={cardClasses}>
+	<Card class="!page-card grid-rows-3">
 		{@render joined()}
 	</Card>
 {/if}

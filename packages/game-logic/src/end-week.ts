@@ -36,6 +36,27 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 	const team1Players = weekData.team1?.players;
 	const team2Players = weekData.team2?.players;
 
+	// build NFL team score lookup from matchups
+	const matchupsRaw = (await valkey?.get(matchupsKey)) ?? '';
+	if (matchupsRaw.length === 0) {
+		return { success: false, message: 'No NFL matchups found for the week.' };
+	}
+	const matchups: any[] = JSON.parse(matchupsRaw);
+
+	const nflTeamScores: Record<string, number> = {};
+	let bestNflTeamScore = 0;
+	let bestNflTeamName;
+	for (const matchup of matchups) {
+		for (const scoreObj of matchup.matchupScores) {
+			const [team, score] = Object.entries(scoreObj)[0];
+			nflTeamScores[team] = score as number;
+			if ((score as number) > bestNflTeamScore) {
+				bestNflTeamScore = score as number;
+				bestNflTeamName = team;
+			}
+		}
+	}
+
 	// determine the win status for both teams
 	let team1WinStatus,
 		team2WinStatus,
@@ -45,10 +66,21 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 		losingTeamScore;
 	const team1Score = weekData.team1.totalScore;
 	const team2Score = weekData.team2.totalScore;
-	if (team1Score > team2Score) {
+
+	const getBestNflScore = (nflTeams: string[]) =>
+		Math.max(...nflTeams.map((t) => nflTeamScores[t] ?? 0));
+
+	let team1Wins: boolean;
+	if (team1Score !== team2Score) {
+		team1Wins = team1Score > team2Score;
+	} else {
+		// tiebreaker: whichever luckball team has the single highest-scoring NFL team
+		team1Wins = getBestNflScore(weekData.team1.nflTeams) >= getBestNflScore(weekData.team2.nflTeams);
+	}
+
+	if (team1Wins) {
 		team1WinStatus = true;
 		team2WinStatus = false;
-
 		winningTeamName = team1Name;
 		winningTeamScore = team1Score;
 		losingTeamName = team2Name;
@@ -56,30 +88,10 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 	} else {
 		team1WinStatus = false;
 		team2WinStatus = true;
-
 		winningTeamName = team2Name;
 		winningTeamScore = team2Score;
 		losingTeamName = team1Name;
 		losingTeamScore = team1Score;
-	}
-
-	// find the best nfl team for the week
-	const matchupsRaw = (await valkey?.get(matchupsKey)) ?? '';
-	if (matchupsRaw.length === 0) {
-		return { success: false, message: 'No NFL matchups found for the week.' };
-	}
-	const matchups: any[] = JSON.parse(matchupsRaw);
-
-	let bestNflTeamScore = 0;
-	let bestNflTeamName;
-	for (const matchup of matchups) {
-		for (const scoreObj of matchup.matchupScores) {
-			const [team, score] = Object.entries(scoreObj)[0];
-			if ((score as number) > bestNflTeamScore) {
-				bestNflTeamScore = score as number;
-				bestNflTeamName = team;
-			}
-		}
 	}
 
 	// update the week to the end status

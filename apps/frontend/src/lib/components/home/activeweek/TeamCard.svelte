@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
-	import type { MatchupData } from '$lib/types/valkey-types';
 	import { Card } from 'svelte-ux';
+	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
+	import TeamCardColumn from '$lib/components/home/activeweek/TeamCardColumn.svelte';
+	import type { MatchupData } from '@luckball/game-logic';
+	import { LucideChevronDown } from '@lucide/svelte';
 
 	let { teamPlayerData, displayName, matchups } = $props();
 
@@ -14,54 +16,90 @@
 		if (!matchup?.matchupScores) return undefined;
 		return matchup.matchupScores.find((obj) => obj[team] !== undefined)?.[team];
 	}
+
+	let expandedTeams = $state(new Set<string>());
+	let toggleTeam = (team: string) => {
+		const next = new Set(expandedTeams);
+		if (next.has(team)) next.delete(team);
+		else next.add(team);
+		expandedTeams = next;
+	};
 </script>
 
-{#snippet playersText(data: any)}
-	<div class="flex w-full flex-col gap-1">
-		<h3 class="text-accent">Players</h3>
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div class="grid grid-cols-1 gap-2 md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
-			{#each data?.usernames as player}
+{#snippet playersColumn(data: any)}
+	{#each data?.usernames as player}
+		<div
+			class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate px-2"
+		>
+			<span class="truncate" class:text-primary={player === displayName}>
+				{player}
+			</span>
+		</div>
+	{/each}
+{/snippet}
+
+{#snippet teamsColumn(data: any)}
+	<div class="grid grid-cols-[16px_24px_fit-content(50%)_auto_fit-content(25%)] items-center gap-2">
+		{#each data?.nflTeams as team}
+			{@const matchup = matchups?.find((m: any) => m.teams.includes(team))}
+			{@const opponent = matchup?.teams.find((t: any) => t !== team)}
+			{@const score = getTeamScoreFromMatchups(matchups, team)}
+
+			<div class="contents cursor-pointer" onclick={() => toggleTeam(team)} role="presentation">
+				<LucideChevronDown
+					class={[
+						'w-fit transition-transform duration-300',
+						expandedTeams.has(team) ? '-rotate-90' : ''
+					]}
+					size={16}
+				/>
+				<img
+					class="h-6 w-fit"
+					height="32"
+					src="{PUBLIC_TEAM_LOGO_URL}/{team}.png"
+					alt="{team} logo"
+				/>
+				<span class="text-fluid-sm justify-self-center">{team}</span>
+				<span class="text-fluid-xs text-primary-content/40 self-end">vs {opponent}</span>
+				<span class="text-accent text-fluid-sm grid w-full grid-cols-2 items-end">
+					<span>{score}</span>
+					<span class="text-primary-content text-fluid-xs mb-0.5 justify-self-end">pts</span>
+				</span>
+			</div>
+
+			<div
+				class={[
+					'col-span-full grid transition-[grid-template-rows] duration-300',
+					expandedTeams.has(team) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+				]}
+			>
 				<div
-					class="col-span-1 flex flex-row items-center justify-between gap-2 overflow-auto truncate p-2"
+					class="text-fluid-xs text-primary-content/60 ml-8 flex flex-row items-center overflow-hidden"
 				>
-					<span class="truncate" class:text-primary={player === displayName}>
-						{player}
-					</span>
+					<span class="p-2">More details coming soon...</span>
 				</div>
-			{/each}
-		</div>
+			</div>
+		{/each}
 	</div>
 {/snippet}
 
-{#snippet teamsText(data: any)}
-	<div class="flex w-full flex-col gap-1">
-		<h3 class="text-accent">Teams</h3>
-		<hr class="border-t-1 block h-[1px] w-full border-0 border-t-white" />
-		<div class="grid grid-cols-1 gap-2 md:grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
-			{#each data?.nflTeams as team}
-				<div class="w-30 flex flex-row items-center justify-between p-2">
-					<img class="h-6" height="32" src="{PUBLIC_TEAM_LOGO_URL}/{team}.png" alt="{team} logo" />
-					<span>{team}</span>
-					<span class="text-primary text-xs">({getTeamScoreFromMatchups(matchups, team)})</span>
-				</div>
-			{/each}
+<div class="flex w-full flex-col gap-4 overflow-y-scroll md:flex-1">
+	<h2 class="text-primary text-fluid-lg mb-2 flex flex-row gap-4">
+		<span>{teamPlayerData?.name}</span>
+		<span class="text-primary-content">|</span>
+		<div>
+			<span class="text-accent">{teamPlayerData.totalScore}</span>
+			<span class="text-primary-content"> points</span>
 		</div>
-	</div>
-{/snippet}
-
-{#snippet titleAndCard(data: any)}
-	<div class="flex h-full flex-col gap-4">
-		<h2 class="text-primary mb-2 text-2xl">
-			{data?.name}<span class="ml-2"> - {data.totalScore} points</span>
-		</h2>
-		<Card class="flex h-full flex-row justify-start gap-4 p-4">
-			{@render teamsText(data)}
-			{@render playersText(data)}
+	</h2>
+	<span class="overflow-y-scroll pr-4">
+		<Card class="bg-surface-200 flex h-fit flex-row justify-start gap-8 rounded-lg border-2 p-4">
+			<TeamCardColumn header="Teams">
+				{@render teamsColumn(teamPlayerData)}
+			</TeamCardColumn>
+			<TeamCardColumn header="Players">
+				{@render playersColumn(teamPlayerData)}
+			</TeamCardColumn>
 		</Card>
-	</div>
-{/snippet}
-
-<div class="w-full md:flex-1">
-	{@render titleAndCard(teamPlayerData)}
+	</span>
 </div>

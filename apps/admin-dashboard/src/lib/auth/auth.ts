@@ -8,6 +8,9 @@ import { BETTER_AUTH_SECRET, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '$env
 
 export const auth = betterAuth({
 	secret: BETTER_AUTH_SECRET,
+	advanced: {
+		cookiePrefix: 'admin'
+	},
 	plugins: [sveltekitCookies(getRequestEvent)],
 	database: drizzleAdapter(drizzle, {
 		provider: 'pg',
@@ -18,8 +21,8 @@ export const auth = betterAuth({
 	},
 	socialProviders: {
 		github: {
-			clientId: '',
-			clientSecret: ''
+			clientId: GITHUB_CLIENT_ID as string,
+			clientSecret: GITHUB_CLIENT_SECRET as string
 		}
 	}
 });

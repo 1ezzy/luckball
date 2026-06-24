@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { WeekStatus } from '$lib/types/valkey-types.js';
+	import { WeekStatus } from '@luckball/game-logic/types';
 	import PreWeek from '$lib/components/layouts/home/PreWeek.svelte';
 	import ActiveWeek from '$lib/components/layouts/home/ActiveWeek.svelte';
 	import PostWeek from '$lib/components/layouts/home/PostWeek.svelte';

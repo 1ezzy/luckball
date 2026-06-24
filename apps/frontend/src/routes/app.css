@@ -9,6 +9,16 @@
 @source '../../node_modules/svelte-ux/dist';
 @source '../../node_modules/layerchart/dist';
 
+@utility page-card {
+	@apply bg-surface-200;
+	@apply h-9/10 2xl:max-h-[40vh];
+	@apply my-auto flex-1 md:gap-8;
+	@apply grid grid-cols-1;
+	@apply items-center justify-items-center;
+	@apply rounded-lg border-2;
+	@apply p-8 text-center;
+}
+
 @theme {
 	/* breakpoints */
 	--breakpoint-3xl: 120rem;
@@ -16,7 +26,7 @@
 	--breakpoint-5xl: 200rem;
 
 	/* utopia fluid type scale */
-	--text-fluid-xs: clamp(0.64rem, 0.569rem + 0.356vw, 1.28rem);
+	--text-fluid-xs: clamp(0.512rem, 0.455rem + 0.284vw, 1.024rem);
 	--text-fluid-sm: clamp(0.8rem, 0.711rem + 0.444vw, 1.6rem);
 	--text-fluid-base: clamp(1rem, 0.889rem + 0.556vw, 2rem);
 	--text-fluid-lg: clamp(1.25rem, 1.111rem + 0.694vw, 2.5rem);
@@ -29,44 +39,44 @@
 :root {
 	font-family: 'Rubik';
 
-	/* primary */
-	--color-primary-content: hsl(268 75% 10%);
-	--color-primary-100: hsl(268 75% 95%);
-	--color-primary-200: hsl(268 75% 88%);
-	--color-primary-300: hsl(268 75% 80%);
-	--color-primary-400: hsl(268 75% 70%);
-	--color-primary-500: hsl(268 75% 58%);
-	--color-primary-600: hsl(268 75% 48%);
-	--color-primary-700: hsl(268 75% 38%);
-	--color-primary-800: hsl(268 75% 27%);
-	--color-primary-900: hsl(268 75% 17%);
-	--color-primary: var(--color-primary-600);
+	/* primary — purple */
+	--color-primary-content: hsl(268 60% 12%);
+	--color-primary-100: hsl(268 60% 94%);
+	--color-primary-200: hsl(268 60% 89%);
+	--color-primary-300: hsl(268 60% 82%);
+	--color-primary-400: hsl(268 60% 69%);
+	--color-primary-500: hsl(268 60% 54%);
+	--color-primary-600: hsl(268 60% 44%);
+	--color-primary-700: hsl(268 60% 35%);
+	--color-primary-800: hsl(268 60% 25%);
+	--color-primary-900: hsl(268 60% 15%);
+	--color-primary: var(--color-primary-500);
 
-	/* secondary */
-	--color-secondary-content: hsl(172 52% 96%);
-	--color-secondary-100: hsl(172 52% 94%);
-	--color-secondary-200: hsl(172 52% 86%);
-	--color-secondary-300: hsl(172 52% 77%);
-	--color-secondary-400: hsl(172 52% 66%);
-	--color-secondary-500: hsl(172 52% 55%);
-	--color-secondary-600: hsl(172 52% 40%);
-	--color-secondary-700: hsl(172 52% 25%);
-	--color-secondary-800: hsl(172 52% 16%);
-	--color-secondary-900: hsl(172 52% 9%);
-	--color-secondary: var(--color-secondary-700);
+	/* secondary — sky blue */
+	--color-secondary-content: hsl(205 80% 12%);
+	--color-secondary-100: hsl(205 80% 95%);
+	--color-secondary-200: hsl(205 80% 87%);
+	--color-secondary-300: hsl(205 80% 76%);
+	--color-secondary-400: hsl(205 80% 63%);
+	--color-secondary-500: hsl(205 80% 50%);
+	--color-secondary-600: hsl(205 80% 38%);
+	--color-secondary-700: hsl(205 80% 27%);
+	--color-secondary-800: hsl(205 80% 17%);
+	--color-secondary-900: hsl(205 80% 9%);
+	--color-secondary: var(--color-secondary-500);
 
-	/* accent — coral orange (hue 16) */
-	--color-accent-content: hsl(16 80% 96%);
-	--color-accent-100: hsl(16 80% 95%);
-	--color-accent-200: hsl(16 80% 88%);
-	--color-accent-300: hsl(16 80% 80%);
-	--color-accent-400: hsl(16 80% 68%);
-	--color-accent-500: hsl(16 80% 55%);
-	--color-accent-600: hsl(16 80% 44%);
-	--color-accent-700: hsl(16 80% 32%);
-	--color-accent-800: hsl(16 80% 22%);
-	--color-accent-900: hsl(16 80% 14%);
-	--color-accent: var(--color-accent-700);
+	/* accent — sea foam green */
+	--color-accent-content: hsl(158 45% 12%);
+	--color-accent-100: hsl(158 45% 95%);
+	--color-accent-200: hsl(158 45% 86%);
+	--color-accent-300: hsl(158 45% 74%);
+	--color-accent-400: hsl(158 45% 60%);
+	--color-accent-500: hsl(158 45% 47%);
+	--color-accent-600: hsl(158 45% 36%);
+	--color-accent-700: hsl(158 45% 26%);
+	--color-accent-800: hsl(158 45% 17%);
+	--color-accent-900: hsl(158 45% 10%);
+	--color-accent: var(--color-accent-500);
 
 	/* surface */
 	--color-surface-content: hsl(31 20% 18%);

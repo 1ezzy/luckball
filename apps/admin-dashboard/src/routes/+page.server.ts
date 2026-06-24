@@ -1,11 +1,17 @@
-import { fail, redirect, type Actions } from '@sveltejs/kit';
+import { auth } from '$lib/auth/auth';
+import { fail, redirect, type Actions, type ServerLoadEvent } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 import { beginWeek, endWeek, startActiveWeek, updateScores } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 import { drizzle } from '$lib/clients/drizzle-client';
 
-export const load = () => {
-	if (process.env.NODE_ENV === 'production') {
-		throw redirect(302, '/');
+export const load: PageServerLoad = async ({ request }: ServerLoadEvent) => {
+	const session = await auth.api.getSession({
+		headers: request.headers
+	});
+
+	if (!session) {
+		throw redirect(307, '/login');
 	}
 };
 

@@ -1,5 +1,5 @@
 import { fail, type Actions } from '@sveltejs/kit';
-import { addUserToWeek } from '@luckball/game-logic';
+import { addUserToWeek, removeUserFromWeek } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { auth } from '$lib/auth/auth';
@@ -76,6 +76,22 @@ export const actions: Actions = {
 		const result = await addUserToWeek(displayName, userId, valkey, drizzle);
 		if (!result.success) {
 			return fail(400, { displayName, error: result.message });
+		}
+
+		return { success: true };
+	},
+	leaveWeek: async ({ request }) => {
+		const session = await auth.api.getSession({
+			headers: request.headers
+		});
+		const userId = session?.user.id;
+		if (!userId) {
+			return fail(400, { userId, error: 'User ID is required' });
+		}
+
+		const result = await removeUserFromWeek(userId, valkey);
+		if (!result.success) {
+			return fail(400, { userId, error: result.message });
 		}
 
 		return { success: true };

@@ -5,5 +5,7 @@
 </script>
 
 <main class="bg-surface-300 flex h-screen">
-	{@render children()}
+	<div class="flex w-full justify-center bg-[url('src/lib/assets/dash-bg.png')] bg-cover">
+		{@render children()}
+	</div>
 </main>

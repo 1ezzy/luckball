@@ -9,15 +9,19 @@
 
 <WeekShell>
 	{#snippet copy()}
-		<TitleAndPreWeekCopy {currentWeekText} />
+		<TitleAndPreWeekCopy {currentWeekText} {weekJoined} />
 	{/snippet}
-	<div class="flex w-full flex-col gap-16 md:flex-row">
-		<DisplayNameForm {weekJoined} {currentWeekText} {displayName} {prevDisplayName} />
-		<RecordsCard
-			totalWins={recordsData.totalWins}
-			totalLosses={recordsData.totalLosses}
-			highestScoringTeamName={recordsData.highestScoringTeamName}
-			highestScoringTeamScore={recordsData.highestScoringTeamScore}
-		/>
+	<div class="flex h-full w-full flex-col gap-8 md:flex-row">
+		<div class="flex items-center justify-center md:flex-1">
+			<DisplayNameForm {weekJoined} {currentWeekText} {displayName} {prevDisplayName} />
+		</div>
+		<div class="flex items-center justify-center md:flex-1">
+			<RecordsCard
+				totalWins={recordsData.totalWins}
+				totalLosses={recordsData.totalLosses}
+				highestScoringTeamName={recordsData.highestScoringTeamName}
+				highestScoringTeamScore={recordsData.highestScoringTeamScore}
+			/>
+		</div>
 	</div>
 </WeekShell>
