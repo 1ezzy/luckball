@@ -65,7 +65,7 @@
 	</div>
 {/snippet}
 
-<Card class="bg-surface-200 h-full w-full gap-4 rounded-lg border-2 p-4 md:max-h-[60vh]">
+<Card class="bg-surface-200 gap-4 rounded-lg border-2 p-4 md:max-h-[60vh] my-auto">
 	<div
 		class={[
 			'my-auto flex w-full flex-col items-center justify-center gap-4',

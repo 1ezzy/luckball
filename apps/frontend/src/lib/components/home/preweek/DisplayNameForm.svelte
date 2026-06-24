@@ -45,11 +45,11 @@
 {/snippet}
 
 {#if !weekJoined}
-	<Card class="!page-card grid-rows-3">
+	<Card class="page-card! grid-rows-3">
 		{@render joinForm()}
 	</Card>
 {:else}
-	<Card class="!page-card grid-rows-3">
+	<Card class="page-card! grid-rows-3">
 		{@render joined()}
 	</Card>
 {/if}

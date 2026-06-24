@@ -5,7 +5,7 @@
 	let { bestNflTeamName, bestNflTeamScore } = $props();
 </script>
 
-<Card class="!page-card grid-rows-2">
+<Card class="page-card! grid-rows-2">
 	<h2 class="text-secondary text-fluid-lg mb-2">Highest Scoring NFL Team</h2>
 	<div class="flex flex-col gap-2">
 		<div class="flex flex-row items-center justify-center gap-2">
