@@ -26,6 +26,7 @@
 			{displayName}
 			{userTeamName}
 			{winningTeamName}
+			mainPage={false}
 		/>
 		<ScheduleCard {matchups} />
 	</PageShell>

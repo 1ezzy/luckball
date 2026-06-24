@@ -3,8 +3,8 @@
 
 	let { currentWeekText, displayName, winningTeamName, userTeamName, mainPage = true } = $props();
 
-	let won = winningTeamName === userTeamName;
-	let quote = won ? generateWinningQuote() : generateLosingQuote();
+	let won = $derived(winningTeamName === userTeamName);
+	let quote = $derived(won ? generateWinningQuote() : generateLosingQuote());
 
 	let subtextCopy = $derived.by(() => {
 		switch (`${!!displayName}:${mainPage}:${won}`) {

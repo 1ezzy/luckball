@@ -15,12 +15,18 @@
 	</PageTitle>
 
 	{#if weekStatus === WeekStatus.Pending}
-		<PreWeekCopy {currentWeekText} {weekJoined} />
+		<PreWeekCopy {currentWeekText} {weekJoined} mainPage={others.mainPage} />
 	{:else if weekStatus === WeekStatus.InProgress}
-		<ActiveWeekCopy {currentWeekText} {weekJoined} userTeamAssignment={others.userTeamAssignment} />
+		<ActiveWeekCopy
+			{currentWeekText}
+			{weekJoined}
+			mainPage={others.mainPage}
+			userTeamAssignment={others.userTeamAssignment}
+		/>
 	{:else if weekStatus === WeekStatus.Ended}
 		<PostWeekCopy
 			{currentWeekText}
+			mainPage={others.mainPage}
 			displayName={others.displayName}
 			winningTeamName={others.winningTeamName}
 			userTeamName={others.userTeamName}

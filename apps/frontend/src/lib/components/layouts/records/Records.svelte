@@ -29,6 +29,7 @@
 			{displayName}
 			{userTeamName}
 			{winningTeamName}
+			mainPage={false}
 		/>
 		<RecordsCard {totalWins} {totalLosses} {highestScoringTeamName} {highestScoringTeamScore} />
 	</PageShell>

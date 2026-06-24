@@ -1,7 +1,7 @@
 <script lang="ts">
 	let { currentWeekText, weekJoined, userTeamAssignment, mainPage = true } = $props();
 
-	const weekBegunCopy = `<span class="text-secondary">${currentWeekText}</span> has begun! `;
+	let weekBegunCopy = $derived(`<span class="text-secondary">${currentWeekText}</span> has begun! `);
 	let subtextCopy = $derived.by(() => {
 		switch (`${!!weekJoined}:${mainPage}`) {
 			case 'true:true':
