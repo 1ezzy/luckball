@@ -7,10 +7,7 @@
 
 	let { teamPlayerData, displayName, matchups } = $props();
 
-	export function getTeamScoreFromMatchups(
-		matchups: Matchup[],
-		team: string
-	): number | undefined {
+	export function getTeamScoreFromMatchups(matchups: Matchup[], team: string): number | undefined {
 		if (!matchups) return undefined;
 		const matchup = matchups.find((m) => m.teams.includes(team));
 		if (!matchup?.matchupScores) return undefined;

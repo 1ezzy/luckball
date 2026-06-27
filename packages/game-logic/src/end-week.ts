@@ -77,7 +77,8 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 		team1Wins = team1Score > team2Score;
 	} else {
 		// tiebreaker: whichever luckball team has the single highest-scoring NFL team
-		team1Wins = getBestNflScore(weekData.team1.nflTeams) >= getBestNflScore(weekData.team2.nflTeams);
+		team1Wins =
+			getBestNflScore(weekData.team1.nflTeams) >= getBestNflScore(weekData.team2.nflTeams);
 	}
 
 	if (team1Wins) {

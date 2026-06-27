@@ -2,7 +2,7 @@ import type { ValkeyClient } from '@luckball/valkey-client';
 import { getActiveWeek } from './active-week';
 import type { User } from './types';
 
-export const updateUserProperty = async (
+export const setUserProperty = async (
 	userId: string,
 	propertyKey: keyof User,
 	propertyValue: User[keyof User],
