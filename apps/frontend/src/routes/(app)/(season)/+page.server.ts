@@ -28,8 +28,8 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return { ...team, usernames };
 	};
 
-	const team1Data = getTeamWithUsernames(weekData?.team1, allUserGameData);
-	const team2Data = getTeamWithUsernames(weekData?.team2, allUserGameData);
+	const team1Data = getTeamWithUsernames(weekData?.teams[0], allUserGameData);
+	const team2Data = getTeamWithUsernames(weekData?.teams[1], allUserGameData);
 
 	const currentWeekData = {
 		seasonType: seasonType,
@@ -45,10 +45,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 		bestNflTeamScore: weekData.bestNflTeamScore
 	};
 
-	const teamData = {
-		team1: team1Data,
-		team2: team2Data
-	};
+	const teamData = [team1Data, team2Data];
 
 	return {
 		currentWeekData,

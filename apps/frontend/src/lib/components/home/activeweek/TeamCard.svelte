@@ -38,9 +38,9 @@
 {#snippet teamsColumn(data: any)}
 	<div class="grid grid-cols-[16px_24px_fit-content(50%)_auto_fit-content(25%)] items-center gap-2">
 		{#each data?.nflTeams as team}
-			{@const matchup = matchups?.find((m: any) => m.teams.includes(team))}
-			{@const opponent = matchup?.teams.find((t: any) => t !== team)}
-			{@const score = getTeamScoreFromMatchups(matchups, team)}
+			{const matchup = matchups?.find((m: any) => m.teams.includes(team))}
+			{const opponent = matchup?.teams.find((t: any) => t !== team)}
+			{const score = getTeamScoreFromMatchups(matchups, team)}
 
 			<div class="contents cursor-pointer" onclick={() => toggleTeam(team)} role="presentation">
 				<LucideChevronDown

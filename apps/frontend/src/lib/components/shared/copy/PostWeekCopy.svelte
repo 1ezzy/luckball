@@ -21,19 +21,19 @@
 				return `<span>You lost this week. You can check out the final scores on the home page, the next round starts soon.</span> 
 				<span class="text-bold text-secondary">"${quote}"</span>`;
 			case 'false:true:true':
-				return `${currentWeekText} has ended! Check out this week's winning team below. The next round starts soon.`;
+				return `<span>${currentWeekText} has ended! Check out this week's winning team below. The next round starts soon.</span>`;
 			case 'false:true:false':
-				return `${currentWeekText} has ended! Check out this week's winning team below. The next round starts soon.`;
+				return `<span>${currentWeekText} has ended! Check out this week's winning team below. The next round starts soon.</span>`;
 			case 'false:false:true':
-				return `${currentWeekText} has ended! Check out this week's winning team on the home page. The next round starts soon.`;
+				return `<span>${currentWeekText} has ended! Check out this week's winning team on the home page. The next round starts soon.</span>`;
 			case 'false:false:false':
-				return `${currentWeekText} has ended! Check out this week's winning team on the home page. The next round starts soon.`;
+				return `<span>${currentWeekText} has ended! Check out this week's winning team on the home page. The next round starts soon.</span>`;
 			default:
 				return '';
 		}
 	});
 </script>
 
-<div class="flex w-full flex-col gap-2 leading-8">
+<div class="flex w-full flex-col gap-2 leading-8 text-fluid-base">
 	{@html subtextCopy}
 </div>

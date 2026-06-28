@@ -45,7 +45,7 @@
 
 <!--TODO: split up matchup.event so the opposing team name can be made lighter -->
 {#snippet matchupAndDate(matchup: Matchup)}
-	{@const matchupSplit = matchup.event.split('@')}
+	{const matchupSplit = matchup.event.split('@')}
 	<div class="grid grid-rows-2 items-center justify-items-center">
 		<div class="text-fluid-sm flex h-8 flex-row items-center gap-2">
 			<span class="text-fluid-sm">{matchupSplit[0]}</span>

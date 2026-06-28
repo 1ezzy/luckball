@@ -21,7 +21,6 @@
 	const preWeekLayoutProps = $derived({
 		matchups: matchups,
 		matchupTeams: matchups?.map((matchup) => matchup.teams),
-		teamData: teamData,
 		currentWeekText: currentWeekData?.currentWeekText,
 		displayName: currentDisplayName,
 		prevDisplayName: prevDisplayName,

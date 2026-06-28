@@ -1,7 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { createEspnClientForEnv } from './api/espn-client';
-import { WeekStatus } from './types';
+import { WeekStatus, type Matchup } from './types';
 import { getActiveWeek } from './active-week';
+import type { ValkeyClient } from '@luckball/valkey-client';
 
 const generateTeamName = (): string => {
 	const adj = faker.word.adjective({ length: { min: 5, max: 8 }, strategy: 'fail' });
@@ -39,7 +40,7 @@ const shuffleNflTeams = (teams: string[]): [string[], string[]] => {
 	return [team1Teams, team2Teams];
 };
 
-export const startActiveWeek = async (valkey: any) => {
+export const startActiveWeek = async (valkey: ValkeyClient) => {
 	const espnApi = createEspnClientForEnv();
 	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
@@ -47,25 +48,25 @@ export const startActiveWeek = async (valkey: any) => {
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
-	const currentWeekData = await valkey.get(weekDataKey);
-	if (JSON.parse(currentWeekData).status !== WeekStatus.Pending) {
+	const currentWeekData = await valkey?.get(weekDataKey);
+	if (!currentWeekData || JSON.parse(currentWeekData).status !== WeekStatus.Pending) {
 		return { success: false, message: 'Week not started - current week data status not "pending"' };
 	}
 
 	// get a list of all the users
-	const users = await valkey.hkeys(usersKey);
+	const users = await valkey?.hkeys(usersKey);
 	if (!users || Object.keys(users).length === 0) {
 		return { success: false, message: 'No users to start the week.' };
 	}
 
 	// get a list of all the matchups
-	const matchupsRaw = await valkey.get(matchupsKey);
-	if (matchupsRaw.length === 0) {
+	const matchupsRaw = await valkey?.get(matchupsKey);
+	if (!matchupsRaw || matchupsRaw.length === 0) {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 	const matchups = JSON.parse(matchupsRaw);
 
-	const updatedMatchups = matchups.map((matchup: any) => {
+	const updatedMatchups = matchups.map((matchup: Matchup) => {
 		const scoresObjList = matchup.teams.map((team: string) => ({
 			[team]: 0
 		}));
@@ -87,51 +88,53 @@ export const startActiveWeek = async (valkey: any) => {
 
 	// update each player's teamAssignment
 	for (const userId of team1Players) {
-		const userDataString = await valkey.hget(usersKey, userId);
+		const userDataString = await valkey?.hget(usersKey, userId);
 		if (userDataString) {
 			const userData = JSON.parse(userDataString);
 			userData.teamAssignment = team1Name;
-			await valkey.hset(usersKey, userId, JSON.stringify(userData));
+			await valkey?.hset(usersKey, userId, JSON.stringify(userData));
 		}
 	}
 
 	for (const userId of team2Players) {
-		const userDataString = await valkey.hget(usersKey, userId);
+		const userDataString = await valkey?.hget(usersKey, userId);
 		if (userDataString) {
 			const userData = JSON.parse(userDataString);
 			userData.teamAssignment = team2Name;
-			await valkey.hset(usersKey, userId, JSON.stringify(userData));
+			await valkey?.hset(usersKey, userId, JSON.stringify(userData));
 		}
 	}
 
 	// randomly select one team from each matchup to assign to both teams
-	const matchupEvents = matchups.map((matchup: any) => matchup.event);
+	const matchupEvents = matchups.map((matchup: Matchup) => matchup.event);
 	const [team1NflTeams, team2NflTeams] = shuffleNflTeams(matchupEvents);
 
 	// create week data with new teams
 	const weekData = {
-		team1: {
-			name: team1Name,
-			players: team1Players,
-			nflTeams: team1NflTeams,
-			totalScore: 0,
-			wins: 0
-		},
-		team2: {
-			name: team2Name,
-			players: team2Players,
-			nflTeams: team2NflTeams,
-			totalScore: 0,
-			wins: 0
-		},
+		teams: [
+			{
+				name: team1Name,
+				players: team1Players,
+				nflTeams: team1NflTeams,
+				totalScore: 0,
+				wins: 0
+			},
+			{
+				name: team2Name,
+				players: team2Players,
+				nflTeams: team2NflTeams,
+				totalScore: 0,
+				wins: 0
+			}
+		],
 		status: WeekStatus.InProgress
 	};
 
 	// save the week data to valkey
-	await valkey.set(weekDataKey, JSON.stringify(weekData));
+	await valkey?.set(weekDataKey, JSON.stringify(weekData));
 
 	// save the matchup data to valkey
-	await valkey.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
+	await valkey?.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
 
 	return { success: true, message: `Week ${currentWeek} started successfully.` };
 };

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { Dialog } from 'svelte-ux';
+	import BoostSelectionDialog from '$lib/components/home/activeweek/BoostSelectionDialog.svelte';
 	import TeamCard from '$lib/components/home/activeweek/TeamCard.svelte';
 	import TitleAndActiveWeekCopy from '$lib/components/home/activeweek/TitleAndActiveWeekCopy.svelte';
 	import WeekShell from '$lib/components/layouts/home/WeekShell.svelte';
+	import type { Team } from '@luckball/game-logic';
 
 	let {
 		matchups,
@@ -14,31 +15,22 @@
 		weekBoosted
 	} = $props();
 
-	// TODO: add logic to detect if user has already boosted
-	// TODO: create modal to make boost selections
+	let personalTeam = $derived(
+		teamData?.filter((team: Team) => team.name === userTeamAssignment)[0]
+	);
+	let opponentTeam = $derived(
+		teamData?.filter((team: Team) => team.name !== userTeamAssignment)[0]
+	);
 </script>
 
-{#if weekBoosted === null || weekBoosted === undefined}
-	<Dialog class="bg-surface-300 text-primary-content h-[75vh] w-[75vw] border-2 border-primary-content rounded-lg" open={true} persistent>
-		<div class="grid w-full h-full p-8 justify-center">
-			<div class="flex flex-row gap-4 text-fluid-xl">
-				<h3>Individual Score</h3>
-				<span>|</span>
-				<h4 class="text-primary">Baller Boosts</h4>
-			</div>
-			<div>
-
-			</div>
-		</div>
-	</Dialog>
-{/if}
+<BoostSelectionDialog {weekBoosted} {personalTeam} {opponentTeam}></BoostSelectionDialog>
 
 <WeekShell>
 	{#snippet copy()}
 		<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
 	{/snippet}
 	<div class="flex h-full flex-col gap-8 overflow-y-scroll md:flex-row">
-		<TeamCard teamPlayerData={teamData?.team1} {displayName} {matchups} />
-		<TeamCard teamPlayerData={teamData?.team2} {displayName} {matchups} />
+		<TeamCard teamPlayerData={personalTeam} {displayName} {matchups} />
+		<TeamCard teamPlayerData={opponentTeam} {displayName} {matchups} />
 	</div>
 </WeekShell>

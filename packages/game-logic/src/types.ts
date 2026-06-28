@@ -25,8 +25,7 @@ export interface Matchup {
 }
 
 export interface WeekData {
-	team1: Team;
-	team2: Team;
+	teams: Team[];
 	status: WeekStatus;
 	winningTeamName?: string;
 	winningTeamScore?: number;
