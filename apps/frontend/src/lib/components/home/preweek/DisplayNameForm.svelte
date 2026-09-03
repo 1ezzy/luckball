@@ -9,14 +9,16 @@
 
 {#snippet joined()}
 	<span class="text-secondary text-fluid-lg">You've successfully joined {currentWeekText}!</span>
-	<span class="text-primary-content text-fluid-base">
-		Display Name: <span class="text-primary font-bold">{displayName}</span>
-	</span>
-	<div class="flex w-4/5 flex-col gap-4 text-center">
-		<Button variant="fill" color="info">Update Name</Button>
-		<form class="w-full" method="post" action="?/leaveWeek" use:enhance>
-			<Button class="w-full" type="submit" variant="fill" color="danger">Leave Week</Button>
-		</form>
+	<div class="flex w-4/5 flex-col items-center justify-center gap-8">
+		<span class="text-primary-content text-fluid-base h-10">
+			Display Name: <span class="text-primary font-bold">{displayName}</span>
+		</span>
+		<div class="grid grid-cols-2 gap-4 w-full">
+			<Button variant="fill" color="info">Update Name</Button>
+			<form class="w-full" method="post" action="?/leaveWeek" use:enhance>
+				<Button class="w-full" type="submit" variant="fill" color="danger">Leave Week</Button>
+			</form>
+		</div>
 	</div>
 {/snippet}
 
@@ -45,11 +47,11 @@
 {/snippet}
 
 {#if !weekJoined}
-	<Card class="page-card! grid-rows-3">
+	<Card class="page-card! grid-rows-[auto_1fr]">
 		{@render joinForm()}
 	</Card>
 {:else}
-	<Card class="page-card! grid-rows-3">
+	<Card class="page-card! grid-rows-[auto_1fr]">
 		{@render joined()}
 	</Card>
 {/if}

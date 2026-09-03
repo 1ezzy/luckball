@@ -17,6 +17,7 @@
 	@apply items-center justify-items-center;
 	@apply rounded-lg border-2;
 	@apply p-8 text-center;
+	@apply shadow-lg;
 }
 
 @theme {

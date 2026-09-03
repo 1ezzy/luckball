@@ -1,5 +1,5 @@
 import { fail, type Actions } from '@sveltejs/kit';
-import { addUserToWeek, removeUserFromWeek } from '@luckball/game-logic';
+import { addUserToWeek, removeUserFromWeek, WeekStatus } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { auth } from '$lib/auth/auth';
@@ -19,8 +19,14 @@ export const load: PageServerLoad = async ({ parent }) => {
 	} = await parent();
 	const currentUserGameData = userId ? { ...currentUserGameDataFromId, userId } : null;
 
-	const getTeamWithUsernames = (team: { players: string[] }, allUsers: Record<string, string>) => {
-		if (!team || !allUsers || !team.players) return { ...team, usernames: [] };
+	const getTeamWithUsernames = (
+		team: { players: string[] } | undefined,
+		allUsers: Record<string, string>
+	) => {
+		if (!team || !allUsers || !team.players) {
+			return { ...team, usernames: [] };
+		}
+
 		const usernames = team.players.map((id) => {
 			if (!allUsers[id]) return [];
 			return JSON.parse(allUsers[id])?.displayName;
@@ -28,8 +34,12 @@ export const load: PageServerLoad = async ({ parent }) => {
 		return { ...team, usernames };
 	};
 
-	const team1Data = getTeamWithUsernames(weekData?.teams[0], allUserGameData);
-	const team2Data = getTeamWithUsernames(weekData?.teams[1], allUserGameData);
+	let team1Data,
+		team2Data = null;
+	if (weekData?.status === WeekStatus.InProgress) {
+		team1Data = getTeamWithUsernames(weekData?.teams[0], allUserGameData);
+		team2Data = getTeamWithUsernames(weekData?.teams[1], allUserGameData);
+	}
 
 	const currentWeekData = {
 		seasonType: seasonType,
