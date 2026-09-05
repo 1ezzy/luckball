@@ -1,5 +1,10 @@
 import { fail, type Actions } from '@sveltejs/kit';
-import { addUserToWeek, removeUserFromWeek, WeekStatus } from '@luckball/game-logic';
+import {
+	addUserToWeek,
+	removeUserFromWeek,
+	WeekStatus,
+	updateUserDisplayName
+} from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { auth } from '$lib/auth/auth';
@@ -99,6 +104,28 @@ export const actions: Actions = {
 		const result = await removeUserFromWeek(userId, valkey);
 		if (!result.success) {
 			return fail(400, { userId, error: result.message });
+		}
+
+		return { success: true };
+	},
+	updateUsername: async ({ request }) => {
+		const session = await auth.api.getSession({
+			headers: request.headers
+		});
+		const userId = session?.user.id;
+		if (!userId) {
+			return fail(400, { userId, error: 'User ID is required' });
+		}
+
+		const data = await request.formData();
+		const modifiedUsername = data.get('modifiedUsername')?.toString();
+		if (!modifiedUsername) {
+			return fail(400, { modifiedUsername, error: 'Updated username is required' });
+		}
+
+		const result = await updateUserDisplayName(modifiedUsername, userId, valkey, drizzle);
+		if (!result.success) {
+			return fail(400, { modifiedUsername, error: result.message });
 		}
 
 		return { success: true };

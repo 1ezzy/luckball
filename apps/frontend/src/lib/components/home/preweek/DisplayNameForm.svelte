@@ -4,45 +4,101 @@
 
 	let { weekJoined, currentWeekText, displayName, prevDisplayName } = $props();
 
-	let loading = $state(false);
+	let joinLoading = $state(false);
+	let editCompleteLoading = $state(false);
+
+	let modifiedUsername = $derived(prevDisplayName);
+	let editingUsername = $state(false);
 </script>
 
 {#snippet joined()}
-	<span class="text-secondary text-fluid-lg">You've successfully joined {currentWeekText}!</span>
+	<span class="text-secondary text-fluid-lg">You've Successfully Joined {currentWeekText}</span>
 	<div class="flex w-4/5 flex-col items-center justify-center gap-8">
-		<span class="text-primary-content text-fluid-base h-10">
-			Display Name: <span class="text-primary font-bold">{displayName}</span>
-		</span>
+		{#if !editingUsername}
+			<div
+				class="bg-primary-200 w-full rounded-lg flex items-center justify-center border-primary-400 border-2 py-2"
+			>
+				<span class="text-primary-content text-fluid-base">
+					Display Name: <span class="text-primary font-bold">{displayName}</span>
+				</span>
+			</div>
+		{:else}
+			<TextField
+				classes={{
+					container: 'w-full border-2 rounded-lg',
+					root: 'w-full',
+					input: 'text-fluid-base!'
+				}}
+				placeholder="Enter Display Name"
+				bind:value={modifiedUsername}
+			/>
+		{/if}
 		<div class="grid grid-cols-2 gap-4 w-full">
-			<Button variant="fill" color="info">Update Name</Button>
-			<form class="w-full" method="post" action="?/leaveWeek" use:enhance>
-				<Button class="w-full" type="submit" variant="fill" color="danger">Leave Week</Button>
-			</form>
+			{#if !editingUsername}
+				<form class="w-full" method="post" action="?/leaveWeek" use:enhance>
+					<Button class="w-full" type="submit" variant="fill" color="danger">Leave Week</Button>
+				</form>
+			{:else}
+				<Button variant="fill" color="warning" onclick={() => (editingUsername = !editingUsername)}>
+					Cancel
+				</Button>
+			{/if}
+
+			{#if !editingUsername}
+				<Button variant="fill" color="info" onclick={() => (editingUsername = !editingUsername)}>
+					Update Name
+				</Button>
+			{:else}
+				<form
+					class="w-full"
+					method="post"
+					action="?/updateUsername"
+					id="updateUsername"
+					use:enhance={({ formData }) => {
+						formData.set('modifiedUsername', modifiedUsername);
+
+						editingUsername = false;
+						editCompleteLoading = true;
+						return async ({ update }) => {
+							await update();
+							editCompleteLoading = false;
+						};
+					}}
+				>
+					<Button class="w-full" type="submit" variant="fill" color="success">Confirm</Button>
+				</form>
+			{/if}
 		</div>
 	</div>
 {/snippet}
 
 {#snippet joinForm()}
-	<h3 class="text-secondary text-fluid-lg">Join {currentWeekText} now!</h3>
+	<h3 class="text-secondary text-fluid-lg">Join {currentWeekText}</h3>
 	<form
 		class="flex w-4/5 flex-col items-center justify-center gap-8"
 		method="post"
 		action="?/joinWeek"
 		use:enhance={() => {
-			loading = true;
+			joinLoading = true;
 			return async ({ update }) => {
 				await update();
-				loading = false;
+				joinLoading = false;
 			};
 		}}
 	>
 		<TextField
-			classes={{ container: 'border-2', root: 'w-full' }}
+			classes={{
+				container: 'w-full border-2 rounded-lg',
+				root: 'w-full',
+				input: 'text-fluid-base!'
+			}}
 			name="displayName"
 			placeholder="Enter Display Name"
 			bind:value={prevDisplayName}
 		/>
-		<Button type="submit" color="success" variant="fill" class="w-full" {loading}>Join Week</Button>
+		<Button type="submit" color="success" variant="fill" class="w-full" loading={joinLoading}>
+			Join Week
+		</Button>
 	</form>
 {/snippet}
 

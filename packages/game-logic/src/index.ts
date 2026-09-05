@@ -5,6 +5,7 @@ export { endWeek } from './end-week';
 
 // generic game logic
 export { addUserToWeek } from './add-user';
+export { updateUserDisplayName } from './update-user-displayname';
 export { removeUserFromWeek } from './remove-user';
 export { updateScores } from './update-scores';
 
