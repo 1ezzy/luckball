@@ -1,6 +1,6 @@
 import type { ValkeyClient } from '@luckball/valkey-client';
-import { WeekStatus } from './types';
-import { getActiveWeek } from './active-week';
+import { WeekStatus } from '../types';
+import { getActiveWeek } from '../week/active-week';
 
 export const removeUserFromWeek = async (userId: string, valkey: ValkeyClient) => {
 	if (!userId) {

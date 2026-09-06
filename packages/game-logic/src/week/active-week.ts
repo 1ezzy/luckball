@@ -1,5 +1,5 @@
 import type { ValkeyClient } from '@luckball/valkey-client';
-import type { IEspnClient } from './api/espn-client.interface';
+import type { IEspnClient } from './../api/espn-client.interface';
 
 export const ACTIVE_WEEK_KEY = 'game:active-week';
 

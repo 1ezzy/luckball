@@ -1,8 +1,8 @@
 import { schema, type DrizzleClient } from '@luckball/drizzle-client';
 import type { ValkeyClient } from '@luckball/valkey-client';
 import { eq } from 'drizzle-orm';
-import { WeekStatus } from './types';
-import { getActiveWeek } from './active-week';
+import { WeekStatus } from '../types';
+import { getActiveWeek } from '../week/active-week';
 
 export const addUserToWeek = async (
 	displayName: string,

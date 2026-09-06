@@ -1,8 +1,8 @@
 import type { ValkeyClient } from '@luckball/valkey-client';
-import { createEspnClientForEnv } from './api/espn-client';
-import { WeekStatus } from './types';
-import type { WeekData } from './types';
+import { createEspnClientForEnv } from '../api/espn-client';
 import { getActiveWeek } from './active-week';
+import { WeekStatus } from '../types';
+import type { WeekData } from '../types';
 
 export const updateScores = async (valkey: ValkeyClient) => {
 	const espnApi = createEspnClientForEnv();
@@ -74,8 +74,10 @@ export const updateScores = async (valkey: ValkeyClient) => {
 
 	const updatedWeekData: WeekData = {
 		...weekData,
-		team1: { ...weekData.team1, totalScore: teamScores.team1 },
-		team2: { ...weekData.team2, totalScore: teamScores.team2 },
+		teams: [
+			{ ...weekData.teams[0], totalScore: teamScores.team1 },
+			{ ...weekData.teams[1], totalScore: teamScores.team2 }
+		],
 		status: WeekStatus.InProgress,
 		bestNflTeamName,
 		bestNflTeamScore

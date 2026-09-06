@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
 	import { NFL_TEAM_NAMES } from '@luckball/game-logic/client';
 	import { Button, Card, Dialog, MenuItem, SelectField, type MenuOption } from 'svelte-ux';
@@ -119,17 +120,24 @@
 {/snippet}
 
 {#snippet dialogActions()}
-	<div class="w-full flex justify-end px-8">
+	<form
+		class="w-full flex justify-end px-8"
+		method="POST"
+		action="?/selectBoosts"
+		use:enhance={({ formData }) => {
+			formData.set('boostedTeams', JSON.stringify(selectedTeams));
+		}}
+	>
 		<Button
 			class="text-white"
 			variant="fill"
 			color="primary"
-			formaction="?/selectBoosts"
+			type="submit"
 			disabled={!allBoostsSelected}
 		>
 			Continue
 		</Button>
-	</div>
+	</form>
 {/snippet}
 
 {#if weekBoosted === null || weekBoosted === undefined}

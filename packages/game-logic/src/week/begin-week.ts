@@ -1,6 +1,6 @@
 import type { ValkeyClient } from '@luckball/valkey-client';
-import { createEspnClientForEnv } from './api/espn-client';
-import { WeekStatus } from './types';
+import { createEspnClientForEnv } from './../api/espn-client';
+import { WeekStatus } from '../types';
 import { ACTIVE_WEEK_KEY } from './active-week';
 
 export const beginWeek = async (valkey: ValkeyClient) => {

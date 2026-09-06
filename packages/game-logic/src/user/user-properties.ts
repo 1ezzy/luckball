@@ -1,9 +1,10 @@
 import type { ValkeyClient } from '@luckball/valkey-client';
-import { getActiveWeek } from './active-week';
-import type { User } from './types';
+import { getActiveWeek } from '../week/active-week';
+import { WeekStatus, type User } from '../types';
 
 export const setUserProperty = async (
 	userId: string,
+	weekStatus: WeekStatus,
 	propertyKey: keyof User,
 	propertyValue: User[keyof User],
 	valkey: ValkeyClient
@@ -13,11 +14,20 @@ export const setUserProperty = async (
 	}
 
 	const { currentWeek, seasonType } = await getActiveWeek(valkey);
-	await valkey?.hset(`${seasonType}:week:${currentWeek}:users`, {
-		[userId]: {
-			[propertyKey]: propertyValue
-		}
-	});
+
+	// confirm the user has already joined for the week
+	const existingUserString = await valkey?.hget(`${seasonType}:week:${currentWeek}:users`, userId);
+	if (weekStatus === WeekStatus.InProgress && !existingUserString) {
+		return { success: false, message: 'User hasnt joined this week' };
+	}
+
+	const existingUser = existingUserString ? (JSON.parse(existingUserString) as User) : ({} as User);
+
+	// update the property with the new value in valkey
+	await valkey?.hset(`${seasonType}:week:${currentWeek}:users`, userId, JSON.stringify({
+		...existingUser,
+		[propertyKey]: propertyValue
+	}));
 
 	return {
 		success: true,

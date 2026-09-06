@@ -1,14 +1,11 @@
-import { fail, type Actions } from '@sveltejs/kit';
-import {
-	addUserToWeek,
-	removeUserFromWeek,
-	WeekStatus,
-	updateUserDisplayName
-} from '@luckball/game-logic';
+import { fail, type Actions, type RequestEvent } from '@sveltejs/kit';
+import { addUserToWeek, removeUserFromWeek, updateUserDisplayName } from '@luckball/game-logic';
+import { WeekStatus } from '@luckball/game-logic/types';
 import { valkey } from '$lib/clients/valkey-client';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { auth } from '$lib/auth/auth';
 import type { PageServerLoad } from './$types';
+import { setUserBoosts } from '@luckball/game-logic';
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const {
@@ -69,16 +66,22 @@ export const load: PageServerLoad = async ({ parent }) => {
 	};
 };
 
-export const actions: Actions = {
-	joinWeek: async ({ request }) => {
+function withSession<T>(handler: (userId: string, event: RequestEvent) => Promise<T>) {
+	return async (event: RequestEvent) => {
 		const session = await auth.api.getSession({
-			headers: request.headers
+			headers: event.request.headers
 		});
 		const userId = session?.user.id;
 		if (!userId) {
-			return fail(400, { userId, error: 'User ID is required' });
+			return fail(401, { error: 'User ID is required' });
 		}
 
+		return handler(userId, event);
+	};
+}
+
+export const actions: Actions = {
+	joinWeek: withSession(async (userId, { request }) => {
 		const data = await request.formData();
 		const displayName = data.get('displayName')?.toString();
 		if (!displayName) {
@@ -91,32 +94,16 @@ export const actions: Actions = {
 		}
 
 		return { success: true };
-	},
-	leaveWeek: async ({ request }) => {
-		const session = await auth.api.getSession({
-			headers: request.headers
-		});
-		const userId = session?.user.id;
-		if (!userId) {
-			return fail(400, { userId, error: 'User ID is required' });
-		}
-
+	}),
+	leaveWeek: withSession(async (userId) => {
 		const result = await removeUserFromWeek(userId, valkey);
 		if (!result.success) {
 			return fail(400, { userId, error: result.message });
 		}
 
 		return { success: true };
-	},
-	updateUsername: async ({ request }) => {
-		const session = await auth.api.getSession({
-			headers: request.headers
-		});
-		const userId = session?.user.id;
-		if (!userId) {
-			return fail(400, { userId, error: 'User ID is required' });
-		}
-
+	}),
+	updateUsername: withSession(async (userId, { request }) => {
 		const data = await request.formData();
 		const modifiedUsername = data.get('modifiedUsername')?.toString();
 		if (!modifiedUsername) {
@@ -129,5 +116,19 @@ export const actions: Actions = {
 		}
 
 		return { success: true };
-	}
+	}),
+	selectBoosts: withSession(async (userId, { request }) => {
+		const data = await request.formData();
+		const boostedTeamsString = data.get('boostedTeams')?.toString();
+		if (!boostedTeamsString) {
+			return fail(400, { boostedTeamsString, error: 'List of boosted teams required' });
+		}
+
+		const result = await setUserBoosts(JSON.parse(boostedTeamsString), userId, valkey);
+		if (!result.success) {
+			return fail(400, { boostedTeamsString, error: result.message });
+		}
+
+		return { success: true };
+	})
 };

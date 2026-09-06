@@ -1,8 +1,8 @@
 import { schema, type DrizzleClient } from '@luckball/drizzle-client';
-import { createEspnClientForEnv } from './api/espn-client';
+import { createEspnClientForEnv } from './../api/espn-client';
 import { eq, sql } from 'drizzle-orm';
 import type { ValkeyClient } from '@luckball/valkey-client';
-import { WeekStatus } from './types';
+import { WeekStatus } from '../types';
 import { getActiveWeek } from './active-week';
 
 export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {

@@ -1,8 +1,8 @@
 import { schema, type DrizzleClient } from '@luckball/drizzle-client';
 import type { ValkeyClient } from '@luckball/valkey-client';
 import { eq } from 'drizzle-orm';
-import { WeekStatus } from './types';
-import { getActiveWeek } from './active-week';
+import { WeekStatus } from '../types';
+import { getActiveWeek } from '../week/active-week';
 
 export const updateUserDisplayName = async (
 	updatedDisplayName: string,
@@ -48,11 +48,11 @@ export const updateUserDisplayName = async (
 	);
 
 	// update user display name in Postgres
-	const updateResult = await drizzle
+	await drizzle
 		.update(schema.user_profile)
 		.set({ displayName: updatedUserData.displayName, updatedAt: new Date() })
 		.where(eq(schema.user_profile.userId, userId))
 		.returning({ updatedDisplayName: schema.user_profile.displayName });
 
-	return { success: true, message: 'User joined successfully!' };
+	return { success: true, message: 'User display name updated successfully!' };
 };

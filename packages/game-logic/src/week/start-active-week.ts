@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { createEspnClientForEnv } from './api/espn-client';
-import { WeekStatus, type Matchup } from './types';
+import { createEspnClientForEnv } from './../api/espn-client';
+import { WeekStatus, type Matchup } from '../types';
 import { getActiveWeek } from './active-week';
 import type { ValkeyClient } from '@luckball/valkey-client';
 
