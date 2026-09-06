@@ -3,7 +3,7 @@
 	import TeamCard from '$lib/components/home/activeweek/TeamCard.svelte';
 	import TitleAndActiveWeekCopy from '$lib/components/home/activeweek/TitleAndActiveWeekCopy.svelte';
 	import WeekShell from '$lib/components/layouts/home/WeekShell.svelte';
-	import type { Team } from '@luckball/game-logic';
+	import type { Team } from '@luckball/game-logic/types';
 
 	let {
 		matchups,
@@ -23,7 +23,7 @@
 	);
 </script>
 
-<BoostSelectionDialog {weekBoosted} {personalTeam} {opponentTeam}></BoostSelectionDialog>
+<BoostSelectionDialog {weekBoosted} {personalTeam} {matchups}></BoostSelectionDialog>
 
 <WeekShell>
 	{#snippet copy()}

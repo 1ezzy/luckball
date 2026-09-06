@@ -2,7 +2,7 @@
 	import { Card } from 'svelte-ux';
 	import { PUBLIC_TEAM_LOGO_URL } from '$env/static/public';
 	import TeamCardColumn from '$lib/components/home/activeweek/TeamCardColumn.svelte';
-	import type { Matchup } from '@luckball/game-logic';
+	import type { Matchup } from '@luckball/game-logic/types';
 	import { LucideChevronDown } from '@lucide/svelte';
 
 	let { teamPlayerData, displayName, matchups } = $props();
@@ -37,26 +37,26 @@
 
 {#snippet teamsColumn(data: any)}
 	<div class="grid grid-cols-[16px_24px_fit-content(50%)_auto_fit-content(25%)] items-center gap-2">
-		{#each data?.nflTeams as team}
-			{const matchup = matchups?.find((m: any) => m.teams.includes(team))}
-			{const opponent = matchup?.teams.find((t: any) => t !== team)}
-			{const score = getTeamScoreFromMatchups(matchups, team)}
+		{#each data?.nflTeams as nflTeam}
+			{const matchup = matchups?.find((matchup: any) => matchup.teams.includes(nflTeam))}
+			{const opponent = matchup?.teams.find((team: any) => team !== nflTeam)}
+			{const score = getTeamScoreFromMatchups(matchups, nflTeam)}
 
-			<div class="contents cursor-pointer" onclick={() => toggleTeam(team)} role="presentation">
+			<div class="contents cursor-pointer" onclick={() => toggleTeam(nflTeam)} role="presentation">
 				<LucideChevronDown
 					class={[
 						'w-fit transition-transform duration-300',
-						expandedTeams.has(team) ? '-rotate-90' : ''
+						expandedTeams.has(nflTeam) ? '-rotate-90' : ''
 					]}
 					size={16}
 				/>
 				<img
 					class="h-6 w-fit"
 					height="32"
-					src="{PUBLIC_TEAM_LOGO_URL}/{team}.png"
-					alt="{team} logo"
+					src="{PUBLIC_TEAM_LOGO_URL}/{nflTeam}.png"
+					alt="{nflTeam} logo"
 				/>
-				<span class="text-fluid-sm justify-self-center">{team}</span>
+				<span class="text-fluid-sm justify-self-center">{nflTeam}</span>
 				<span class="text-fluid-xs text-primary-content/40 self-end">vs {opponent}</span>
 				<span class="text-accent text-fluid-sm grid w-full grid-cols-2 items-end">
 					<span>{score}</span>
@@ -67,7 +67,7 @@
 			<div
 				class={[
 					'col-span-full grid transition-[grid-template-rows] duration-300',
-					expandedTeams.has(team) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+					expandedTeams.has(nflTeam) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
 				]}
 			>
 				<div

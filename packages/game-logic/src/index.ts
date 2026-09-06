@@ -16,7 +16,3 @@ export { createMockEspnClient } from './api/espn-client.mock';
 // active week
 export { getActiveWeek, ACTIVE_WEEK_KEY } from './active-week';
 export type { ActiveWeek } from './active-week';
-
-// types
-export type { Team, MatchupScore, Matchup, WeekData, User, AllUsersData } from './types';
-export { WeekStatus } from './types';
