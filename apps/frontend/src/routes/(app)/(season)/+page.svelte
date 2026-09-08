@@ -41,7 +41,7 @@
 		currentWeekText: currentWeekData?.currentWeekText,
 		displayName: currentDisplayName,
 		weekJoined: currentDisplayName,
-		weekBoosted: currentUserGameData.boosts
+		userBoosts: currentUserGameData?.boosts
 	});
 
 	const postWeekLayoutProps = $derived({
