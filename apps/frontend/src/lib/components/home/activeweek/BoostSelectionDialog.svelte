@@ -39,6 +39,14 @@
 	);
 
 	let allBoostsSelected = $derived(!selectedTeams.some((team) => team === undefined));
+
+	const createdBoostedTeamList = () => {
+		return [
+			{ multiplier: 1.25, team: selectedTeams[0] },
+			{ multiplier: 1.5, team: selectedTeams[1] },
+			{ multiplier: 2.0, team: selectedTeams[2] }
+		];
+	};
 </script>
 
 {#snippet dialogHeader()}
@@ -125,7 +133,7 @@
 		method="POST"
 		action="?/selectBoosts"
 		use:enhance={({ formData }) => {
-			formData.set('boostedTeams', JSON.stringify(selectedTeams));
+			formData.set('boostedTeams', JSON.stringify(createdBoostedTeamList()));
 		}}
 	>
 		<Button

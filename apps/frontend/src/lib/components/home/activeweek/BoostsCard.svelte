@@ -3,7 +3,6 @@
 	import { Card } from 'svelte-ux';
 
 	let { boosts } = $props();
-	let luckyPicks = $state(true);
 </script>
 
 {#snippet boostPill(multiplierAmt: number, teamName: string)}
@@ -25,19 +24,9 @@
 	<div class="grid grid-rows-[1fr_auto] gap-2">
 		<span class="text-fluid-sm">Baller Boosts</span>
 		<div class="flex flex-row justify-start gap-4 justify-self-start">
-			{@render boostPill(1.25, boosts.multiplier1Team)}
-			{@render boostPill(1.5, boosts.multiplier2Team)}
-			{@render boostPill(2.0, boosts.multiplier3Team)}
+			{#each boosts as boost}
+				{@render boostPill(boost.multiplier, boost.team)}
+			{/each}
 		</div>
 	</div>
-	{#if luckyPicks}
-		<div class="grid grid-rows-[1fr_auto] gap-2">
-			<span class="text-fluid-sm">Lucky Picks</span>
-			<div class="flex flex-row justify-start gap-4 justify-self-start">
-				{@render boostPill(1.25, boosts.multiplier1Team)}
-				{@render boostPill(1.5, boosts.multiplier2Team)}
-				{@render boostPill(2.0, boosts.multiplier3Team)}
-			</div>
-		</div>
-	{/if}
 </Card>

@@ -124,7 +124,9 @@ export const actions: Actions = {
 			return fail(400, { boostedTeamsString, error: 'List of boosted teams required' });
 		}
 
-		const result = await setUserBoosts(JSON.parse(boostedTeamsString), userId, valkey);
+		const boostedTeams = JSON.parse(boostedTeamsString);
+
+		const result = await setUserBoosts(boostedTeams, userId, valkey);
 		if (!result.success) {
 			return fail(400, { boostedTeamsString, error: result.message });
 		}
