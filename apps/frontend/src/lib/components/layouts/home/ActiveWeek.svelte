@@ -4,7 +4,9 @@
 	import TeamCard from '$lib/components/home/activeweek/TeamCard.svelte';
 	import TitleAndActiveWeekCopy from '$lib/components/home/activeweek/TitleAndActiveWeekCopy.svelte';
 	import WeekShell from '$lib/components/layouts/home/WeekShell.svelte';
+	import { ArrowBigUpDash, ChessQueen } from '@lucide/svelte';
 	import type { Team } from '@luckball/game-logic/types';
+	import { ToggleGroup, ToggleOption, TogglePanel } from 'svelte-ux';
 
 	let {
 		matchups,
@@ -24,10 +26,39 @@
 	);
 </script>
 
+{#snippet secondaryNavAndPanels()}
+	<ToggleGroup
+		variant="default"
+		size="lg"
+		inset
+		vertical
+		classes={{
+			root: 'h-full grid grid-cols-[min-content_auto] gap-12 2xl:gap-16',
+			options: 'h-fit p-0 gap-4 rounded-md',
+			option: 'h-fit'
+		}}
+	>
+		<ToggleOption value="teams">
+			<span class="flex flex-row gap-2 items-center">
+				<ChessQueen /> Lineups
+			</span>
+		</ToggleOption>
+		<ToggleOption value="boosts">
+			<span class="flex flex-row gap-2 items-center">
+				<ArrowBigUpDash /> Boosts
+			</span>
+		</ToggleOption>
+		<svelte:fragment slot="panes">
+			<TogglePanel>{@render teamCards()}</TogglePanel>
+			<TogglePanel>{@render boostsCard()}</TogglePanel>
+		</svelte:fragment>
+	</ToggleGroup>
+{/snippet}
+
 {#snippet teamCards()}
-	<div class="grid grid-rows-[min-content_auto] w-full gap-1 md:flex-1 items-center">
+	<div class="grid grid-rows-[min-content_auto] w-full items-center gap-1 overflow-hidden">
 		<h3 class="text-secondary text-fluid-lg mb-2 w-full whitespace-nowrap">This Week's Lineups</h3>
-		<div class="flex h-full flex-col gap-8 overflow-y-scroll md:flex-row">
+		<div class="flex h-full flex-col gap-8 md:flex-row overflow-y-scroll">
 			<TeamCard teamPlayerData={personalTeam} {displayName} {matchups} />
 			<TeamCard teamPlayerData={opponentTeam} {displayName} {matchups} />
 		</div>
@@ -35,8 +66,10 @@
 {/snippet}
 
 {#snippet boostsCard()}
-	<div class="grid grid-rows-[min-content_auto] w-full gap-1 md:flex-1 items-center">
-		<h3 class="text-secondary text-fluid-lg mb-2 w-full whitespace-nowrap">Your Score Modifiers</h3>
+	<div class="grid grid-rows-[min-content_auto] w-full gap-4 md:flex-1 items-start">
+		<h3 class="text-secondary text-fluid-lg mb-2 w-full whitespace-nowrap self-center">
+			Your Score Modifiers
+		</h3>
 		<BoostsCard boosts={userBoosts} />
 	</div>
 {/snippet}
@@ -47,12 +80,5 @@
 	{#snippet copy()}
 		<TitleAndActiveWeekCopy {currentWeekText} {weekJoined} {userTeamAssignment} />
 	{/snippet}
-	{#if userBoosts}
-		<div class="grid grid-rows-[1fr_auto] gap-16 2xl:gap-24 overflow-y-scroll">
-			{@render boostsCard()}
-			{@render teamCards()}
-		</div>
-	{:else}
-		{@render teamCards()}
-	{/if}
+	{@render secondaryNavAndPanels()}
 </WeekShell>

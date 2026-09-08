@@ -9,7 +9,7 @@
 	<PageShell>
 		{@render copy()}
 		<hr class="h-px w-full border-0 border-t-2 border-t-black md:hidden" />
-		<div class="flex h-full w-full flex-col gap-8 overflow-y-scroll md:my-auto">
+		<div class="flex h-full w-full flex-col gap-8 overflow-hidden md:my-auto">
 			{@render children()}
 		</div>
 	</PageShell>

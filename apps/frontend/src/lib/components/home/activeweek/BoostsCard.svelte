@@ -21,25 +21,23 @@
 	</div>
 {/snippet}
 
-<span class="">
-	<Card class="bg-surface-200 h-fit w-fit rounded-lg border-2 p-4 grid gap-16 grid-cols-2">
+<Card class="bg-surface-200 h-fit w-full rounded-lg border-2 p-4 grid gap-16 grid-cols-2">
+	<div class="grid grid-rows-[1fr_auto] gap-2">
+		<span class="text-fluid-sm">Baller Boosts</span>
+		<div class="flex flex-row justify-start gap-4 justify-self-start">
+			{@render boostPill(1.25, boosts.multiplier1Team)}
+			{@render boostPill(1.5, boosts.multiplier2Team)}
+			{@render boostPill(2.0, boosts.multiplier3Team)}
+		</div>
+	</div>
+	{#if luckyPicks}
 		<div class="grid grid-rows-[1fr_auto] gap-2">
-			<span class="text-fluid-xd">Baller Boosts</span>
+			<span class="text-fluid-sm">Lucky Picks</span>
 			<div class="flex flex-row justify-start gap-4 justify-self-start">
 				{@render boostPill(1.25, boosts.multiplier1Team)}
 				{@render boostPill(1.5, boosts.multiplier2Team)}
 				{@render boostPill(2.0, boosts.multiplier3Team)}
 			</div>
 		</div>
-		{#if luckyPicks}
-			<div class="grid grid-rows-[1fr_auto] gap-2">
-				<span class="text-fluid-xs">Lucky Picks</span>
-				<div class="flex flex-row justify-start gap-4 justify-self-start">
-					{@render boostPill(1.25, boosts.multiplier1Team)}
-					{@render boostPill(1.5, boosts.multiplier2Team)}
-					{@render boostPill(2.0, boosts.multiplier3Team)}
-				</div>
-			</div>
-		{/if}
-	</Card>
-</span>
+	{/if}
+</Card>

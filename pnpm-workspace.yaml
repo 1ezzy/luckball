@@ -12,6 +12,8 @@ allowBuilds:
   better-sqlite3: true
   esbuild: true
   svelte-preprocess: true
+minimumReleaseAgeExclude:
+  - '@lucide/svelte@1.43.0'
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - esbuild
