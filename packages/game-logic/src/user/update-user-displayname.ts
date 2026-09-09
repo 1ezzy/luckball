@@ -14,8 +14,6 @@ export const updateUserDisplayName = async (
 		return { success: false, message: 'updatedDisplayName and userId are required' };
 	}
 
-	console.log(updatedDisplayName);
-
 	const { currentWeek, seasonType } = await getActiveWeek(valkey);
 
 	// check if there is an active round for the week

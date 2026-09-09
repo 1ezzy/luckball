@@ -38,3 +38,7 @@
 
 - [ ] **Partial failure in `endWeek` user update loop** (`packages/game-logic/src/end-week.ts`)
   - If one user's Postgres update fails mid-loop, some users get their stats updated and others don't, leaving inconsistent state. Fix: use `Promise.allSettled()` and log any failures so they're visible and recoverable.
+
+## NON AI TODOS
+
+- Update join form so updating a username displays a loading state as the change propagates

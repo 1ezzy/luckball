@@ -28,12 +28,13 @@
 
 {#snippet secondaryNavAndPanels()}
 	<ToggleGroup
+		value="teams"
 		variant="default"
 		size="lg"
 		inset
 		vertical
 		classes={{
-			root: 'h-full grid grid-cols-[min-content_auto] gap-12 2xl:gap-16',
+			root: 'h-full grid grid-rows-[min-content_auto] gap-12 2xl:gap-16 md:grid-cols-[min-content_auto]',
 			options: 'h-fit p-0 gap-4 rounded-md',
 			option: 'h-fit'
 		}}

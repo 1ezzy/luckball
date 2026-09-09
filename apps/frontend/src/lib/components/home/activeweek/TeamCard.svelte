@@ -36,7 +36,9 @@
 {/snippet}
 
 {#snippet teamsColumn(data: any)}
-	<div class="grid grid-cols-[16px_24px_fit-content(50%)_auto_fit-content(25%)] items-center gap-2">
+	<div
+		class="grid grid-cols-[min-content_2fr_fit-content(50%)_3fr_fit-content(25%)] items-center gap-2"
+	>
 		{#each data?.nflTeams as nflTeam}
 			{const matchup = matchups?.find((matchup: any) => matchup.teams.includes(nflTeam))}
 			{const opponent = matchup?.teams.find((team: any) => team !== nflTeam)}
@@ -56,9 +58,11 @@
 					src="{PUBLIC_TEAM_LOGO_URL}/{nflTeam}.png"
 					alt="{nflTeam} logo"
 				/>
-				<span class="text-fluid-sm justify-self-center">{nflTeam}</span>
-				<span class="text-fluid-xs text-primary-content/40 self-end">vs {opponent}</span>
-				<span class="text-accent text-fluid-sm grid w-full grid-cols-2 items-end">
+				<span class="text-fluid-sm justify-self-end">{nflTeam}</span>
+				<span class="text-fluid-xs text-primary-content/40 self-end mb-0.5 whitespace-nowrap"
+					>vs {opponent}</span
+				>
+				<span class="text-accent text-fluid-sm grid w-full grid-cols-2 items-end gap-1">
 					<span>{score}</span>
 					<span class="text-primary-content text-fluid-xs mb-0.5 justify-self-end">pts</span>
 				</span>

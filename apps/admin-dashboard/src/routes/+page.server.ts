@@ -37,8 +37,8 @@ export const actions: Actions = {
 	endWeek: async () => {
 		const result = await endWeek(valkey, drizzle);
 
-		if (!result.success) {
-			return fail(400, { error: result.message });
+		if (!result?.success) {
+			return fail(400, { error: result?.message });
 		}
 
 		return { success: true };

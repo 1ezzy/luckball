@@ -2,7 +2,7 @@ import { schema, type DrizzleClient } from '@luckball/drizzle-client';
 import { createEspnClientForEnv } from './../api/espn-client';
 import { eq, sql } from 'drizzle-orm';
 import type { ValkeyClient } from '@luckball/valkey-client';
-import { WeekStatus } from '../types';
+import { WeekStatus, type Matchup } from '../types';
 import { getActiveWeek } from './active-week';
 
 export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
@@ -43,12 +43,16 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 	if (matchupsRaw.length === 0) {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
-	const matchups: any[] = JSON.parse(matchupsRaw);
+	const matchups: Matchup[] = JSON.parse(matchupsRaw);
 
 	const nflTeamScores: Record<string, number> = {};
 	let bestNflTeamScore = 0;
 	let bestNflTeamName;
 	for (const matchup of matchups) {
+		if (!matchup.matchupScores) {
+			return;
+		}
+
 		for (const scoreObj of matchup.matchupScores) {
 			const [team, score] = Object.entries(scoreObj)[0];
 			nflTeamScores[team] = score as number;
@@ -148,14 +152,20 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 			})
 			.where(eq(schema.user_profile.userId, userId));
 	};
+
+	const updatedUserProfiles = [];
 	for (const userId of Object.keys(users)) {
 		const parsedUserData = JSON.parse(users[userId]);
 		if (parsedUserData.teamAssignment === winningTeamName) {
-			updateUserProfileStats(winningTeamName, winningTeamScore, userId, true);
+			updatedUserProfiles.push(
+				updateUserProfileStats(winningTeamName, winningTeamScore, userId, true)
+			);
 		} else {
-			updateUserProfileStats(losingTeamName, losingTeamScore, userId, false);
+			updatedUserProfiles.push(losingTeamName, losingTeamScore, userId, false);
 		}
 	}
+
+	await Promise.all(updatedUserProfiles);
 
 	return { success: true, message: `Week ${currentWeek} ended.` };
 };

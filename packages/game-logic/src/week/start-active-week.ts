@@ -116,15 +116,13 @@ export const startActiveWeek = async (valkey: ValkeyClient) => {
 				name: team1Name,
 				players: team1Players,
 				nflTeams: team1NflTeams,
-				totalScore: 0,
-				wins: 0
+				totalScore: 0
 			},
 			{
 				name: team2Name,
 				players: team2Players,
 				nflTeams: team2NflTeams,
-				totalScore: 0,
-				wins: 0
+				totalScore: 0
 			}
 		],
 		status: WeekStatus.InProgress

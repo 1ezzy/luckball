@@ -3,7 +3,7 @@ export interface Team {
 	players: string[];
 	nflTeams: string[];
 	totalScore: number;
-	wins: number;
+	won?: boolean;
 }
 
 export enum WeekStatus {
@@ -21,7 +21,7 @@ export interface Matchup {
 	id: number;
 	date: string;
 	teams: string[];
-	matchupScores: MatchupScore[];
+	matchupScores?: MatchupScore[];
 }
 
 export interface WeekData {

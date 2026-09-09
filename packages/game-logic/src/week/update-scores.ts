@@ -2,7 +2,8 @@ import type { ValkeyClient } from '@luckball/valkey-client';
 import { createEspnClientForEnv } from '../api/espn-client';
 import { getActiveWeek } from './active-week';
 import { WeekStatus } from '../types';
-import type { WeekData } from '../types';
+import type { Matchup, Team, WeekData } from '../types';
+import type { EspnEvent } from '../api/espn-client.interface';
 
 export const updateScores = async (valkey: ValkeyClient) => {
 	const espnApi = createEspnClientForEnv();
@@ -10,8 +11,11 @@ export const updateScores = async (valkey: ValkeyClient) => {
 
 	// step 1: update matchups
 	// get all matchups for the week
-	const weekEvents = await espnApi.getWeekEvents(seasonType, currentWeek);
-	const matchups = weekEvents.events.map((event: any) => {
+	const weekEvents: { events: EspnEvent[]; teams: string[] } = await espnApi.getWeekEvents(
+		seasonType,
+		currentWeek
+	);
+	const matchups: Matchup[] = weekEvents.events.map((event: EspnEvent) => {
 		const team1 = event.shortName.split(' ')[0];
 		const team2 = event.shortName.split(' ')[2];
 		const teams: string[] = [team1, team2];
@@ -26,10 +30,12 @@ export const updateScores = async (valkey: ValkeyClient) => {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
 
-	const matchupScores = await Promise.all(matchups.map((m: any) => espnApi.getMatchupScores(m.id)));
+	const matchupScores = await Promise.all(
+		matchups.map((matchup: Matchup) => espnApi.getMatchupScores(matchup.id))
+	);
 	const reversedMatchupScores = matchupScores.map((scores) => [...scores].reverse());
 
-	const updatedMatchups = matchups.map((matchup: any, index: number) => ({
+	const updatedMatchups = matchups.map((matchup: Matchup, index: number) => ({
 		...matchup,
 		matchupScores: matchup.teams.map((team: string, i: number) => ({
 			[team]: reversedMatchupScores[index][i]
@@ -41,10 +47,10 @@ export const updateScores = async (valkey: ValkeyClient) => {
 
 	// step 2: update week data
 	const weekDataRaw = await valkey?.get(`${seasonType}:week:${currentWeek}:data`);
-	const weekData: WeekData = JSON.parse(weekDataRaw ?? 'null');
-	const nflTeamScores: Record<string, number> = {};
+	const weekData: WeekData = JSON.parse(weekDataRaw ?? '');
 
 	// build a lookup of NFL team scores from matchups
+	const nflTeamScores: Record<string, number> = {};
 	for (const matchup of updatedMatchups) {
 		for (const scoreObj of matchup.matchupScores) {
 			const [team, score] = Object.entries(scoreObj)[0];
@@ -54,17 +60,18 @@ export const updateScores = async (valkey: ValkeyClient) => {
 
 	// calculate total score for each user team
 	const teamScores: Record<string, number> = {};
-	for (const [teamKey, team] of Object.entries(weekData)) {
-		if (!(team as any).nflTeams) continue;
-		teamScores[teamKey] = (team as any).nflTeams.reduce(
+	for (const team of weekData.teams) {
+		teamScores[team.name] = (team as Team).nflTeams.reduce(
 			(sum: number, nflTeam: string) => sum + (nflTeamScores[nflTeam] ?? 0),
 			0
 		);
 	}
 
+	console.log(teamScores);
+
 	// find the best NFL team and their score
 	let bestNflTeamName = '';
-	let bestNflTeamScore = -Infinity;
+	let bestNflTeamScore = -1;
 	for (const [team, score] of Object.entries(nflTeamScores)) {
 		if (score > bestNflTeamScore) {
 			bestNflTeamName = team;
@@ -75,8 +82,8 @@ export const updateScores = async (valkey: ValkeyClient) => {
 	const updatedWeekData: WeekData = {
 		...weekData,
 		teams: [
-			{ ...weekData.teams[0], totalScore: teamScores.team1 },
-			{ ...weekData.teams[1], totalScore: teamScores.team2 }
+			{ ...weekData.teams[0], totalScore: teamScores[weekData.teams[0].name] },
+			{ ...weekData.teams[1], totalScore: teamScores[weekData.teams[1].name] }
 		],
 		status: WeekStatus.InProgress,
 		bestNflTeamName,
