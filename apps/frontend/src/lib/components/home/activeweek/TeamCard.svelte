@@ -5,7 +5,7 @@
 	import type { Matchup } from '@luckball/game-logic/types';
 	import { LucideChevronDown } from '@lucide/svelte';
 
-	let { teamPlayerData, displayName, matchups } = $props();
+	let { teamData, displayName, matchups } = $props();
 
 	export function getTeamScoreFromMatchups(matchups: Matchup[], team: string): number | undefined {
 		if (!matchups) return undefined;
@@ -84,23 +84,11 @@
 	</div>
 {/snippet}
 
-<div class="flex w-full flex-col gap-4 overflow-y-scroll md:flex-1">
-	<h2 class="text-primary text-fluid-lg mb-2 flex flex-row gap-4">
-		<span>{teamPlayerData?.name}</span>
-		<span class="text-primary-content">|</span>
-		<div>
-			<span class="text-accent">{teamPlayerData.totalScore}</span>
-			<span class="text-primary-content"> points</span>
-		</div>
-	</h2>
-	<span class="overflow-y-scroll pr-4">
-		<Card class="bg-surface-200 flex h-fit flex-row justify-start gap-8 rounded-lg border-2 p-4">
-			<TeamCardColumn header="Teams">
-				{@render teamsColumn(teamPlayerData)}
-			</TeamCardColumn>
-			<TeamCardColumn header="Players">
-				{@render playersColumn(teamPlayerData)}
-			</TeamCardColumn>
-		</Card>
-	</span>
-</div>
+<Card class="bg-surface-200 flex h-fit flex-row justify-start gap-8 rounded-lg border-2 p-4">
+	<TeamCardColumn header="Teams">
+		{@render teamsColumn(teamData)}
+	</TeamCardColumn>
+	<TeamCardColumn header="Players">
+		{@render playersColumn(teamData)}
+	</TeamCardColumn>
+</Card>
