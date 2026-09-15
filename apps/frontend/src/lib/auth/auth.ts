@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { sveltekitCookies } from 'better-auth/svelte-kit';
+import { username } from 'better-auth/plugins';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { getRequestEvent } from '$app/server';
 import { schema } from '@luckball/drizzle-client';
@@ -12,15 +13,18 @@ import {
 	GOOGLE_CLIENT_SECRET
 } from '$env/static/private';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const auth = betterAuth({
 	secret: BETTER_AUTH_SECRET,
-	plugins: [sveltekitCookies(getRequestEvent)],
+	plugins: [username(), sveltekitCookies(getRequestEvent)],
 	database: drizzleAdapter(drizzle, {
 		provider: 'pg',
 		schema: schema
 	}),
 	emailAndPassword: {
-		enabled: false
+		enabled: true,
+		disableSignUp: !isProduction
 	},
 	socialProviders: {
 		discord: {
