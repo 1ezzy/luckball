@@ -57,14 +57,14 @@
 					alt="{nflTeam} logo"
 				/>
 				<div class="grid grid-cols-2 items-end gap-2 justify-end">
-					<span class="text-fluid-sm justify-self-end">{nflTeam}</span>
+					<span class="text-fluid-sm justify-self-center">{nflTeam}</span>
 					<span
 						class="text-fluid-xs text-primary-content/40 mb-0.5 whitespace-nowrap justify-self-start"
 					>
 						vs {opponent}
 					</span>
 				</div>
-				<div class="grid w-full grid-cols-2 items-end gap-2">
+				<div class="grid w-full grid-cols-2 items-end gap-1">
 					<span class="text-accent text-fluid-sm justify-self-end">
 						{score}
 					</span>
@@ -89,9 +89,7 @@
 {/snippet}
 
 <!-- desktop view -->
-<Card
-	class="hidden h-fit bg-surface-200 md:grid grid-cols-[fit-content(60%)_fit-content(40%)] gap-8 rounded-lg border-2 p-4"
->
+<Card class="hidden h-fit bg-surface-200 md:grid grid-cols-[3fr_2fr] gap-4 rounded-lg border-2 p-4">
 	<TeamCardColumn header="Teams">
 		{@render teamsColumn(teamData)}
 	</TeamCardColumn>
