@@ -5,7 +5,7 @@
 	import type { Matchup } from '@luckball/game-logic/types';
 	import { LucideChevronDown } from '@lucide/svelte';
 
-	let { teamData, displayName, matchups } = $props();
+	let { teamData, displayName, matchups, showTeams = $bindable() } = $props();
 
 	export function getTeamScoreFromMatchups(matchups: Matchup[], team: string): number | undefined {
 		if (!matchups) return undefined;
@@ -36,9 +36,7 @@
 {/snippet}
 
 {#snippet teamsColumn(data: any)}
-	<div
-		class="grid grid-cols-[min-content_2fr_fit-content(50%)_3fr_fit-content(25%)] items-center gap-2"
-	>
+	<div id="foo" class="grid grid-cols-[auto_auto_1fr_1fr] items-center gap-2">
 		{#each data?.nflTeams as nflTeam}
 			{const matchup = matchups?.find((matchup: any) => matchup.teams.includes(nflTeam))}
 			{const opponent = matchup?.teams.find((team: any) => team !== nflTeam)}
@@ -53,25 +51,31 @@
 					size={16}
 				/>
 				<img
-					class="h-6 w-fit"
-					height="32"
+					class="w-6 h-6 aspect-square"
+					height="24"
 					src="{PUBLIC_TEAM_LOGO_URL}/{nflTeam}.png"
 					alt="{nflTeam} logo"
 				/>
-				<span class="text-fluid-sm justify-self-end">{nflTeam}</span>
-				<span class="text-fluid-xs text-primary-content/40 self-end mb-0.5 whitespace-nowrap"
-					>vs {opponent}</span
-				>
-				<span class="text-accent text-fluid-sm grid w-full grid-cols-2 items-end gap-1">
-					<span>{score}</span>
-					<span class="text-primary-content text-fluid-xs mb-0.5 justify-self-end">pts</span>
-				</span>
+				<div class="grid grid-cols-2 items-end gap-2 justify-end">
+					<span class="text-fluid-sm justify-self-end">{nflTeam}</span>
+					<span
+						class="text-fluid-xs text-primary-content/40 mb-0.5 whitespace-nowrap justify-self-start"
+					>
+						vs {opponent}
+					</span>
+				</div>
+				<div class="grid w-full grid-cols-2 items-end gap-2">
+					<span class="text-accent text-fluid-sm justify-self-end">
+						{score}
+					</span>
+					<span class="text-primary-content text-fluid-xs mb-0.5 justify-self-start">pts</span>
+				</div>
 			</div>
 
 			<div
 				class={[
-					'col-span-full grid transition-[grid-template-rows] duration-300',
-					expandedTeams.has(nflTeam) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+					'col-span-full grid transition-all duration-300',
+					expandedTeams.has(nflTeam) ? 'grid-rows-[1fr]' : 'opacity-0 grid-rows-[0fr]'
 				]}
 			>
 				<div
@@ -84,11 +88,29 @@
 	</div>
 {/snippet}
 
-<Card class="bg-surface-200 flex h-fit flex-row justify-start gap-8 rounded-lg border-2 p-4">
+<!-- desktop view -->
+<Card
+	class="hidden h-fit bg-surface-200 md:grid grid-cols-[fit-content(60%)_fit-content(40%)] gap-8 rounded-lg border-2 p-4"
+>
 	<TeamCardColumn header="Teams">
 		{@render teamsColumn(teamData)}
 	</TeamCardColumn>
 	<TeamCardColumn header="Players">
 		{@render playersColumn(teamData)}
 	</TeamCardColumn>
+</Card>
+
+<!-- mobile view -->
+<Card
+	class="md:hidden bg-surface-200 flex h-fit flex-row justify-start gap-8 rounded-lg border-2 p-4"
+>
+	{#if showTeams}
+		<TeamCardColumn header="Teams">
+			{@render teamsColumn(teamData)}
+		</TeamCardColumn>
+	{:else}
+		<TeamCardColumn header="Players">
+			{@render playersColumn(teamData)}
+		</TeamCardColumn>
+	{/if}
 </Card>

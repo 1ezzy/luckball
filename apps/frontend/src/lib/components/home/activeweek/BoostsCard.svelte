@@ -20,8 +20,19 @@
 	</div>
 {/snippet}
 
-<Card class="bg-surface-200 h-fit w-full rounded-lg border-2 p-4 grid gap-16 grid-cols-2">
-	<div class="grid grid-rows-[1fr_auto] gap-2">
+<Card class="bg-surface-200 w-full rounded-lg border-2 p-4 ">
+	<!-- desktop view -->
+	<div class="hidden md:grid grid-rows-[1fr_auto] gap-4">
+		<span class="text-fluid-sm">Baller Boosts</span>
+		<div class="flex flex-row justify-start gap-4 justify-self-start">
+			{#each boosts as boost}
+				{@render boostPill(boost.multiplier, boost.team)}
+			{/each}
+		</div>
+	</div>
+
+	<!-- mobile view -->
+	<div class="md:hidden grid grid-rows-[1fr_auto] gap-2">
 		<span class="text-fluid-sm">Baller Boosts</span>
 		<div class="flex flex-row justify-start gap-4 justify-self-start">
 			{#each boosts as boost}
