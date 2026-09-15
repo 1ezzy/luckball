@@ -2,15 +2,14 @@
 	import { Button, Checkbox, TextField } from 'svelte-ux';
 	import { authClient } from '$lib/clients/auth-client';
 
-	let email = $state('');
 	let username = $state('');
 	let password = $state('');
 	let rememberMe = $state(true);
 
 	async function handleLogin(event: SubmitEvent) {
 		event.preventDefault();
-		await authClient.signIn.email({
-			email,
+		await authClient.signIn.username({
+			username,
 			password,
 			rememberMe
 		});
@@ -56,8 +55,8 @@
 {/snippet}
 
 {#snippet loginForm()}
-	<form class="flex flex-col gap-6 self-start" onsubmit={handleLogin}>
-		<div class="grid grid-rows-2 gap-8">
+	<form class="flex flex-col gap-4 self-start" onsubmit={handleLogin}>
+		<div class="grid grid-rows-2 gap-4 mb-4">
 			<TextField
 				classes={{ input: 'text-primary-content autofill-fix' }}
 				type="text"
@@ -71,8 +70,11 @@
 				bind:value={password}
 			/>
 		</div>
-		<Checkbox bind:checked={rememberMe}>Remember me</Checkbox>
-		<Button type="submit" variant="fill" color="primary">Log in</Button>
+		<Checkbox class="text-primary-content" bind:checked={rememberMe}>Remember me</Checkbox>
+		<Button class="text-white" type="submit" variant="fill" color="primary">Log In</Button>
+		<span class="text-fluid-xs text-primary-content text-center">
+			Need an account? <a class="underline text-primary" href="/sign-up">Sign up here</a>
+		</span>
 	</form>
 {/snippet}
 
