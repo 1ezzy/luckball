@@ -2,7 +2,7 @@ import { auth } from '$lib/auth/auth';
 import { error, redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ request }) => {
+export const load: LayoutServerLoad = async ({ request, locals }) => {
 	const session = await auth.api.getSession({
 		headers: request.headers
 	});
@@ -11,5 +11,5 @@ export const load: LayoutServerLoad = async ({ request }) => {
 	const userId = session?.user.id;
 	if (!userId) throw error(400, 'User ID is required');
 
-	return { userId };
+	return { userId, flags: locals.flags };
 };

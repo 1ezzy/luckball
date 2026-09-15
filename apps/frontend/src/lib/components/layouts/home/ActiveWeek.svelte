@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { ToggleGroup, ToggleOption, TogglePanel } from 'svelte-ux';
 	import BoostsCard from '$lib/components/home/activeweek/BoostsCard.svelte';
 	import BoostSelectionDialog from '$lib/components/home/activeweek/BoostSelectionDialog.svelte';
@@ -26,6 +27,7 @@
 	);
 
 	let showTeams = $state(true);
+	let showBoosts = $derived(page.data.flags['boosts-v1']);
 </script>
 
 {#snippet secondaryNavAndPanels()}
@@ -46,11 +48,13 @@
 				<ChessQueen /> Lineups
 			</span>
 		</ToggleOption>
-		<ToggleOption value="boosts">
-			<span class="flex flex-row gap-2 items-center">
-				<ArrowBigUpDash /> Boosts
-			</span>
-		</ToggleOption>
+		{#if showBoosts}
+			<ToggleOption value="boosts">
+				<span class="flex flex-row gap-2 items-center">
+					<ArrowBigUpDash /> Boosts
+				</span>
+			</ToggleOption>
+		{/if}
 		<svelte:fragment slot="panes">
 			<TogglePanel>{@render teamCards()}</TogglePanel>
 			<TogglePanel>{@render boostsCard()}</TogglePanel>
