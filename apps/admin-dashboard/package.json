@@ -47,6 +47,6 @@
 		"@luckball/valkey-client": "workspace:*"
 	},
 	"engines": {
-		"node": ">=23.11.1"
+		"node": ">=22.12.0"
 	}
 }
