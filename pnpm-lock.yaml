@@ -156,9 +156,6 @@ importers:
       iovalkey:
         specifier: ^0.3.3
         version: 0.3.3(supports-color@7.2.0)
-      node-cron:
-        specifier: ^4.5.0
-        version: 4.5.0
       postgres:
         specifier: ^3.4.9
         version: 3.4.9
@@ -3206,10 +3203,6 @@ packages:
   node-abi@3.92.0:
     resolution: {integrity: sha512-KdHvFWZjEKDf0cakgFjebl371GPsISX2oZHcuyKqM7DtogIsHrqKeLTo8wBHxaXRAQlY2PsPlZmfo+9ZCxEREQ==}
     engines: {node: '>=10'}
-
-  node-cron@4.5.0:
-    resolution: {integrity: sha512-4Trh+kjvbXokyJkwQumvD5YAgeJfgHLR/sKyu71uSmxfCR5QMO1hldpvmFZOICN5pLgNY+J5Y8+ar3XKo5/4tQ==}
-    engines: {node: '>=20'}
 
   node-releases@2.0.47:
     resolution: {integrity: sha512-Uzmd6LXpouKo8EUK68IjH4+E01w/hXyV3R3g/geCJo+rXLNfh1xucB+LOzYEOQPSiUK3h/xZf0cQGcSsmyL2Og==}
@@ -6576,8 +6569,6 @@ snapshots:
   node-abi@3.92.0:
     dependencies:
       semver: 7.8.3
-
-  node-cron@4.5.0: {}
 
   node-releases@2.0.47: {}
 
