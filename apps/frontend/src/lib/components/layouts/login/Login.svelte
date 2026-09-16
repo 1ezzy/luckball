@@ -1,19 +1,14 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { Button, Checkbox, TextField } from 'svelte-ux';
 	import { authClient } from '$lib/clients/auth-client';
+	import { enhance } from '$app/forms';
+
+	let enableSignUp = $derived(page.data.flags['enable-sign-up']);
 
 	let username = $state('');
 	let password = $state('');
 	let rememberMe = $state(true);
-
-	async function handleLogin(event: SubmitEvent) {
-		event.preventDefault();
-		await authClient.signIn.username({
-			username,
-			password,
-			rememberMe
-		});
-	}
 </script>
 
 {#snippet titleCopy()}
@@ -55,26 +50,38 @@
 {/snippet}
 
 {#snippet loginForm()}
-	<form class="flex flex-col gap-4 self-start" onsubmit={handleLogin}>
+	<form
+		use:enhance
+		class="flex flex-col gap-4 self-start"
+		action="?/login"
+		method="POST"
+		autocomplete="off"
+	>
 		<div class="grid grid-rows-2 gap-4 mb-4">
 			<TextField
+				bind:value={username}
 				classes={{ input: 'text-primary-content autofill-fix' }}
 				type="text"
+				name="username"
+				autocomplete="off"
 				label="Username"
-				bind:value={username}
 			/>
 			<TextField
+				bind:value={password}
 				classes={{ input: 'text-primary-content autofill-fix' }}
 				type="password"
+				name="password"
+				autocomplete="off"
 				label="Password"
-				bind:value={password}
 			/>
 		</div>
-		<Checkbox class="text-primary-content" bind:checked={rememberMe}>Remember me</Checkbox>
+		<Checkbox bind:checked={rememberMe} class="text-primary-content">Remember me</Checkbox>
 		<Button class="text-white" type="submit" variant="fill" color="primary">Log In</Button>
-		<span class="text-fluid-xs text-primary-content text-center">
-			Need an account? <a class="underline text-primary" href="/sign-up">Sign up here</a>
-		</span>
+		{#if enableSignUp}
+			<span class="text-fluid-xs text-primary-content text-center">
+				Need an account? <a class="underline text-primary" href="/sign-up">Sign up here</a>
+			</span>
+		{/if}
 	</form>
 {/snippet}
 

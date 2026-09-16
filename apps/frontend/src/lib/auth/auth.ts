@@ -12,10 +12,12 @@ import {
 	GOOGLE_CLIENT_ID,
 	GOOGLE_CLIENT_SECRET
 } from '$env/static/private';
+import { PUBLIC_BETTER_AUTH_URL } from '$env/static/public';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 export const auth = betterAuth({
+	baseURL: PUBLIC_BETTER_AUTH_URL,
 	secret: BETTER_AUTH_SECRET,
 	plugins: [username(), sveltekitCookies(getRequestEvent)],
 	database: drizzleAdapter(drizzle, {
@@ -24,7 +26,7 @@ export const auth = betterAuth({
 	}),
 	emailAndPassword: {
 		enabled: true,
-		disableSignUp: !isProduction
+		disableSignUp: isProduction
 	},
 	socialProviders: {
 		discord: {

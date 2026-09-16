@@ -129,7 +129,9 @@
 	</div>
 {/snippet}
 
-<BoostSelectionDialog weekBoosted={userBoosts} {personalTeam} {matchups}></BoostSelectionDialog>
+{#if weekJoined}
+	<BoostSelectionDialog weekBoosted={userBoosts} {personalTeam} {matchups}></BoostSelectionDialog>
+{/if}
 
 <WeekShell>
 	{#snippet copy()}

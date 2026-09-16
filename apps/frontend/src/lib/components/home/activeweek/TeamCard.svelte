@@ -36,7 +36,7 @@
 {/snippet}
 
 {#snippet teamsColumn(data: any)}
-	<div id="foo" class="grid grid-cols-[auto_auto_1fr_1fr] items-center gap-2">
+	<div class="grid grid-cols-[auto_auto_3fr_2fr] items-center gap-2">
 		{#each data?.nflTeams as nflTeam}
 			{const matchup = matchups?.find((matchup: any) => matchup.teams.includes(nflTeam))}
 			{const opponent = matchup?.teams.find((team: any) => team !== nflTeam)}
@@ -79,7 +79,7 @@
 				]}
 			>
 				<div
-					class="text-fluid-xs text-primary-content/60 ml-8 flex flex-row items-center overflow-hidden"
+					class="text-fluid-xs text-primary-content/40 ml-8 flex flex-row items-center overflow-hidden"
 				>
 					<span class="p-2">More details coming soon...</span>
 				</div>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { Pencil } from '@lucide/svelte';
 	import { Button, Card, TextField } from 'svelte-ux';
 
 	let { weekJoined, currentWeekText, displayName, prevDisplayName } = $props();
@@ -18,7 +19,7 @@
 			<div
 				class="bg-primary-200 w-full rounded-lg flex items-center justify-center border-primary-400 border-2 py-2"
 			>
-				<span class="text-primary-content text-fluid-base">
+				<span class="text-primary-content text-fluid-sm">
 					Display Name: <span class="text-primary font-bold">{displayName}</span>
 				</span>
 			</div>
@@ -27,11 +28,15 @@
 				classes={{
 					container: 'w-full border-2 rounded-lg',
 					root: 'w-full',
-					input: 'text-fluid-base!'
+					input: 'text-fluid-sm!'
 				}}
 				placeholder="Enter Display Name"
 				bind:value={modifiedUsername}
-			/>
+			>
+				<div slot="prefix">
+					<Pencil class="size-4 text-primary-content/80 mr-2" />
+				</div>
+			</TextField>
 		{/if}
 		<div class="grid grid-cols-2 gap-4 w-full">
 			{#if !editingUsername}
@@ -90,7 +95,7 @@
 			classes={{
 				container: 'w-full border-2 rounded-lg',
 				root: 'w-full',
-				input: 'text-fluid-base!'
+				input: 'text-fluid-sm!'
 			}}
 			name="displayName"
 			placeholder="Enter Display Name"
@@ -103,11 +108,11 @@
 {/snippet}
 
 {#if !weekJoined}
-	<Card class="page-card! grid-rows-[auto_1fr]">
+	<Card class="page-card! grid-rows-[auto_1fr] gap-8">
 		{@render joinForm()}
 	</Card>
 {:else}
-	<Card class="page-card! grid-rows-[auto_1fr]">
+	<Card class="page-card! grid-rows-[auto_1fr] gap-8">
 		{@render joined()}
 	</Card>
 {/if}

@@ -20,6 +20,13 @@
 	@apply shadow-lg;
 }
 
+@utility nav-btn {
+	@apply bg-surface-200;
+	@apply border-primary-content rounded-lg border-2;
+	@apply flex h-10 w-full flex-row items-center justify-start gap-2 p-2;
+	@apply hover:bg-surface-100 overflow-hidden transition-colors duration-300 hover:cursor-pointer;
+}
+
 @theme {
 	/* breakpoints */
 	--breakpoint-3xl: 120rem;
