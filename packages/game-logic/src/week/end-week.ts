@@ -33,10 +33,10 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 	}
 
 	// get relevant team data for new object
-	const team1Name = weekData.team1?.name;
-	const team2Name = weekData.team2?.name;
-	const team1Players = weekData.team1?.players;
-	const team2Players = weekData.team2?.players;
+	const team1Name = weekData.teams[0].name;
+	const team2Name = weekData.teams[1].name;
+	const team1Players = weekData.teams[0].players;
+	const team2Players = weekData.teams[1].players;
 
 	// build NFL team score lookup from matchups
 	const matchupsRaw = (await valkey?.get(matchupsKey)) ?? '';
@@ -70,8 +70,8 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 		winningTeamScore,
 		losingTeamName,
 		losingTeamScore;
-	const team1Score = weekData.team1.totalScore;
-	const team2Score = weekData.team2.totalScore;
+	const team1Score = weekData.teams[0].totalScore;
+	const team2Score = weekData.teams[1].totalScore;
 
 	const getBestNflScore = (nflTeams: string[]) =>
 		Math.max(...nflTeams.map((t) => nflTeamScores[t] ?? 0));
@@ -82,7 +82,7 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 	} else {
 		// tiebreaker: whichever luckball team has the single highest-scoring NFL team
 		team1Wins =
-			getBestNflScore(weekData.team1.nflTeams) >= getBestNflScore(weekData.team2.nflTeams);
+			getBestNflScore(weekData.teams[0].nflTeams) >= getBestNflScore(weekData.teams[1].nflTeams);
 	}
 
 	if (team1Wins) {
