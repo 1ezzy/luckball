@@ -11,9 +11,10 @@ export function createValkeyClient(url: string) {
 		throw new Error('Valkey URL must be provided.');
 	}
 
-	return new Valkey({
-		port: 6379,
-		host: url,
-		db: 0
+	const client = new Valkey(url);
+	client.on('error', (err) => {
+		console.error('Valkey connection error:', err);
 	});
+
+	return client;
 }
