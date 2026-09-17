@@ -84,10 +84,10 @@
 {#snippet teamCardWithTitle(teamData: Team, matchups: Matchup[], displayName?: string)}
 	<!-- layout for desktop view -->
 	<div class="hidden md:flex w-full flex-col gap-4 md:h-full md:min-h-0 md:flex-1 snap-center">
-		<h2 class="text-primary text-fluid-lg mb-2 flex flex-row gap-4">
+		<h2 class="text-primary text-fluid-lg mb-2 flex flex-row gap-4 pr-4 items-center">
 			<span>{teamData?.name}</span>
 			<span class="text-primary-content">|</span>
-			<div>
+			<div class="text-fluid-base">
 				<span class="text-accent">{teamData?.totalScore}</span>
 				<span class="text-primary-content"> points</span>
 			</div>
@@ -104,10 +104,10 @@
 			{#if !displayName}
 				<MoveLeft class="text-primary-content animate-pulse" />
 			{/if}
-			<div class="flex flex-row gap-4 items-center">
+			<div class="flex flex-row gap-2 items-center">
 				<h2>{teamData?.name}</h2>
 				<span class="text-primary-content">|</span>
-				<div>
+				<div class="text-fluid-base">
 					<span class="text-accent">{teamData?.totalScore}</span>
 					<span class="text-primary-content"> points</span>
 				</div>

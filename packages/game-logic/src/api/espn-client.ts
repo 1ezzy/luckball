@@ -100,5 +100,5 @@ export const createEspnClient = (customFetch?: typeof fetch) => {
 };
 
 export const createEspnClientForEnv = (): IEspnClient => {
-	return process.env.NODE_ENV === 'development' ? new MockEspnClient() : new EspnClient();
+	return process.env.NODE_ENV === 'localhost' ? new MockEspnClient() : new EspnClient();
 };
