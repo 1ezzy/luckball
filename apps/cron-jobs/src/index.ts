@@ -14,7 +14,7 @@ export class CronJobRunner {
 
 	constructor(env: any) {
 		this.valkey = createValkeyClient(env.VALKEY_URL);
-		this.drizzle = createDrizzleClient(env);
+		this.drizzle = createDrizzleClient(env.POSTGRES_URL);
 	}
 
 	async handleBeginWeek() {
