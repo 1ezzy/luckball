@@ -9,6 +9,14 @@ export const updateScores = async (valkey: ValkeyClient) => {
 	const espnApi = createEspnClientForEnv();
 	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
+	const existingWeekDataRaw = await valkey?.get(`${seasonType}:week:${currentWeek}:data`);
+	const existingWeekData: WeekData | undefined = existingWeekDataRaw
+		? JSON.parse(existingWeekDataRaw)
+		: undefined;
+	if (!existingWeekData || existingWeekData.status !== WeekStatus.InProgress) {
+		return { success: true, message: 'Week not in progress -- skipping score update.' };
+	}
+
 	// step 1: update matchups
 	// get all matchups for the week
 	const weekEvents: { events: EspnEvent[]; teams: string[] } = await espnApi.getWeekEvents(
@@ -46,8 +54,7 @@ export const updateScores = async (valkey: ValkeyClient) => {
 	await valkey?.set(`${seasonType}:week:${currentWeek}:matchups`, JSON.stringify(updatedMatchups));
 
 	// step 2: update week data
-	const weekDataRaw = await valkey?.get(`${seasonType}:week:${currentWeek}:data`);
-	const weekData: WeekData = JSON.parse(weekDataRaw ?? '');
+	const weekData = existingWeekData;
 
 	// build a lookup of NFL team scores from matchups
 	const nflTeamScores: Record<string, number> = {};
