@@ -18,4 +18,4 @@ ENV NODE_ENV=production
 COPY --from=build /app /app
 WORKDIR /app/apps/frontend
 EXPOSE 3000
-CMD ["node", "build"]
+CMD ["sh", "-c", "pnpm db:migrate && node build"]
