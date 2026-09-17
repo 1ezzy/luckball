@@ -5,8 +5,8 @@ import type { ValkeyClient } from '@luckball/valkey-client';
 import { WeekStatus, type Matchup } from '../types';
 import { getActiveWeek } from './active-week';
 
-export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
-	const espnApi = createEspnClientForEnv();
+export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient, espnMock?: string) => {
+	const espnApi = createEspnClientForEnv(espnMock);
 	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;

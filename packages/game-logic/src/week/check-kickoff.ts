@@ -6,8 +6,8 @@ import { startActiveWeek } from './start-active-week';
 
 const KICKOFF_BUFFER_MS = 60 * 60 * 1000;
 
-export const checkAndStartActiveWeek = async (valkey: ValkeyClient) => {
-	const espnApi = createEspnClientForEnv();
+export const checkAndStartActiveWeek = async (valkey: ValkeyClient, espnMock?: string) => {
+	const espnApi = createEspnClientForEnv(espnMock);
 	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
@@ -29,6 +29,6 @@ export const checkAndStartActiveWeek = async (valkey: ValkeyClient) => {
 		return { success: true, started: false, message: 'Not within an hour of kickoff yet.' };
 	}
 
-	const result = await startActiveWeek(valkey);
+	const result = await startActiveWeek(valkey, espnMock);
 	return { ...result, started: result.success };
 };

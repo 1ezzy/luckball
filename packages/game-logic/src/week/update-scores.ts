@@ -5,8 +5,8 @@ import { WeekStatus } from '../types';
 import type { Matchup, Team, WeekData } from '../types';
 import type { EspnEvent } from '../api/espn-client.interface';
 
-export const updateScores = async (valkey: ValkeyClient) => {
-	const espnApi = createEspnClientForEnv();
+export const updateScores = async (valkey: ValkeyClient, espnMock?: string) => {
+	const espnApi = createEspnClientForEnv(espnMock);
 	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
 	const existingWeekDataRaw = await valkey?.get(`${seasonType}:week:${currentWeek}:data`);
@@ -73,8 +73,6 @@ export const updateScores = async (valkey: ValkeyClient) => {
 			0
 		);
 	}
-
-	console.log(teamScores);
 
 	// find the best NFL team and their score
 	let bestNflTeamName = '';

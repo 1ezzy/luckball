@@ -3,8 +3,8 @@ import { createEspnClientForEnv } from './../api/espn-client';
 import { WeekStatus } from '../types';
 import { ACTIVE_WEEK_KEY } from './active-week';
 
-export const beginWeek = async (valkey: ValkeyClient) => {
-	const espnApi = createEspnClientForEnv();
+export const beginWeek = async (valkey: ValkeyClient, espnMock?: string) => {
+	const espnApi = createEspnClientForEnv(espnMock);
 	const activeWeek = await espnApi.getActiveWeek();
 	const { currentWeek, seasonType } = activeWeek;
 
