@@ -6,7 +6,7 @@ FROM base AS build
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends python3 make g++ \
 	&& rm -rf /var/lib/apt/lists/*
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json tsconfig.json ./
 COPY apps/frontend/package.json apps/frontend/package.json
 COPY packages/drizzle-client/package.json packages/drizzle-client/package.json
 COPY packages/game-logic/package.json packages/game-logic/package.json
