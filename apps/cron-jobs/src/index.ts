@@ -1,4 +1,10 @@
-import { beginWeek, endWeek, startActiveWeek, updateScores } from '@luckball/game-logic';
+import {
+	beginWeek,
+	checkAndStartActiveWeek,
+	endWeek,
+	startActiveWeek,
+	updateScores
+} from '@luckball/game-logic';
 import { createValkeyClient } from '@luckball/valkey-client';
 import { createDrizzleClient } from '@luckball/drizzle-client';
 
@@ -21,6 +27,12 @@ export class CronJobRunner {
 		const result = await startActiveWeek(this.valkey);
 		console.log('♣ Starting Active Week...');
 		return result.success ? { success: true } : { success: false, error: result.message };
+	}
+
+	async handleCheckStartActiveWeek() {
+		const result = await checkAndStartActiveWeek(this.valkey);
+		console.log(result.started ? '♣ Kickoff imminent - starting active week...' : '♣ Not time yet, skipping.');
+		return result.success ? { success: true, started: result.started } : { success: false, error: result.message };
 	}
 
 	async handleEndWeek() {

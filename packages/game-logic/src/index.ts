@@ -1,5 +1,6 @@
 // week-specific logic
 export { startActiveWeek } from './week/start-active-week';
+export { checkAndStartActiveWeek } from './week/check-kickoff';
 export { beginWeek } from './week/begin-week';
 export { endWeek } from './week/end-week';
 export { updateScores } from './week/update-scores';
