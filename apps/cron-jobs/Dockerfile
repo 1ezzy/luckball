@@ -11,6 +11,5 @@ RUN pnpm install --frozen-lockfile
 RUN pnpm --filter luckball-cron-jobs deploy --prod /prod/cron-jobs
 
 FROM base AS runtime
-ENV NODE_ENV=production
 COPY --from=build /prod/cron-jobs /app
-CMD ["pnpm", "start"]
+CMD ["node", "-e", "setInterval(() => {}, 2147483647)"]

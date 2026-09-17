@@ -15,7 +15,6 @@ FROM base AS runtime
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends curl \
 	&& rm -rf /var/lib/apt/lists/*
-ENV NODE_ENV=production
 COPY --from=build /prod/frontend /app
 EXPOSE 3000
-CMD ["sh", "-c", "pnpm db:migrate && node build"]
+CMD ["sh", "-c", "node_modules/.bin/tsx scripts/migrate.ts && node build"]
