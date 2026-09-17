@@ -1,18 +1,20 @@
 import { schema, type DrizzleClient } from '@luckball/drizzle-client';
-import { createEspnClientForEnv } from './api/espn-client';
+import { createEspnClientForEnv } from './../api/espn-client';
 import { eq, sql } from 'drizzle-orm';
 import type { ValkeyClient } from '@luckball/valkey-client';
+import { WeekStatus, type Matchup } from '../types';
+import { getActiveWeek } from './active-week';
 
 export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 	const espnApi = createEspnClientForEnv();
-	const { currentWeek, seasonType } = await espnApi.getActiveWeek();
+	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;
 	const weekDataKey = `${seasonType}:week:${currentWeek}:data`;
 	const matchupsKey = `${seasonType}:week:${currentWeek}:matchups`;
 
 	const currentWeekData = (await valkey?.get(weekDataKey)) ?? '';
-	if (JSON.parse(currentWeekData).status !== 'in_progress') {
+	if (JSON.parse(currentWeekData).status !== WeekStatus.InProgress) {
 		return {
 			success: false,
 			message: 'Week not started - current week data status not "in_progress"'
@@ -31,22 +33,26 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 	}
 
 	// get relevant team data for new object
-	const team1Name = weekData.team1?.name;
-	const team2Name = weekData.team2?.name;
-	const team1Players = weekData.team1?.players;
-	const team2Players = weekData.team2?.players;
+	const team1Name = weekData.teams[0].name;
+	const team2Name = weekData.teams[1].name;
+	const team1Players = weekData.teams[0].players;
+	const team2Players = weekData.teams[1].players;
 
 	// build NFL team score lookup from matchups
 	const matchupsRaw = (await valkey?.get(matchupsKey)) ?? '';
 	if (matchupsRaw.length === 0) {
 		return { success: false, message: 'No NFL matchups found for the week.' };
 	}
-	const matchups: any[] = JSON.parse(matchupsRaw);
+	const matchups: Matchup[] = JSON.parse(matchupsRaw);
 
 	const nflTeamScores: Record<string, number> = {};
 	let bestNflTeamScore = 0;
 	let bestNflTeamName;
 	for (const matchup of matchups) {
+		if (!matchup.matchupScores) {
+			return;
+		}
+
 		for (const scoreObj of matchup.matchupScores) {
 			const [team, score] = Object.entries(scoreObj)[0];
 			nflTeamScores[team] = score as number;
@@ -64,8 +70,8 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 		winningTeamScore,
 		losingTeamName,
 		losingTeamScore;
-	const team1Score = weekData.team1.totalScore;
-	const team2Score = weekData.team2.totalScore;
+	const team1Score = weekData.teams[0].totalScore;
+	const team2Score = weekData.teams[1].totalScore;
 
 	const getBestNflScore = (nflTeams: string[]) =>
 		Math.max(...nflTeams.map((t) => nflTeamScores[t] ?? 0));
@@ -75,7 +81,8 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 		team1Wins = team1Score > team2Score;
 	} else {
 		// tiebreaker: whichever luckball team has the single highest-scoring NFL team
-		team1Wins = getBestNflScore(weekData.team1.nflTeams) >= getBestNflScore(weekData.team2.nflTeams);
+		team1Wins =
+			getBestNflScore(weekData.teams[0].nflTeams) >= getBestNflScore(weekData.teams[1].nflTeams);
 	}
 
 	if (team1Wins) {
@@ -108,7 +115,7 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 			players: team2Players,
 			winStatus: team2WinStatus
 		},
-		status: 'ended',
+		status: WeekStatus.Ended,
 		winningTeamName: winningTeamName,
 		winningTeamScore: winningTeamScore,
 		bestNflTeamName: bestNflTeamName,
@@ -145,14 +152,20 @@ export const endWeek = async (valkey: ValkeyClient, drizzle: DrizzleClient) => {
 			})
 			.where(eq(schema.user_profile.userId, userId));
 	};
+
+	const updatedUserProfiles = [];
 	for (const userId of Object.keys(users)) {
 		const parsedUserData = JSON.parse(users[userId]);
 		if (parsedUserData.teamAssignment === winningTeamName) {
-			updateUserProfileStats(winningTeamName, winningTeamScore, userId, true);
+			updatedUserProfiles.push(
+				updateUserProfileStats(winningTeamName, winningTeamScore, userId, true)
+			);
 		} else {
-			updateUserProfileStats(losingTeamName, losingTeamScore, userId, false);
+			updatedUserProfiles.push(losingTeamName, losingTeamScore, userId, false);
 		}
 	}
+
+	await Promise.all(updatedUserProfiles);
 
 	return { success: true, message: `Week ${currentWeek} ended.` };
 };

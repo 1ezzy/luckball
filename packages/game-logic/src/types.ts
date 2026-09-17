@@ -3,7 +3,7 @@ export interface Team {
 	players: string[];
 	nflTeams: string[];
 	totalScore: number;
-	wins: number;
+	won?: boolean;
 }
 
 export enum WeekStatus {
@@ -16,33 +16,34 @@ export interface MatchupScore {
 	[teamName: string]: number;
 }
 
-export interface MatchupData {
+export interface Matchup {
 	event: string;
 	id: number;
-	date: Date;
+	date: string;
 	teams: string[];
-	matchupScores: MatchupScore[];
+	matchupScores?: MatchupScore[];
 }
 
 export interface WeekData {
-	team1: Team;
-	team2: Team;
+	teams: Team[];
 	status: WeekStatus;
-	score?: string[];
 	winningTeamName?: string;
-	winningTeamScore?: string;
+	winningTeamScore?: number;
 	bestNflTeamName?: string;
-	bestNflTeamScore?: string;
+	bestNflTeamScore?: number;
 	lastWinningTeam?: string;
 }
 
-export interface BoostSelection {}
+export interface Boost {
+	multiplier: number;
+	team: string;
+}
 
 export interface User {
 	displayName: string;
 	joinedAt: string;
 	teamAssignment: string | null;
-	boostsSelected: BoostSelection[] | null;
+	boosts: Boost[] | null;
 }
 
 export type AllUsersData = Record<string, string>;

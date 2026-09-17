@@ -1,17 +1,24 @@
 <script lang="ts">
-	import { Button } from 'svelte-ux';
+	import { page } from '$app/state';
+	import { Button, Checkbox, TextField } from 'svelte-ux';
 	import { authClient } from '$lib/clients/auth-client';
+	import { enhance } from '$app/forms';
+
+	let enableSignUp = $derived(page.data.flags['enable-sign-up']);
+
+	let username = $state('');
+	let password = $state('');
+	let rememberMe = $state(true);
 </script>
 
 {#snippet titleCopy()}
-	<div class="flex w-full flex-col items-center justify-center gap-4">
+	<div class="flex w-full flex-col items-center justify-center gap-4 self-end">
 		<h1 class="text-primary text-6xl font-bold">Luckball</h1>
 		<h1 class="text-secondary text-center text-2xl">It's all about the Luck Of The Ball</h1>
 	</div>
 {/snippet}
 
-<div class="flex h-full w-full flex-col items-center justify-center gap-16 p-8">
-	{@render titleCopy()}
+{#snippet legacyLoginForm()}
 	<div class="flex flex-col gap-8">
 		<Button
 			class="gap-2"
@@ -40,4 +47,57 @@
 			Continue with Google
 		</Button>
 	</div>
+{/snippet}
+
+{#snippet loginForm()}
+	<form
+		use:enhance
+		class="flex flex-col gap-4 self-start"
+		action="?/login"
+		method="POST"
+		autocomplete="off"
+	>
+		<div class="grid grid-rows-2 gap-4 mb-4">
+			<TextField
+				bind:value={username}
+				classes={{ input: 'text-primary-content autofill-fix' }}
+				type="text"
+				name="username"
+				autocomplete="off"
+				label="Username"
+			/>
+			<TextField
+				bind:value={password}
+				classes={{ input: 'text-primary-content autofill-fix' }}
+				type="password"
+				name="password"
+				autocomplete="off"
+				label="Password"
+			/>
+		</div>
+		<Checkbox bind:checked={rememberMe} class="text-primary-content">Remember me</Checkbox>
+		<Button class="text-white" type="submit" variant="fill" color="primary">Log In</Button>
+		{#if enableSignUp}
+			<span class="text-fluid-xs text-primary-content text-center">
+				Need an account? <a class="underline text-primary" href="/sign-up">Sign up here</a>
+			</span>
+		{/if}
+	</form>
+{/snippet}
+
+<div class="grid w-full h-full gap-16 items-center justify-items-center p-8">
+	{@render titleCopy()}
+	{@render loginForm()}
 </div>
+
+<style>
+	:global(.autofill-fix:-webkit-autofill),
+	:global(.autofill-fix:-webkit-autofill:hover),
+	:global(.autofill-fix:-webkit-autofill:focus),
+	:global(.autofill-fix:-webkit-autofill:active) {
+		-webkit-box-shadow: 0 0 0 1000px var(--color-surface-100) inset;
+		-webkit-text-fill-color: var(--color-primary-content);
+		caret-color: var(--color-primary-content);
+		transition: background-color 5000s ease-in-out 0s;
+	}
+</style>

@@ -18,9 +18,13 @@
 	</div>
 	<div class="flex flex-col gap-4">
 		<h2 class="text-secondary text-fluid-lg">Best Team (All-Time)</h2>
-		<span class="text-fluid-base">
-			<span class="text-primary font-bold">{highestScoringTeamName}</span>
-			(<span class="text-accent font-bold">{highestScoringTeamScore}</span>)
-		</span>
+		{#if highestScoringTeamName}
+			<span class="text-fluid-base">
+				<span class="text-primary font-bold">{highestScoringTeamName}</span>
+				(<span class="text-accent font-bold">{highestScoringTeamScore}</span>)
+			</span>
+		{:else}
+			<span class="text-fluid-sm text-primary-content/40">No team to show</span>
+		{/if}
 	</div>
 </Card>

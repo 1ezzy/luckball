@@ -3,11 +3,12 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"start": "tsx --env-file=.env src/index.ts",
-		"begin-week": "pnpm tsx --env-file=.env src/commands.ts begin-week",
-		"start-active-week": "pnpm tsx --env-file=.env src/commands.ts start-active-week",
-		"end-week": "pnpm tsx --env-file=.env src/commands.ts end-week",
-		"update-scores": "pnpm tsx --env-file=.env src/commands.ts update-scores"
+		"start": "node -e \"setInterval(() => {}, 2147483647)\"",
+		"begin-week": "pnpm tsx --env-file-if-exists=.env src/commands.ts begin-week",
+		"start-active-week": "pnpm tsx --env-file-if-exists=.env src/commands.ts start-active-week",
+		"check-start-active-week": "pnpm tsx --env-file-if-exists=.env src/commands.ts check-start-active-week",
+		"end-week": "pnpm tsx --env-file-if-exists=.env src/commands.ts end-week",
+		"update-scores": "pnpm tsx --env-file-if-exists=.env src/commands.ts update-scores"
 	},
 	"dependencies": {
 		"@luckball/drizzle-client": "workspace:*",
@@ -16,7 +17,6 @@
 		"commander": "^14.0.0",
 		"drizzle-orm": "^0.45.2",
 		"iovalkey": "^0.3.3",
-		"node-cron": "^4.5.0",
 		"postgres": "^3.4.9",
 		"tsx": "^4.22.4"
 	},

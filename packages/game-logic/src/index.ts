@@ -1,17 +1,20 @@
 // week-specific logic
-export { startActiveWeek } from './start-active-week';
-export { beginWeek } from './begin-week';
-export { endWeek } from './end-week';
+export { startActiveWeek } from './week/start-active-week';
+export { checkAndStartActiveWeek } from './week/check-kickoff';
+export { beginWeek } from './week/begin-week';
+export { endWeek } from './week/end-week';
+export { updateScores } from './week/update-scores';
 
-// generic game logic
-export { addUserToWeek } from './add-user';
-export { removeUserFromWeek } from './remove-user';
-export { updateScores } from './update-scores';
+// user-specific logic
+export { addUserToWeek } from './user/add-user';
+export { updateUserDisplayName } from './user/update-user-displayname';
+export { removeUserFromWeek } from './user/remove-user';
+export { setUserBoosts } from './user/user-boosts';
 
 // espn client
 export { createEspnClient, createEspnClientForEnv } from './api/espn-client';
 export { createMockEspnClient } from './api/espn-client.mock';
 
-// types
-export type { Team, MatchupScore, MatchupData, WeekData, User, AllUsersData, BoostSelection } from './types';
-export { WeekStatus } from './types';
+// active week
+export { getActiveWeek, ACTIVE_WEEK_KEY } from './week/active-week';
+export type { ActiveWeek } from './week/active-week';

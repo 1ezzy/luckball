@@ -23,6 +23,15 @@ program
 	});
 
 program
+	.command('check-start-active-week')
+	.description('Check if kickoff is within an hour and start the active week if so')
+	.action(async () => {
+		const result = await runner.handleCheckStartActiveWeek();
+		console.log(result);
+		process.exit(0);
+	});
+
+program
 	.command('end-week')
 	.description('Trigger endWeek cron job')
 	.action(async () => {

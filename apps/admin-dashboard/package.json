@@ -45,5 +45,8 @@
 		"@luckball/drizzle-client": "workspace:*",
 		"@luckball/game-logic": "workspace:*",
 		"@luckball/valkey-client": "workspace:*"
+	},
+	"engines": {
+		"node": ">=22.12.0"
 	}
 }

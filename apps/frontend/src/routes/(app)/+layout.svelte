@@ -18,7 +18,7 @@
 		class={[
 			'absolute w-full',
 			'transition-[height] duration-300 md:h-full md:transition-[width]',
-			navExpanded ? 'h-64 md:w-[240px]' : 'h-16 md:w-[74px]'
+			navExpanded ? 'h-64 md:w-60' : 'h-16 md:w-18.5'
 		]}
 	>
 		<Navigation userId={data?.userId} bind:navExpanded></Navigation>
@@ -27,7 +27,7 @@
 	<main
 		class={[
 			'bg-surface-300 text-primary-content mt-16 flex h-full min-h-screen w-full flex-col p-4',
-			'md:ml-[74px] md:mt-0 md:p-0',
+			'md:ml-18.5 md:mt-0 md:p-0',
 			'transition-[filter] duration-300',
 			navExpanded ? 'blur-xs brightness-80' : ''
 		]}
