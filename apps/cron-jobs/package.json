@@ -4,10 +4,10 @@
 	"private": true,
 	"scripts": {
 		"start": "node -e \"setInterval(() => {}, 2147483647)\"",
-		"begin-week": "pnpm tsx --env-file=.env src/commands.ts begin-week",
-		"start-active-week": "pnpm tsx --env-file=.env src/commands.ts start-active-week",
-		"end-week": "pnpm tsx --env-file=.env src/commands.ts end-week",
-		"update-scores": "pnpm tsx --env-file=.env src/commands.ts update-scores"
+		"begin-week": "pnpm tsx --env-file-if-exists=.env src/commands.ts begin-week",
+		"start-active-week": "pnpm tsx --env-file-if-exists=.env src/commands.ts start-active-week",
+		"end-week": "pnpm tsx --env-file-if-exists=.env src/commands.ts end-week",
+		"update-scores": "pnpm tsx --env-file-if-exists=.env src/commands.ts update-scores"
 	},
 	"dependencies": {
 		"@luckball/drizzle-client": "workspace:*",
