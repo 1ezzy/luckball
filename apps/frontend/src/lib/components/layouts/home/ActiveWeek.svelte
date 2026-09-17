@@ -129,7 +129,7 @@
 	</div>
 {/snippet}
 
-{#if weekJoined}
+{#if weekJoined && showBoosts}
 	<BoostSelectionDialog weekBoosted={userBoosts} {personalTeam} {matchups}></BoostSelectionDialog>
 {/if}
 
