@@ -17,7 +17,7 @@ COPY packages/drizzle-client packages/drizzle-client
 COPY packages/game-logic packages/game-logic
 COPY packages/valkey-client packages/valkey-client
 RUN pnpm --filter luckball-frontend build
-RUN pnpm prune --prod
+RUN CI=true pnpm prune --prod
 
 FROM base AS runtime
 RUN apt-get update \
