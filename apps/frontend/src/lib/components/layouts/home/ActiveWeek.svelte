@@ -6,13 +6,7 @@
 	import TeamCard from '$lib/components/home/activeweek/TeamCard.svelte';
 	import TitleAndActiveWeekCopy from '$lib/components/home/activeweek/TitleAndActiveWeekCopy.svelte';
 	import WeekShell from '$lib/components/layouts/home/WeekShell.svelte';
-	import {
-		ArrowBigUpDash,
-		ChessQueen,
-		MoveRight,
-		MoveLeft,
-		LucideGalleryHorizontalEnd
-	} from '@lucide/svelte';
+	import { ArrowBigUpDash, ChessQueen } from '@lucide/svelte';
 	import type { Matchup, Team } from '@luckball/game-logic/types';
 
 	let {
@@ -32,7 +26,6 @@
 		teamData?.filter((team: Team) => team.name !== userTeamAssignment)[0]
 	);
 
-	let showTeams = $state(true);
 	let showBoosts = $derived(page.data.flags['boosts-v1']);
 </script>
 
@@ -122,7 +115,7 @@
 				<span class="text-primary-content/40 text-fluid-xs">Swipe right</span>
 			{/if}
 		</div>
-		<TeamCard {teamData} {matchups} {displayName} {showTeams} />
+		<TeamCard {teamData} {matchups} {displayName} />
 	</div>
 {/snippet}
 

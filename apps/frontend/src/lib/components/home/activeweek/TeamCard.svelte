@@ -5,7 +5,9 @@
 	import type { Matchup } from '@luckball/game-logic/types';
 	import { LucideChevronDown } from '@lucide/svelte';
 
-	let { teamData, displayName, matchups, showTeams = $bindable() } = $props();
+	let { teamData, displayName, matchups } = $props();
+
+	let selectedCardView = $state('teams');
 
 	export function getTeamScoreFromMatchups(matchups: Matchup[], team: string): number | undefined {
 		if (!matchups) return undefined;
@@ -102,13 +104,14 @@
 <Card
 	class="md:hidden bg-surface-200 flex h-fit flex-row justify-start gap-8 rounded-lg border-2 p-4"
 >
-	{#if showTeams}
-		<TeamCardColumn header="Teams">
+	<TeamCardColumn
+		header={selectedCardView === 'teams' ? 'Teams' : 'Players'}
+		bind:selectedView={selectedCardView}
+	>
+		{#if selectedCardView === 'teams'}
 			{@render teamsColumn(teamData)}
-		</TeamCardColumn>
-	{:else}
-		<TeamCardColumn header="Players">
+		{:else if selectedCardView === 'players'}
 			{@render playersColumn(teamData)}
-		</TeamCardColumn>
-	{/if}
+		{/if}
+	</TeamCardColumn>
 </Card>
