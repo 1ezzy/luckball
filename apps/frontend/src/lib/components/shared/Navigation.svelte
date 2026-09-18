@@ -42,10 +42,7 @@
 
 {#snippet headerLink(Icon: Component, path: string)}
 	<NavItem
-		class={[
-			'h-10 w-fit flex flex-row items-center justify-center gap-2 p-2',
-			'transition-opacity duration-300'
-		]}
+		class="h-10 w-fit flex flex-row items-center justify-center gap-2 p-2"
 		currentUrl={page.url}
 		{path}
 	>
@@ -79,12 +76,12 @@
 	</Button>
 {/snippet}
 
+<!-- desktop view -->
 <nav
-	class={['nav-shell', navExpanded ? 'px-8' : 'px-4']}
+	class={['nav-shell hidden md:flex', navExpanded ? 'px-8' : 'px-4']}
 	onmouseenter={() => (navExpanded = true)}
 	onmouseleave={() => (navExpanded = false)}
 >
-	<!-- desktop view -->
 	<div class="hidden h-full flex-col gap-8 md:flex">
 		{@render navLink(LucideHouse, 'Home', '/')}
 		{@render navLink(LucideCalendar, 'Schedule', '/schedule')}
@@ -98,8 +95,10 @@
 		{/if}
 		{@render loginLogoutNavButton()}
 	</div>
+</nav>
 
-	<!-- mobile view -->
+<!-- mobile view -->
+<nav class="nav-shell flex md:hidden">
 	<header class="w-full flex-1 grid grid-cols-4 gap-2 justify-items-center md:hidden">
 		{@render headerLink(LucideHouse, '/')}
 		{@render headerLink(LucideCalendar, '/schedule')}
@@ -114,7 +113,7 @@
 	.nav-shell {
 		@apply relative;
 		@apply h-full;
-		@apply flex flex-col;
+		@apply flex-col;
 		@apply bg-primary-400;
 		@apply text-primary-content;
 		@apply transition-[padding] duration-300;
