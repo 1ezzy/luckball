@@ -5,12 +5,11 @@
 		LucideAward,
 		LucideCalendar,
 		LucideHouse,
+		LucideIdCardLanyard,
 		LucideLogOut,
-		LucideMenu,
 		LucideSettings
 	} from '@lucide/svelte';
 	import type { Component } from 'svelte';
-	import { fade } from 'svelte/transition';
 	import { authClient } from '$lib/clients/auth-client';
 	import { invalidateAll } from '$app/navigation';
 
@@ -41,20 +40,16 @@
 	</NavItem>
 {/snippet}
 
-{#snippet headerLink(Icon: Component, text: string, path: string)}
+{#snippet headerLink(Icon: Component, path: string)}
 	<NavItem
-		on:click={() => (navExpanded = false)}
 		class={[
-			'h-10 w-full flex-row items-center justify-start gap-2 p-2 transition-opacity duration-300',
-			navExpanded ? 'flex' : 'hidden'
+			'h-10 w-fit flex flex-row items-center justify-center gap-2 p-2',
+			'transition-opacity duration-300'
 		]}
 		currentUrl={page.url}
 		{path}
 	>
-		<Icon size={16} strokeWidth={2} />
-		<span class="w-full">
-			{text}
-		</span>
+		<Icon class="text-white" size={24} strokeWidth={2} />
 	</NavItem>
 {/snippet}
 
@@ -89,6 +84,7 @@
 	onmouseenter={() => (navExpanded = true)}
 	onmouseleave={() => (navExpanded = false)}
 >
+	<!-- desktop view -->
 	<div class="hidden h-full flex-col gap-8 md:flex">
 		{@render navLink(LucideHouse, 'Home', '/')}
 		{@render navLink(LucideCalendar, 'Schedule', '/schedule')}
@@ -102,24 +98,13 @@
 		{/if}
 		{@render loginLogoutNavButton()}
 	</div>
-	<header class="flex flex-col gap-1 md:hidden">
-		{#if !navExpanded}
-			<button
-				in:fade={{ duration: 300 }}
-				class="flex flex-row items-center justify-center gap-2"
-				onclick={() => (navExpanded = true)}
-			>
-				<LucideMenu size={24} strokeWidth={2} class="" />
-				<span>Menu</span>
-			</button>
-		{:else}
-			<div in:fade={{ duration: 500 }} class="flex flex-col gap-1">
-				{@render headerLink(LucideHouse, 'Home', '/')}
-				{@render headerLink(LucideCalendar, 'Schedule', '/schedule')}
-				{@render headerLink(LucideAward, 'Records', '/records')}
-				{@render headerLink(LucideSettings, 'Settings', '/settings')}
-			</div>
-		{/if}
+
+	<!-- mobile view -->
+	<header class="w-full flex-1 grid grid-cols-4 gap-2 justify-items-center md:hidden">
+		{@render headerLink(LucideHouse, '/')}
+		{@render headerLink(LucideCalendar, '/schedule')}
+		{@render headerLink(LucideIdCardLanyard, '/records')}
+		{@render headerLink(LucideSettings, '/settings')}
 	</header>
 </nav>
 
@@ -127,7 +112,7 @@
 	@reference "../../../routes/app.css";
 
 	.nav-shell {
-		@apply relative z-10;
+		@apply relative;
 		@apply h-full;
 		@apply flex flex-col;
 		@apply bg-primary-400;
@@ -138,7 +123,7 @@
 	@media (width < theme(--breakpoint-md)) {
 		.nav-shell {
 			@apply w-full px-4 py-4;
-			@apply border-b-primary-content border-b-2;
+			@apply border-t-primary-content border-t-2;
 			@apply items-center justify-center;
 		}
 	}

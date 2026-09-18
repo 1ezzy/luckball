@@ -57,7 +57,7 @@
 					alt="{nflTeam} logo"
 				/>
 				<div class="grid grid-cols-2 items-end gap-2 justify-end">
-					<span class="text-fluid-sm justify-self-center">{nflTeam}</span>
+					<span class="text-fluid-sm justify-self-end">{nflTeam}</span>
 					<span
 						class="text-fluid-xs text-primary-content/40 mb-0.5 whitespace-nowrap justify-self-start"
 					>
