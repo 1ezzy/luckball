@@ -5,11 +5,12 @@ import { eq } from 'drizzle-orm';
 import { drizzle } from '$lib/clients/drizzle-client';
 import { valkey } from '$lib/clients/valkey-client';
 import { getMatchup, getWeekAndUserData } from '$lib/server/valkey';
+import { env } from '$env/dynamic/private';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ parent }) => {
 	const { userId } = await parent();
-	const espnApi = createEspnClientForEnv();
+	const espnApi = createEspnClientForEnv(env.ESPN_MOCK);
 
 	// get data for the active NFL week from ESPN
 	let activeWeek;

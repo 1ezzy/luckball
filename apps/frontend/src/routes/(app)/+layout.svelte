@@ -3,7 +3,7 @@
 
 	import '../app.css';
 
-	let { children, data } = $props();
+	let { children } = $props();
 
 	let navExpanded = $state(false);
 </script>
@@ -13,20 +13,21 @@
 	<meta name="luckball" content="Team-based football matchup scramble" />
 </svelte:head>
 
-<div class={['flex flex-col', 'md:flex-row']}>
+<div class={['flex flex-col-reverse', 'md:flex-row']}>
 	<section
 		class={[
-			'absolute w-full',
-			'transition-[height] duration-300 md:h-full md:transition-[width]',
-			navExpanded ? 'h-64 md:w-60' : 'h-16 md:w-18.5'
+			'sticky md:absolute w-full z-100',
+			'duration-300 md:h-full md:transition-[width]',
+			navExpanded ? 'md:w-60' : 'md:w-18.5',
+			'h-16 bottom-0 md:h-full'
 		]}
 	>
-		<Navigation userId={data?.userId} bind:navExpanded></Navigation>
+		<Navigation bind:navExpanded></Navigation>
 	</section>
 
 	<main
 		class={[
-			'bg-surface-300 text-primary-content mt-16 flex h-full min-h-screen w-full flex-col p-4',
+			'bg-surface-300 text-primary-content flex h-full min-h-screen w-full flex-col p-4',
 			'md:ml-18.5 md:mt-0 md:p-0',
 			'transition-[filter] duration-300',
 			navExpanded ? 'blur-xs brightness-80' : ''

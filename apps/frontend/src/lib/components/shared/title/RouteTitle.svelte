@@ -10,7 +10,7 @@
 
 <div class="flex w-full flex-col gap-4 text-center md:text-left 2xl:gap-8">
 	<PageTitle>
-		<span class="text-fluid-2xl text-primary-content">|</span>
+		<span class="hidden md:block text-fluid-2xl text-primary-content">|</span>
 		<h2 class="text-fluid-2xl text-secondary">{routeName}</h2>
 	</PageTitle>
 

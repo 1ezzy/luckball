@@ -40,8 +40,8 @@ const shuffleNflTeams = (teams: string[]): [string[], string[]] => {
 	return [team1Teams, team2Teams];
 };
 
-export const startActiveWeek = async (valkey: ValkeyClient) => {
-	const espnApi = createEspnClientForEnv();
+export const startActiveWeek = async (valkey: ValkeyClient, espnMock?: string) => {
+	const espnApi = createEspnClientForEnv(espnMock);
 	const { currentWeek, seasonType } = await getActiveWeek(valkey, espnApi);
 
 	const usersKey = `${seasonType}:week:${currentWeek}:users`;

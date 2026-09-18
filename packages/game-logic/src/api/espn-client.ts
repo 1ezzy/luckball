@@ -44,8 +44,9 @@ export class EspnClient implements IEspnClient {
 
 	async getWeekEvents(seasonType: number, weekNumber: number): Promise<any> {
 		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl';
+		// TODO: removed hard-coded year from this fetch
 		const response = await this.fetch(
-			`${baseUrl}/seasons/2025/types/${seasonType}/weeks/${weekNumber}/events`
+			`${baseUrl}/seasons/2026/types/${seasonType}/weeks/${weekNumber}/events`
 		);
 		const data = (await response.json()) as any;
 
@@ -99,6 +100,7 @@ export const createEspnClient = (customFetch?: typeof fetch) => {
 	return new EspnClient(customFetch);
 };
 
-export const createEspnClientForEnv = (): IEspnClient => {
-	return process.env.NODE_ENV === 'localhost' ? new MockEspnClient() : new EspnClient();
+export const createEspnClientForEnv = (mockOverride?: string): IEspnClient => {
+	const useMock = mockOverride ?? process.env.ESPN_MOCK;
+	return useMock === 'true' ? new MockEspnClient() : new EspnClient();
 };

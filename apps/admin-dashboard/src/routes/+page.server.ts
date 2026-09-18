@@ -4,6 +4,7 @@ import type { PageServerLoad } from './$types';
 import { beginWeek, endWeek, startActiveWeek, updateScores } from '@luckball/game-logic';
 import { valkey } from '$lib/clients/valkey-client';
 import { drizzle } from '$lib/clients/drizzle-client';
+import { env } from '$env/dynamic/private';
 
 export const load: PageServerLoad = async ({ request }: ServerLoadEvent) => {
 	const session = await auth.api.getSession({
@@ -17,7 +18,7 @@ export const load: PageServerLoad = async ({ request }: ServerLoadEvent) => {
 
 export const actions: Actions = {
 	beginWeek: async () => {
-		const result = await beginWeek(valkey);
+		const result = await beginWeek(valkey, env.ESPN_MOCK);
 
 		if (!result.success) {
 			return fail(400, { error: result.message });
@@ -26,7 +27,7 @@ export const actions: Actions = {
 		return { success: true };
 	},
 	startActiveWeek: async () => {
-		const result = await startActiveWeek(valkey);
+		const result = await startActiveWeek(valkey, env.ESPN_MOCK);
 
 		if (!result.success) {
 			return fail(400, { error: result.message });
@@ -35,7 +36,7 @@ export const actions: Actions = {
 		return { success: true };
 	},
 	endWeek: async () => {
-		const result = await endWeek(valkey, drizzle);
+		const result = await endWeek(valkey, drizzle, env.ESPN_MOCK);
 
 		if (!result?.success) {
 			return fail(400, { error: result?.message });
@@ -44,7 +45,7 @@ export const actions: Actions = {
 		return { success: true };
 	},
 	updateScores: async () => {
-		const result = await updateScores(valkey);
+		const result = await updateScores(valkey, env.ESPN_MOCK);
 
 		if (!result.success) {
 			return fail(400, { error: result.message });
