@@ -44,8 +44,9 @@ export class EspnClient implements IEspnClient {
 
 	async getWeekEvents(seasonType: number, weekNumber: number): Promise<any> {
 		const baseUrl = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl';
+		// TODO: removed hard-coded year from this fetch
 		const response = await this.fetch(
-			`${baseUrl}/seasons/2025/types/${seasonType}/weeks/${weekNumber}/events`
+			`${baseUrl}/seasons/2026/types/${seasonType}/weeks/${weekNumber}/events`
 		);
 		const data = (await response.json()) as any;
 
