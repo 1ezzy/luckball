@@ -13,9 +13,8 @@ import {
 	GOOGLE_CLIENT_SECRET
 } from '$env/static/private';
 import { PUBLIC_BETTER_AUTH_URL } from '$env/static/public';
-import { page } from '$app/state';
 
-const signUpEnabled = page.data.flags['enable-sign-up'];
+const isProduction = process.env.NODE_ENV === 'production';
 
 export const auth = betterAuth({
 	baseURL: PUBLIC_BETTER_AUTH_URL,
@@ -27,7 +26,7 @@ export const auth = betterAuth({
 	}),
 	emailAndPassword: {
 		enabled: true,
-		disableSignUp: signUpEnabled
+		disableSignUp: isProduction
 	},
 	socialProviders: {
 		discord: {
